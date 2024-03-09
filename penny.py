@@ -20,7 +20,7 @@ def index():
     return response
 
 #-----------------------------------------------------------------------
-@app.route('/static/<path:filename>')
+@app.route('/<path:filename>')
 def serve_static(filename):
     if filename == 'css/card.css' or filename == 'js/card.js':
         return flask.send_from_directory('.', filename)
