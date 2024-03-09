@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href = "./static/card.css" /> 
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -29,6 +28,99 @@
             bottom: 0;
             width: 100%;
         }
+        * {
+    font-family: Arial;
+}
+
+.wrapper {
+    max-width: 100vw;
+    overflow: hidden;
+    text-align: center;
+}
+
+.carousel {
+    display: flex;
+    justify-content: flex-start;
+    transition: 1s;
+}
+
+.card {
+    max-width: 80%;
+    width: 900px;
+    height: 600px;
+    border: 1px solid #ccc;
+    margin: 60px auto;
+    position: relative;
+    transition: 1s ease-out;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border-radius: 20px; /* Adjust the value based on your preference for the curve */
+}
+
+.card-count {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust the background color as needed */
+    border-radius: 0 0 20px 20px; /* Match the border-radius of the card */
+    font-size: 0.8rem; /* Adjust the font size as needed */
+}
+
+
+.back {
+    transform: rotateX(180deg);
+}
+
+.card div {
+    position: absolute;
+    top: 60px; /* Adjusted top value for whitespace around the video */
+    left: 60px; /* Adjusted left value for whitespace around the video */
+    right: 60px; /* Adjusted right value for whitespace around the video */
+    bottom: 60px; /* Adjusted bottom value to make room for the card number */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    transition: 2s;
+    text-align: center;
+    background-color: #fafafa;
+}
+
+.active {
+    transform: rotateX(180deg);
+}
+
+.prev,
+.next,
+.flip {
+    width: 150px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #eee;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.prev:hover,
+.next:hover,
+.flip:hover {
+    background-color: #ccc;
+    border-color: #ccc;
+}
+
     </style>
     <title>Signable - Flashcards for ASL Students</title>
 </head>
@@ -58,6 +150,72 @@
         </div>
     </section>
 
-    <script src="card.js"></script>
+    <script>
+        let cards = [
+    {
+        front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+        back: "HELLO"
+    },
+    {
+        front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+        back: "HELLO"
+    },
+    {
+        front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+        back: "HELLO"
+    }
+];
+
+let currentCard = 1,
+    carousel = document.querySelector(".carousel"),
+    next = document.querySelector(".next"),
+    prev = document.querySelector(".prev"),
+    flip = document.querySelector(".flip");
+
+renderCards();
+
+function renderCards() {
+    carousel.style.width = `${cards.length}00vw`;
+    cards.map(el => {
+        let div = document.createElement("div");
+        div.classList.add("card");
+        let front = document.createElement("div");
+        front.classList.add("front");
+        let back = document.createElement("div");
+        back.classList.add("back");
+        front.innerHTML = el.front;
+        back.textContent = el.back;
+        div.appendChild(front);
+        div.appendChild(back);
+        carousel.appendChild(div);
+    });
+}
+
+next.addEventListener("click", function(e) {
+    if (currentCard < cards.length) {
+        currentCard++;
+        cardFly();
+    }
+});
+
+prev.addEventListener("click", function(e) {
+    if (currentCard > 1) {
+        currentCard--;
+        cardFly();
+    }
+});
+
+flip.addEventListener("click", function (e) {
+    let currentCardElement = document.querySelector(".carousel .card:nth-child(" + currentCard + ")");
+    if (currentCardElement) {
+        currentCardElement.classList.toggle("active");
+    }
+});
+
+function cardFly() {
+    carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
+}
+
+    </script>
 </body>
 </html>
