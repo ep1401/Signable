@@ -18,7 +18,7 @@
             padding: 20px;
         }
         section {
-            padding: 20px;
+            padding: 0px;
         }
         footer {
             background-color: #333;
@@ -45,14 +45,13 @@
 }
 
 .card {
-    max-width: 80%;
-    width: 900px;
-    height: 600px;
+    width: 60vw;
+    height: 40vw;
     border: 1px solid #ccc;
-    margin: 60px auto;
+    margin: 60px auto; /* Use auto for left and right margins to center the card horizontally */
     position: relative;
     transition: 1s ease-out;
-    perspective: 1000px;
+    perspective: 1500px; /* Adjust the perspective value */
     transform-style: preserve-3d;
     cursor: pointer;
     font-weight: bold;
@@ -60,17 +59,7 @@
     border-radius: 20px; /* Adjust the value based on your preference for the curve */
 }
 
-.card-count {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.8); /* Adjust the background color as needed */
-    border-radius: 0 0 20px 20px; /* Match the border-radius of the card */
-    font-size: 0.8rem; /* Adjust the font size as needed */
-}
+
 
 
 .back {
@@ -79,10 +68,10 @@
 
 .card div {
     position: absolute;
-    top: 60px; /* Adjusted top value for whitespace around the video */
-    left: 60px; /* Adjusted left value for whitespace around the video */
-    right: 60px; /* Adjusted right value for whitespace around the video */
-    bottom: 60px; /* Adjusted bottom value to make room for the card number */
+    top: 5vw; /* Adjusted top value for whitespace around the video */
+    left: 5vw; /* Adjusted left value for whitespace around the video */
+    right: 5vw; /* Adjusted right value for whitespace around the video */
+    bottom: 5vw; /* Adjusted bottom value to make room for the card number */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,7 +88,7 @@
 .prev,
 .next,
 .flip {
-    width: 150px;
+    width: 10vw;
     border: 1px solid #ccc;
     border-radius: 3px;
     padding: 10px;
