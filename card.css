@@ -1,0 +1,75 @@
+* {
+    font-family: Arial;
+  }
+  
+  .wrapper {
+    max-width: 100vw;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .carousel {
+    display: flex;
+    justify-content: flex-start;
+    transition: 1s;
+  }
+  
+  .card {
+    max-width: 400px;
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 100px;
+    margin: 60px auto;
+    position: relative;
+    transition: 1s ease-out;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .back {
+    transform: rotateX(180deg);
+  }
+  
+  .card div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    transition: 2s;
+    text-align: center;
+    background-color: #fafafa;
+  }
+  
+  .active {
+    transform: rotateX(180deg);
+  }
+  .prev,
+  .next {
+    width: 100px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 30px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #eee;
+    font-size: 14px;
+    font-weight: bold;
+    transition: .2s;
+  }
+  
+  .prev:hover, .next:hover{
+    background-color: #ccc;
+    border-color: #ccc;
+  }
+  
