@@ -20,13 +20,13 @@ def index():
     return response
 
 #-----------------------------------------------------------------------
-@app.route('/<path:filename>')
-def serve_static(filename):
-    print(f"Requested filename: {filename}")
-    if filename == 'css/card.css' or filename == 'js/card.js':
-        return flask.send_from_directory('.', filename)
-    else:
-        flask.abort(404)
+@app.route('/', methods=['GET'])
+@app.route('/card', methods=['GET'])
+def index():
+
+    html_code = flask.render_template('card.css')
+    response = flask.make_response(html_code)
+    return response
 
 
 #-----------------------------------------------------------------------
@@ -34,5 +34,4 @@ def serve_static(filename):
 
 
 #-----------------------------------------------------------------------
-if __name__ == '__main__':
-    app.run(debug=True)
+
