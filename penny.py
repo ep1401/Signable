@@ -9,7 +9,8 @@ import flask
 
 #-----------------------------------------------------------------------
 
-app = flask.Flask(__name__, template_folder='.')
+app = flask.Flask(__name__, template_folder='.', static_url_path='/static', static_folder='static')
+
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
