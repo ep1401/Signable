@@ -132,7 +132,7 @@
 
         .opp,
         .shuffle {
-            width: 10vw;
+            width: 4vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
             padding: 1vw;
@@ -152,6 +152,12 @@
             background-color: #ccc;
             border-color: #ccc;
         }
+
+        .shuffle-image {
+            width: 1.5vw;
+            height: 
+        }
+
     </style>
     <title>Signable - Flashcards for ASL Students</title>
 </head>
@@ -179,7 +185,8 @@
                 {% endfor %}
             </div>
             <button class="shuffle" onclick="shuffleCards()">
-                <img src="/get_shuffle" alt="Shuffle">
+                <img class="shuffle-image" src="/get_shuffle" 
+                alt="Shuffle">
             </button>
 
 
