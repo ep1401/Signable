@@ -129,6 +129,29 @@
             background-color: #ccc;
             border-color: #ccc;
         }
+
+        .opp,
+        .shuffle {
+            width: 10vw;
+            border: .1vw solid #ccc;
+            border-radius: 2vw;
+            padding: 1vw;
+            margin: 1vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .opp:hover,
+        .shuffle:hover {
+            background-color: #ccc;
+            border-color: #ccc;
+        }
     </style>
     <title>Signable - Flashcards for ASL Students</title>
 </head>
@@ -155,10 +178,19 @@
                 </div>
                 {% endfor %}
             </div>
+            <button class="shuffle" onclick="shuffleCards()">
+                <img src="/get_shuffle" alt="Shuffle">
+            </button>
+
+
             <button class="prev">Prev</button>
             <button class="flip">Flip</button>
             <button class="next">Next</button>
+
+            <button class="opp">Opp</button>
         </div>
+
+        <button class="extra">Extra</button>
     </section>
 
     <script>
@@ -166,38 +198,82 @@
             carousel = document.querySelector(".carousel"),
             next = document.querySelector(".next"),
             prev = document.querySelector(".prev"),
-            flip = document.querySelector(".flip");
+            flip = document.querySelector(".flip"),
+            shuffleButton = document.querySelector(".shuffle"),
+            opp = document.querySelector(".opp");
 
-        renderCards();
+        let bool = false;
+    
+        opp.addEventListener("click", function(e) {
+            let currentCardElements = document.querySelectorAll(".card-container");
+            currentCardElements.forEach(cardContainer => {
+                cardContainer.querySelector(".card").classList.toggle("active");
+            });
+            
+            // Check if the first card is active after toggling
+            let firstCard = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
+            bool = firstCard.classList.contains("active");
+        });
 
-        function renderCards() {
-            // No need to render cards here since they are already rendered by Flask
-        }
-
+    
         next.addEventListener("click", function(e) {
             if (currentCard < document.querySelectorAll(".card-container").length) {
+                resetCards();
                 currentCard++;
                 cardFly();
             }
         });
-
+    
         prev.addEventListener("click", function(e) {
             if (currentCard > 1) {
+                resetCards();
                 currentCard--;
                 cardFly();
             }
         });
-
+    
         flip.addEventListener("click", function (e) {
             let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
             if (currentCardElement) {
                 currentCardElement.classList.toggle("active");
             }
         });
-
+    
+        shuffleButton.addEventListener("click", function(e) {
+            shuffleCards();
+            resetCards();
+            currentCard = 1; 
+            cardFly();
+        });
+    
         function cardFly() {
             carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
         }
+    
+        function resetCards() {
+            let cards = document.querySelectorAll(".card-container .card");
+            cards.forEach(card => {
+                if (bool) {
+                    card.classList.add("active"); 
+                }
+                else card.classList.remove("active");
+            });
+        }
+    
+        function shuffleCards() {
+            let cardContainers = Array.from(document.querySelectorAll(".card-container"));
+            for (let i = cardContainers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cardContainers[i], cardContainers[j]] = [cardContainers[j], cardContainers[i]];
+            }
+            cardContainers.forEach(cardContainer => {
+                carousel.appendChild(cardContainer);
+            });
+        }
+    
     </script>
+    
+    
+    
 </body>
 </html>

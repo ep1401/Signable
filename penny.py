@@ -2,6 +2,7 @@
 
 import flask
 from flask import request
+from flask import send_file
 
 app = flask.Flask(__name__, template_folder='.')
 
@@ -28,15 +29,15 @@ def lessons():
     cards = [
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO'
+            'back': 'HELLO1'
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO'
+            'back': 'HELLO2'
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO'
+            'back': 'HELLO3'
         }
     ]
     
@@ -56,6 +57,11 @@ def selectlessons():
         lesson_num = course_lessonsnum[course])
     response = flask.make_response(html_code)
     return response
+
+@app.route('/get_shuffle', methods=['GET'])
+def get_shuffle():
+    return send_file("shuffle.png")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
