@@ -19,8 +19,16 @@ def index():
     response = flask.make_response(html_code)
     return response
 
+
+
 #-----------------------------------------------------------------------
 
+@app.route('/', methods=['GET'])
+@app.route('/lessons', methods=['GET'])
+def index():
+    html_code = flask.render_template('lessons.html')
+    response = flask.make_response(html_code)
+    return response
 
 #-----------------------------------------------------------------------
 
