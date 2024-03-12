@@ -4,32 +4,35 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Koh Santepheap';
             text-align: center;
-            background-color: #f5f5f5;
+            background-color: #B9D6DF;
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #3498db;
-            color: #fff;
+            background-color: #B9D6DF;
+            font-family: 'Koh Santepheap';
+            color: #000000;
             padding: 20px;
         }
         section {
             padding: 0px;
         }
         footer {
-            background-color: #333;
-            color: #fff;
+            background-color: #B9D6DF;
+            color: #000000;
             padding: 10px;
             position: fixed;
             bottom: 0;
             width: 100%;
         }
         * {
-            font-family: Arial;
+            font-family: 'Koh Santepheap';
+            font-size: 22px;
         }
 
         .wrapper {
@@ -56,10 +59,10 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 1.5rem;
+            background-color: #F9F7E7;
+            border-color: #F9F7E7;
             border-radius: 20px; /* Adjust the value based on your preference for the curve */
         }
-
-
 
 
         .back {
@@ -68,17 +71,17 @@
 
         .card div {
             position: absolute;
-            top: 5vw; /* Adjusted top value for whitespace around the video */
-            left: 5vw; /* Adjusted left value for whitespace around the video */
-            right: 5vw; /* Adjusted right value for whitespace around the video */
-            bottom: 5vw; /* Adjusted bottom value to make room for the card number */
+            top: 5vw; 
+            left: 5vw;
+            right: 5vw; 
+            bottom: 5vw; 
             display: flex;
             justify-content: center;
             align-items: center;
             backface-visibility: hidden;
             transition: 2s;
             text-align: center;
-            background-color: #fafafa;
+            background-color: #F9F7E7;
         }
 
         .active {
@@ -97,7 +100,7 @@
             cursor: pointer;
             text-decoration: none;
             color: #222;
-            background-color: #eee;
+            background-color: #F9F7E7;
             font-size: 14px;
             font-weight: bold;
             transition: 0.2s;
@@ -110,101 +113,103 @@
             border-color: #ccc;
         }
 
+        h1 {
+            font-size: 40px;
+        }
+
+        h2 {
+            font-size: 30px;
+        }
+
     </style>
-    <title>Signable - Flashcards for ASL Students</title>
-</head>
-<body>
-    <header>
-        <h1>Signable</h1>
-        <p>Flashcards for ASL Students</p>
-    </header>
-    <section>
-        <h2>Welcome to our Website!</h2>
-        <p>We are dedicated to providing high-quality flashcards for American Sign Language (ASL) students. Our goal is to make learning ASL enjoyable and effective through visual aids and interactive learning materials.</p>
-        <p>Explore our website to discover a variety of flashcards designed to enhance your ASL learning experience.</p>
-    </section>
-    <section>
-        <h2>Signable</h2>
-        <p>Signable is our innovative platform that allows ASL students to practice and learn sign language in an engaging way. With Signable, you can access a wide range of flashcards, practice sessions, and interactive quizzes to improve your ASL skills.</p>
-    </section>
-    
-    <section>
-        <div class="wrapper">
-            <div class="carousel" id="flashcard-carousel">
-                <!-- Flashcards will be dynamically added here -->
+        <title>Signable - Flashcards for ASL Students</title>
+    </head>
+    <body>
+        <header>
+            <h1>Signable</h1>
+        </header>
+        <section>
+            <h2>Start Studying {{course}} Lesson {{lesson_num}}!</h2>
+        </section>
+        
+        
+        <section>
+            <div class="wrapper">
+                <div class="carousel" id="flashcard-carousel">
+                    <!-- Flashcards will be dynamically added here -->
+                </div>
+                <button class="prev">Prev</button>
+                <button class="flip">Flip</button>
+                <button class="next">Next</button>
             </div>
-            <button class="prev">Prev</button>
-            <button class="flip">Flip</button>
-            <button class="next">Next</button>
-        </div>
-    </section>
+        </section>
 
-    <script>
-        let cards = [
-    {
-        front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-        back: "HELLO"
-    },
-    {
-        front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-        back: "HELLO"
-    },
-    {
-        front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-        back: "HELLO"
+        <script>
+            let cards = [
+        {
+            front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            back: "HELLO"
+        },
+        {
+            front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            back: "HELLO"
+        },
+        {
+            front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            back: "HELLO"
+        }
+    ];
+
+    let currentCard = 1,
+        carousel = document.querySelector(".carousel"),
+        next = document.querySelector(".next"),
+        prev = document.querySelector(".prev"),
+        flip = document.querySelector(".flip");
+
+    renderCards();
+
+    function renderCards() {
+        carousel.style.width = `${cards.length}00vw`;
+        cards.map(el => {
+            let div = document.createElement("div");
+            div.classList.add("card");
+            let front = document.createElement("div");
+            front.classList.add("front");
+            let back = document.createElement("div");
+            back.classList.add("back");
+            front.innerHTML = el.front;
+            back.textContent = el.back;
+            div.appendChild(front);
+            div.appendChild(back);
+            carousel.appendChild(div);
+        });
     }
-];
 
-let currentCard = 1,
-    carousel = document.querySelector(".carousel"),
-    next = document.querySelector(".next"),
-    prev = document.querySelector(".prev"),
-    flip = document.querySelector(".flip");
-
-renderCards();
-
-function renderCards() {
-    carousel.style.width = `${cards.length}00vw`;
-    cards.map(el => {
-        let div = document.createElement("div");
-        div.classList.add("card");
-        let front = document.createElement("div");
-        front.classList.add("front");
-        let back = document.createElement("div");
-        back.classList.add("back");
-        front.innerHTML = el.front;
-        back.textContent = el.back;
-        div.appendChild(front);
-        div.appendChild(back);
-        carousel.appendChild(div);
+    next.addEventListener("click", function(e) {
+        if (currentCard < cards.length) {
+            currentCard++;
+            cardFly();
+        }
     });
-}
 
-next.addEventListener("click", function(e) {
-    if (currentCard < cards.length) {
-        currentCard++;
-        cardFly();
+    prev.addEventListener("click", function(e) {
+        if (currentCard > 1) {
+            currentCard--;
+            cardFly();
+        }
+    });
+
+    flip.addEventListener("click", function (e) {
+        let currentCardElement = document.querySelector(".carousel .card:nth-child(" + currentCard + ")");
+        if (currentCardElement) {
+            currentCardElement.classList.toggle("active");
+        }
+    });
+
+    function cardFly() {
+        carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
     }
-});
 
-prev.addEventListener("click", function(e) {
-    if (currentCard > 1) {
-        currentCard--;
-        cardFly();
-    }
-});
-
-flip.addEventListener("click", function (e) {
-    let currentCardElement = document.querySelector(".carousel .card:nth-child(" + currentCard + ")");
-    if (currentCardElement) {
-        currentCardElement.classList.toggle("active");
-    }
-});
-
-function cardFly() {
-    carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
-}
-
-    </script>
-</body>
+        </script>
+    </body>
 </html>

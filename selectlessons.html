@@ -42,36 +42,31 @@
         h2 {
             font-size: 30px;
         }
-          
-
-        .asl101,
-        .asl102,
-        .asl105,
-        .asl107 {
-            width: 40vw;
-            height: 20vw;
+        
+        .lesson {
+            width: calc((100% - 20vw) / 3);
+            height: 15vw;
             border: 1px solid #ccc;
             border-radius: 20px;
             padding: 1vw;
-            margin: 1vw;
+            margin: 3vw;
             text-transform: uppercase;
             cursor: pointer;
             text-decoration: none;
             color: #222;
             background-color: #F9F7E7;
-            font-family: 'Koh Santepheap';font-size: 50px;
+            font-family: 'Koh Santepheap';
+            font-size: 2vw;
             font-weight: bold;
             transition: 0.2s;
+            
         }
-
-        .asl101:hover,
-        .asl102:hover,
-        .asl105:hover,
-        .asl107:hover {
+        
+        /* Hover effect for all lessons */
+        .lesson:hover {
             background-color: #ccc;
             border-color: #ccc;
         }
-
         a {
             text-decoration: none;
         }
@@ -85,15 +80,20 @@
             <h1>Signable</h1>
         </header>
         <section>
-            <h2>Please select a course to start learning!</h2>
+            <h2>Welcome to {{course}}. Now select a lesson!</h2>
         </section>
 
-        <form method="GET" action="/selectlessons">
-            <button class="asl101" name="course" value="ASL101">ASL101</button>
-            <button class="asl102" name="course" value="ASL102">ASL102</button>
-            <button class="asl105" name="course" value="ASL105">ASL105</button>
-            <button class="asl107" name="course" value="ASL107">ASL107</button>
+        <form method="GET" action="/lessons">
+            {% for lesson_num in range(1, lesson_num + 1) %}
+                <button type="submit" class="lesson" name="course"
+                    value="{{ course }} {{ lesson_num }}">
+                    Lesson {{ lesson_num }}</button>
+            {% endfor %}
         </form>
- 
+
+        
+        
+        
+        
     </body>
 </html>
