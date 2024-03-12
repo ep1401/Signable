@@ -128,9 +128,10 @@
         <p>Signable is our innovative platform that allows ASL students to practice and learn sign language in an engaging way. With Signable, you can access a wide range of flashcards, practice sessions, and interactive quizzes to improve your ASL skills.</p>
     </section>
 
-    <form action="lessons.html">
+    <form action="{{ url_for('lessons') }}" method="GET">
         <button type="submit" class="button">HOME</button>
-      </form>
+    </form>
+    
     
     <section>
         <div class="wrapper">
