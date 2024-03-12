@@ -23,7 +23,6 @@ def index():
 
 #-----------------------------------------------------------------------
 
-@app.route('/', methods=['GET'])
 @app.route('/lessons', methods=['GET'])
 def lessons():
     html_code = flask.render_template('lessons.html')
