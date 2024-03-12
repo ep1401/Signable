@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
     <style>
         body {
@@ -42,7 +42,6 @@
         h2 {
             font-size: 2vw;
         }
-          
 
         .wrapper {
             max-width: 100vw;
@@ -54,6 +53,16 @@
             display: flex;
             justify-content: flex-start;
             transition: 1s;
+        }
+
+        .card-container {
+            width: 60vw; 
+            height: 40vw;
+            margin-right: 20vw; 
+            margin-left: 20vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .card {
@@ -72,7 +81,6 @@
             border-color: #F9F7E7;
             border-radius: 2vw; /* Adjust the value based on your preference for the curve */
         }
-
 
         .back {
             transform: rotateX(180deg);
@@ -121,96 +129,75 @@
             background-color: #ccc;
             border-color: #ccc;
         }
-
     </style>
-        <title>Signable - Flashcards for ASL Students</title>
-    </head>
-    <body>
-        <header>
-            <h1>Signable</h1>
-        </header>
-        <section>
-            <h2>Start Studying {{course}} Lesson {{lesson_num}}!</h2>
-        </section>
-        
-        
-        <section>
-            <div class="wrapper">
-                <div class="carousel" id="flashcard-carousel">
-                    <!-- Flashcards will be dynamically added here -->
+    <title>Signable - Flashcards for ASL Students</title>
+</head>
+<body>
+    <header>
+        <h1>Signable</h1>
+    </header>
+    <section>
+        <h2>Start Studying {{course}} Lesson {{lesson_num}}!</h2>
+    </section>
+    <section>
+        <div class="wrapper">
+            <div class="carousel" id="flashcard-carousel">
+                {% for card in cards %}
+                <div class="card-container">
+                    <div class="card">
+                        <div class="front">
+                            {{ card.front | safe }}
+                        </div>
+                        <div class="back">
+                            {{ card.back }}
+                        </div>
+                    </div>
                 </div>
-                <button class="prev">Prev</button>
-                <button class="flip">Flip</button>
-                <button class="next">Next</button>
+                {% endfor %}
             </div>
-        </section>
+            <button class="prev">Prev</button>
+            <button class="flip">Flip</button>
+            <button class="next">Next</button>
+        </div>
+    </section>
 
-        <script>
-            let cards = [
-        {
-            front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            back: "HELLO"
-        },
-        {
-            front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            back: "HELLO"
-        },
-        {
-            front: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            back: "HELLO"
+    <script>
+        let currentCard = 1,
+            carousel = document.querySelector(".carousel"),
+            next = document.querySelector(".next"),
+            prev = document.querySelector(".prev"),
+            flip = document.querySelector(".flip");
+
+        renderCards();
+
+        function renderCards() {
+            // No need to render cards here since they are already rendered by Flask
         }
-    ];
 
-    let currentCard = 1,
-        carousel = document.querySelector(".carousel"),
-        next = document.querySelector(".next"),
-        prev = document.querySelector(".prev"),
-        flip = document.querySelector(".flip");
-
-    renderCards();
-
-    function renderCards() {
-        carousel.style.width = `${cards.length}00vw`;
-        cards.map(el => {
-            let div = document.createElement("div");
-            div.classList.add("card");
-            let front = document.createElement("div");
-            front.classList.add("front");
-            let back = document.createElement("div");
-            back.classList.add("back");
-            front.innerHTML = el.front;
-            back.textContent = el.back;
-            div.appendChild(front);
-            div.appendChild(back);
-            carousel.appendChild(div);
+        next.addEventListener("click", function(e) {
+            if (currentCard < document.querySelectorAll(".card-container").length) {
+                currentCard++;
+                cardFly();
+            }
         });
-    }
 
-    next.addEventListener("click", function(e) {
-        if (currentCard < cards.length) {
-            currentCard++;
-            cardFly();
+        prev.addEventListener("click", function(e) {
+            if (currentCard > 1) {
+                currentCard--;
+                cardFly();
+            }
+        });
+
+        flip.addEventListener("click", function (e) {
+            let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
+            if (currentCardElement) {
+                currentCardElement.classList.toggle("active");
+            }
+        });
+
+        function cardFly() {
+            carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
         }
-    });
-
-    prev.addEventListener("click", function(e) {
-        if (currentCard > 1) {
-            currentCard--;
-            cardFly();
-        }
-    });
-
-    flip.addEventListener("click", function (e) {
-        let currentCardElement = document.querySelector(".carousel .card:nth-child(" + currentCard + ")");
-        if (currentCardElement) {
-            currentCardElement.classList.toggle("active");
-        }
-    });
-
-    function cardFly() {
-        carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
-    }
-
-        </script>
-    </body>
+    </script>
+</body>
 </html>

@@ -25,9 +25,24 @@ def lessons():
     input = request.args.get('course', default=None)
     values = input.split()
     
+    cards = [
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO'
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO'
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO'
+        }
+    ]
+    
     # Your existing code for rendering the template
     html_code = flask.render_template('lessons.html', course=values[0], 
-        lesson_num = values[1])
+        lesson_num = values[1], cards = cards)
     response = flask.make_response(html_code)
     return response
 
