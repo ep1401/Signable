@@ -29,15 +29,48 @@ def lessons():
     cards = [
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO1'
+            'back': 'HELLO1',
+            'id': 1
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO2'
+            'back': 'HELLO2',
+            'id': 2
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO3'
+            'back': 'HELLO3',
+            'id': 3
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO4',
+            'id': 4
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO5',
+            'id': 5
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO6',
+            'id': 6
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO7',
+            'id': 7
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO8',
+            'id': 8
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO9',
+            'id': 9
         }
     ]
     
