@@ -95,6 +95,37 @@ def selectlessons():
 def get_shuffle():
     return send_file("shuffle.png")
 
+@app.route('/get_logo', methods=['GET'])
+def get_logo():
+    return send_file("logo.png")
+
+@app.route('/get_arrowleft', methods=['GET'])
+def get_arrowleft():
+    return send_file("arrowleft.png")
+
+@app.route('/get_arrowright', methods=['GET'])
+def get_arrowright():
+    return send_file("arrowright.png")
+
+@app.route('/get_flip', methods=['GET'])
+def get_flip():
+    return send_file("flip.png")
+
+@app.route('/get_full', methods=['GET'])
+def get_full():
+    return send_file("full.png")
+
+@app.route('/get_info', methods=['GET'])
+def get_info():
+    return send_file("info.png")
+
+@app.route('/get_mirror', methods=['GET'])
+def get_mirror():
+    return send_file("mirror.png")
+
+@app.route('/get_star', methods=['GET'])
+def get_star():
+    return send_file("star.png")
 
 if __name__ == '__main__':
     app.run(debug=True)

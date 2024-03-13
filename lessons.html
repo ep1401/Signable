@@ -14,7 +14,7 @@
             padding: 0;
         }
         header {
-            background-color: #B9D6DF;
+            background-color: #d6eaf0;
             font-family: 'Koh Santepheap';
             color: #000000;
             padding: 1vw;
@@ -52,7 +52,7 @@
         .carousel {
             display: flex;
             justify-content: flex-start;
-            transition: 1s;
+            transition: 0.4s;
         }
 
         .card-container {
@@ -108,8 +108,6 @@
         .prev,
         .next,
         .flip {
-            width: 10vw;
-            height: 4vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
             padding: 1vw;
@@ -131,14 +129,32 @@
             border-color: #ccc;
         }
 
-        .opp,
         .shuffle {
             width: 4vw;
             height: 4vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
             padding: 1vw;
-            margin: 1vw;
+            margin-right: 7vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .opp {
+            width: 4vw;
+            height: 4vw;
+            border: .1vw solid #ccc;
+            border-radius: 2vw;
+            padding: 1vw;
+            margin-left: 7vw;
             text-transform: uppercase;
             cursor: pointer;
             text-decoration: none;
@@ -156,6 +172,28 @@
             background-color: #ccc;
             border-color: #ccc;
         }
+
+        .quiz,
+        .mirror {
+            width: 4vw;
+            height: 4vw;
+            border: .1vw solid #ccc;
+            border-radius: 2vw;
+            padding: 1vw;
+            margin-left: 0vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        
 
         .shuffle-image {
             width: 1.5vw;
@@ -186,6 +224,93 @@
             border-color: #ccc;
         }
 
+        .star {
+            border: none;
+            border-radius: 80vw;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-left: -2.8vw;
+            margin-top: -2.8vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .info {
+            border: none;
+            border-radius: 80vw;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-right: -2.8vw;
+            margin-top: -2.8vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .full {
+            border: none;
+            border-radius: 80vw;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin-right: -2.8vw;
+            margin-bottom: -2.8vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .card-image {
+            width: 2.5vw;
+            height: 2.5vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .arrow-image {
+            width: 3vw;
+            height: 1.5vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .flip-image {
+            width: 1.5vw;
+            height: 1.5vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
     </style>
     <title>Signable - Flashcards for ASL Students</title>
 </head>
@@ -203,26 +328,57 @@
                 <div class="card-container">
                     <div class="card" id = "{{ card.id }}">
                         <div class="front">
+                            <button class="star">
+                                <img class="card-image" src="/get_star" 
+                                alt="Star">
+                            </button>
+                            <button class="info">
+                                <img class="card-image" src="/get_info" 
+                                alt="Info">
+                            </button>
                             {{ card.front | safe }}
                         </div>
                         <div class="back">
+                            <button class="star">
+                                <img class="card-image" src="/get_star" 
+                                alt="Star">
+                            </button>
+                            <button class="info">
+                                <img class="card-image" src="/get_info" 
+                                alt="Info">
+                            </button>
                             {{ card.back }}
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+
+            <button class="mirror">Mir</button>
+
             <button class="shuffle" onclick="shuffleCards()">
                 <img class="shuffle-image" src="/get_shuffle" 
                 alt="Shuffle">
             </button>
 
 
-            <button class="prev">Prev</button>
-            <button class="flip">Flip</button>
-            <button class="next">Next</button>
+            <button class="prev">
+                <img class="arrow-image" src="/get_arrowleft" 
+                alt="Prev">
+            </button>
+            <button class="flip">
+                <img class="flip-image" src="/get_flip" 
+                alt="Flip">
+            </button>
+            <button class="next">
+                <img class="arrow-image" src="/get_arrowright" 
+                alt="Next">
+            </button>
 
             <button class="opp">Opp</button>
+            <button class="quiz">Qui</button>
+
+            <h2>Select a term:</h2>
         </div>
 
         {% for card in cards %}
@@ -263,6 +419,7 @@
         opp.addEventListener("click", function(e) {
             let currentCardElements = document.querySelectorAll(".card-container");
             currentCardElements.forEach(cardContainer => {
+                cardContainer.querySelector(".card").style.transitionDuration='0s';
                 cardContainer.querySelector(".card").classList.toggle("active");
             });
             
@@ -273,6 +430,7 @@
 
     
         next.addEventListener("click", function(e) {
+            resetSpeed();
             if (currentCard < document.querySelectorAll(".card-container").length) {
                 resetCards();
                 currentCard++;
@@ -281,6 +439,7 @@
         });
     
         prev.addEventListener("click", function(e) {
+            resetSpeed();
             if (currentCard > 1) {
                 resetCards();
                 currentCard--;
@@ -289,6 +448,7 @@
         });
     
         flip.addEventListener("click", function (e) {
+            resetSpeed();
             let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
             if (currentCardElement) {
                 currentCardElement.classList.toggle("active");
@@ -301,6 +461,13 @@
             currentCard = 1; 
             cardFly();
         });
+
+        function resetSpeed() {
+            let currentCardElements = document.querySelectorAll(".card-container");
+            currentCardElements.forEach(cardContainer => {
+                cardContainer.querySelector(".card").style.transitionDuration='.4s';
+            });
+        }
     
         function cardFly() {
             carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
