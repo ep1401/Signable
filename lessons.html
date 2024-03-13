@@ -108,6 +108,7 @@
         .prev,
         .next,
         .flip {
+            height: 3.5vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
             padding: 1vw;
@@ -120,18 +121,11 @@
             font-size: 1vw;
             font-weight: bold;
             transition: 0.2s;
-        }
-
-        .prev:hover,
-        .next:hover,
-        .flip:hover {
-            background-color: #ccc;
-            border-color: #ccc;
+            position: relative;
         }
 
         .shuffle {
-            width: 4vw;
-            height: 4vw;
+            height: 3.5vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
             padding: 1vw;
@@ -146,11 +140,11 @@
             transition: 0.2s;
             justify-content: center; 
             align-items: center; 
+            position: relative;
         }
 
         .opp {
-            width: 4vw;
-            height: 4vw;
+            height: 3.5vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
             padding: 1vw;
@@ -165,22 +159,27 @@
             transition: 0.2s;
             justify-content: center; 
             align-items: center; 
+            position: relative;
         }
 
         .opp:hover,
-        .shuffle:hover {
+        .shuffle:hover,
+        .back-button:hover,
+        .mirror:hover,
+        .quiz:hover,
+        .prev:hover,
+        .next:hover,
+        .flip:hover {
             background-color: #ccc;
             border-color: #ccc;
         }
 
-        .quiz,
-        .mirror {
-            width: 4vw;
-            height: 4vw;
+        .mirror,
+        .quiz {
+            height: 3.5vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
             padding: 1vw;
-            margin-left: 0vw;
             text-transform: uppercase;
             cursor: pointer;
             text-decoration: none;
@@ -191,6 +190,7 @@
             transition: 0.2s;
             justify-content: center; 
             align-items: center; 
+            position: relative;
         }
 
         
@@ -217,11 +217,6 @@
             transition: 0.2s;
             justify-content: center; 
             align-items: center; 
-        }
-
-        .back-button:hover {
-            background-color: #ccc;
-            border-color: #ccc;
         }
 
         .star {
@@ -268,28 +263,6 @@
             align-items: center; 
         }
 
-        .full {
-            border: none;
-            border-radius: 80vw;
-            padding: 0vw;
-            margin: 0vw;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            margin-right: -2.8vw;
-            margin-bottom: -2.8vw;
-            text-transform: uppercase;
-            cursor: pointer;
-            text-decoration: none;
-            color: #222;
-            background-color: #F9F7E7;
-            font-size: 1vw;
-            font-weight: bold;
-            transition: 0.2s;
-            justify-content: center; 
-            align-items: center; 
-        }
-
         .card-image {
             width: 2.5vw;
             height: 2.5vw;
@@ -309,6 +282,144 @@
             height: 1.5vw;
             justify-content: center; 
             align-items: center; 
+        }
+
+        .shuffle::after {
+            content: "Shuffle Cards";
+            position: absolute;
+            top: calc(100% + .5vw);
+            left: 1.7vw;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 0.5em;
+            border-radius: 0.25em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none; 
+            text-transform: none;
+            font-size: .8vw;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .shuffle:hover::after {
+            opacity: 1;
+        }
+
+        .mirror::after {
+            content: "MirrorSign";
+            position: absolute;
+            top: calc(100% + .5vw);
+            left: 1.7vw;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 0.5em;
+            border-radius: 0.25em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none; 
+            text-transform: none;
+            font-size: .8vw;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .mirror:hover::after {
+            opacity: 1;
+        }
+
+        .opp::after {
+            content: "Toggle Front Size";
+            position: absolute;
+            top: calc(100% + .5vw);
+            left: 1.7vw;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 0.5em;
+            border-radius: 0.25em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none; 
+            text-transform: none;
+            font-size: .8vw;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .opp:hover::after {
+            opacity: 1;
+        }
+
+        .quiz::after {
+            content: "Quiz";
+            position: absolute;
+            top: calc(100% + .5vw);
+            left: 1.7vw;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 0.5em;
+            border-radius: 0.25em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none; 
+            text-transform: none;
+            font-size: .8vw;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .quiz:hover::after {
+            opacity: 1;
+        }
+
+        .info::after {
+            content: "Extra Info";
+            position: absolute;
+            top: calc(100% + .5vw);
+            left: 1vw;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 0.5em;
+            border-radius: 0.25em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none; 
+            text-transform: none;
+            font-size: .8vw;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .info:hover::after {
+            opacity: 1;
+        }
+
+        .star::after {
+            content: "Star Card";
+            position: absolute;
+            top: calc(100% + .5vw);
+            left: 1vw;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 0.5em;
+            border-radius: 0.25em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none; 
+            text-transform: none;
+            font-size: .8vw;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .star:hover::after {
+            opacity: 1;
         }
 
     </style>
@@ -354,8 +465,10 @@
                 {% endfor %}
             </div>
 
-            <button class="mirror">Mir</button>
-
+            <button class="mirror">
+                <img class="shuffle-image" src="/get_mirror" 
+                alt="Mir">
+            </button>
             <button class="shuffle" onclick="shuffleCards()">
                 <img class="shuffle-image" src="/get_shuffle" 
                 alt="Shuffle">
@@ -375,8 +488,14 @@
                 alt="Next">
             </button>
 
-            <button class="opp">Opp</button>
-            <button class="quiz">Qui</button>
+            <button class="opp">
+                <img class="shuffle-image" src="/get_mirror" 
+                alt="Opp">
+            </button>
+            <button class="quiz">
+                <img class="shuffle-image" src="/get_mirror" 
+                alt="Quiz">
+            </button>
 
             <h2>Select a term:</h2>
         </div>
@@ -463,7 +582,6 @@
         shuffleButton.addEventListener("click", function(e) {
             shuffleCards();
             resetCards();
-            currentCard = 1; 
             cardFly();
         });
 
