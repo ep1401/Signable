@@ -405,6 +405,11 @@
             button.addEventListener('click', function() {
                 resetCards();
 
+                let car = document.querySelectorAll(".carousel");
+                car.forEach(cardCar => {
+                    cardCar.style.transitionDuration='0s';
+                });
+
                 let currentCardElements = document.querySelectorAll(".card-container");
                 currentCardElements.forEach((cardContainer, index) => {
                     if (cardContainer.querySelector(".card").id == this.value) {
@@ -467,6 +472,11 @@
             currentCardElements.forEach(cardContainer => {
                 cardContainer.querySelector(".card").style.transitionDuration='.4s';
             });
+
+            let car = document.querySelectorAll(".carousel");
+                car.forEach(cardCar => {
+                    cardCar.style.transitionDuration='0.4s';
+                });
         }
     
         function cardFly() {
