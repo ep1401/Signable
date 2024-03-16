@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
+    <!-- Add FontAwesome library if it's not already included -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Koh Santepheap';
+            text-align: center;
+            background-color: #B9D6DF;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #B9D6DF;
+            font-family: 'Koh Santepheap';
+            color: #000000;
+            padding: 1vw;
+        }
+        section {
+            padding: 0vw;
+        }
+        footer {
+            background-color: #B9D6DF;
+            color: #000000;
+            padding: 1vw;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        * {
+            font-family: 'Koh Santepheap';
+            font-size: 2.2vw;
+        }
+
+        h1 {
+            font-size: 3vw;
+        }
+
+        h2 {
+            font-size: 2vw;
+        }
+          
+
+        body, div, p {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .wrapper {
+            max-width: 100vw;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .carousel {
+            display: flex;
+            justify-content: flex-start;
+            transition: 0.4s;
+        }
+
+        .card-container {
+            width: 100vw;
+            height: 40vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 40vw;
+            height: 30vw;
+            margin-right: 5vw;
+            margin-left: 5vw;
+            border: .1vw solid #ccc;
+            position: relative;
+            transition: 1s ease-out;
+            perspective: 150vw;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.5rem;
+            background-color: #F9F7E7;
+            border-radius: 2vw;
+            display: flex; /* Add display flex */
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+        }
+        
+
+        .card div {
+            position: absolute;
+            top: 4vw; 
+            left: 4vw;
+            right: 4vw; 
+            bottom: 4vw; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backface-visibility: hidden;
+            transition: 2s;
+            text-align: center;
+            background-color: #F9F7E7;
+        }
+
+        .back {
+            transform: rotateX(180deg);
+        }
+
+        .active {
+            transform: rotateX(180deg);
+        }
+          
+        .card video { 
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-playback { 
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .btn {
+            border-radius: 100%;
+            color: black;
+            display: flex;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+        }
+
+        .record-btn {
+            width: 2%;
+            height: 2%;
+            display: flex;
+            position: absolute;
+            margin-left: 38%;
+            margin-top: 62%;
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .stop-btn {
+            width: 2%;
+            height: 2%;
+            display: none;
+            position: absolute;
+            margin-left: 38%;
+            margin-top: 62%;
+            color: red;
+        }
+
+        .btn:hover {  
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+        .go-back-btn {
+            position: relative;
+            margin-top: -19%;
+            margin-left: -18%;
+            width: 2%;
+            height: 2%;
+            border-radius: 100%;
+            background-color: white;
+            display: none;
+            justify-content: center;
+            align-items: center;  
+        }
+
+        .prev,
+        .next,
+        .flip {
+            height: 3.5vw;
+            border: .1vw solid #ccc;
+            border-radius: 2vw;
+            padding: 1vw;
+            margin: 1vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .star {
+            border: none;
+            border-radius: 80vw;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-left: -2.8vw;
+            margin-top: -2.8vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .info-front,
+        .info-back {
+            border: none;
+            border-radius: 80vw;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-right: -2.8vw;
+            margin-top: -2.8vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #F9F7E7;
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .card-image {
+            width: 2.5vw;
+            height: 2.5vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .arrow-image {
+            width: 3vw;
+            height: 1.5vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .flip-image {
+            width: 1.5vw;
+            height: 1.5vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+
+        .toggle-cam-btn {
+            right: 20px;
+        }
+
+        .file-input-video {
+            display:none;
+        }
+    </style>
+    
+    <title>Signable - Courses</title>
+</head>
+<body>
+    <header>
+        <h1>Signable</h1>
+    </header>
+    <section>
+        <h2>Compare your sign with the Professor!</h2>
+    </section>
+    <div class="wrapper">
+        <div class="carousel" id="flashcard-carousel">
+            {% for card in cards %}
+            <div class="card-container">
+                <div class="card" id = "{{ card.id }}">
+                    <div class="back">
+                        <button class="star">
+                            <img class="card-image" src="/get_star" 
+                            alt="Star">
+                        </button>
+                        <button class="info-front" value = "{{ card.id }}">
+                            <img class="card-image" src="/get_info" 
+                            alt="Info">
+                        </button>
+                        {{ card.front | safe }}
+                    </div>
+                    <div class="front">
+                        <button class="star">
+                            <img class="card-image" src="/get_star" 
+                            alt="Star">
+                        </button>
+                        <button class="info-back" value = "{{ card.id }}">
+                            <img class="card-image" src="/get_info" 
+                            alt="Info">
+                        </button>
+                        {{ card.back }}
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="front">
+                        <video id="video-record-{{ card.id }}" class="video-record" autoplay playsinline muted></video>
+                        <video id="video-playback-{{ card.id }}" class="video-playback" controls></video>
+                        
+                        <div class="btn stop-btn" style="display: none;" onclick="onStreamStop('{{ card.id }}')"><i class="fas fa-stop"></i></div>
+                        <div class="btn record-btn" onclick="onStreamRecord('{{ card.id }}')"><i class="fas fa-video"></i></div>
+                        <div class="go-back-btn" style="display: none;" onClick="onBackClick('{{ card.id }}')"><i class="fas fa-arrow-left"></i></div>     
+                    </div>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+
+    <button class="prev">
+        <img class="arrow-image" src="/get_arrowleft" 
+        alt="Prev">
+    </button>
+    <button class="flip">
+        <img class="flip-image" src="/get_flip" 
+        alt="Flip">
+    </button>
+    <button class="next">
+        <img class="arrow-image" src="/get_arrowright" 
+        alt="Next">
+    </button>
+    
+
+    <!-- Include jQuery library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Include AWS SDK -->
+    <!-- Make sure to include the correct version of the AWS SDK -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1078.0.min.js"></script>
+    <script>
+        let s3;
+        let theStream;
+        let theRecorder;
+        let recordedChunks = [];
+        let blob = null;
+        let url = null;
+        let camera = 'front' // front, back
+        let allElements = '.video-record .video-playback .record-btn .go-back-btn .toggle-cam-btn .progress-btn .download-btn .upload-btn .stop-btn';
+        let config = {
+            bucket: 'video-upload-6052019',
+            region: 'us-east-1',
+            identityPoolId: 'us-east-1:0dce9491-45ec-4e98-9f36-cfc7cf7bc70e'
+        }
+        let currentCard = 1,
+            infofront = document.querySelector(".info-front"),
+            infoback = document.querySelector(".info-back"),
+            carousel = document.querySelector(".carousel"),
+            next = document.querySelector(".next"),
+            prev = document.querySelector(".prev"),
+            flip = document.querySelector(".flip"),
+            backButtons = document.querySelectorAll('.back-button');
+
+        let bool = false;
+        let stopped = false;
+        let recording = false;
+        let id = 0;
+
+
+        backButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                resetCards();
+
+                let car = document.querySelectorAll(".carousel");
+                car.forEach(cardCar => {
+                    cardCar.style.transitionDuration='0s';
+                });
+
+                let currentCardElements = document.querySelectorAll(".card-container");
+                currentCardElements.forEach((cardContainer, index) => {
+                    if (cardContainer.querySelector(".card").id == this.value) {
+                        currentCard = index + 1;
+                    }
+                });
+        
+                cardFly(); 
+            });
+        });
+    
+        next.addEventListener("click", function(e) {
+            if (stopped){
+                stopped = false;
+                showElements('.video-record .record-btn');  
+                getStream();
+            } 
+
+            if (recording) {
+                onStreamStop(id);
+                return;
+            }
+            
+            resetSpeed();
+            if (currentCard < document.querySelectorAll(".card-container").length) {
+                resetCards();
+                currentCard++;
+                cardFly();
+            }
+        });
+    
+        prev.addEventListener("click", function(e) {
+            if (stopped){
+                stopped = false;
+                showElements('.video-record .record-btn');  
+                getStream();
+            }
+
+            if (recording) {
+                onStreamStop(id);
+                return;
+            }
+
+            resetSpeed();
+            if (currentCard > 1) {
+                resetCards();
+                currentCard--;
+                cardFly();
+            }
+        });
+    
+        flip.addEventListener("click", function (e) {
+            resetSpeed();
+            let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
+            if (currentCardElement) {
+                currentCardElement.classList.toggle("active");
+            }
+        });
+
+        document.querySelectorAll('.info-back').forEach(infoBackButton => {
+            infoBackButton.addEventListener('click', function() {
+                // Extract the ID of the current card
+                let currentCardId = infoBackButton.closest('.card-container').querySelector('.card').back;
+        
+                // Retrieve extra information for the current card (assuming you have a way to obtain it)
+                let extraInfo = "heeeee\n\nasdf\n\n"; // Replace this with the method to retrieve extra information based on the currentCardId
+        
+                // Create a modal to display the extra information
+                var modal = document.createElement("div");
+                modal.classList.add("modal");
+        
+                // Display the extra information in the modal
+                var extraInfoContent = document.createElement("p");
+                extraInfoContent.textContent = extraInfo;
+                modal.appendChild(extraInfoContent);
+        
+                // Create a close button for the modal
+                var closeButton = document.createElement("button");
+                closeButton.textContent = "Close";
+                closeButton.classList.add("close-button");
+                closeButton.addEventListener("click", function() {
+                    modal.style.display = "none";
+                });
+        
+                // Append the close button to the modal
+                modal.appendChild(closeButton);
+        
+                // Append the modal to the body
+                document.body.appendChild(modal);
+            });
+        });
+
+        function resetSpeed() {
+            let currentCardElements = document.querySelectorAll(".card-container");
+            currentCardElements.forEach(cardContainer => {
+                cardContainer.querySelector(".card").style.transitionDuration='.4s';
+            });
+
+            let car = document.querySelectorAll(".carousel");
+                car.forEach(cardCar => {
+                    cardCar.style.transitionDuration='0.4s';
+                });
+        }
+    
+        function cardFly() {
+            carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
+        }
+    
+        function resetCards() {
+            let cards = document.querySelectorAll(".card-container .card");
+            cards.forEach(card => {
+                if (bool) {
+                    card.classList.add("active"); 
+                }
+                else card.classList.remove("active");
+            });
+        }
+
+        function displayCard(cardnumber) {
+            currentCard = cardnumber;
+            cardFly();
+        }
+
+        $(function(){
+            // Initialise Bucket
+            setupBucket();
+
+            // Get stream
+            getStream();
+        });
+
+        
+
+        /**
+        * Event Handlers
+        */
+        
+        function onBackClick() {
+            stopped = false;
+            recording = false;
+            showElements('.video-record .record-btn');  
+            getStream();
+        }
+
+        function onStreamRecord(cardId) {
+            recording = true;
+            id = cardId;
+            showElements(`#video-record-${cardId} .stop-btn`);
+            recordedChunks = [];
+        
+            try {
+                theRecorder = new MediaRecorder(theStream, { mimeType: "video/webm" });
+            } catch (e) {
+                console.error('Exception while creating MediaRecorder: ' + e);
+                return;
+            }
+            
+            console.log('MediaRecorder created');
+            theRecorder.ondataavailable = function(event) {
+                recorderOnDataAvailable(event, cardId);
+            };
+            theRecorder.start(100);
+        }
+        
+        function onStreamStop(cardId) {
+            stopped = true;
+            recording = false;
+            showElements(`#video-playback-${cardId} .go-back-btn`);
+        
+            console.log('Saving data');
+            theRecorder.stop();
+            stopAllMediaTracks();
+        
+            blob = new Blob(recordedChunks, { type: "video/webm" });
+            url = (window.URL || window.webkitURL).createObjectURL(blob);
+        
+            var mediaControl = document.getElementById(`video-playback-${cardId}`);
+            mediaControl.src = url;
+        }
+
+
+
+        /**
+        * Helpers
+        */
+        function setupBucket() {
+            var albumBucketName = config.bucket;
+            var bucketRegion = config.region;
+            var IdentityPoolId = config.identityPoolId;
+
+            AWS.config.update({
+                region: bucketRegion,
+                credentials: new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: IdentityPoolId
+                })
+            });
+
+            s3 = new AWS.S3({
+                apiVersion: '2006-03-01',
+                params: {Bucket: albumBucketName}
+            });
+        }
+
+        function recorderOnDataAvailable (event) {
+            if (event.data.size == 0) return;
+            console.log('ondataavailable, type: ' + event.data.type);
+            recordedChunks.push(event.data);
+        }
+
+        function getUserMedia(options, successCallback, failureCallback) {
+            navigator.mediaDevices.getUserMedia(options).then(successCallback, failureCallback);
+        }
+
+        function getStream() {
+            var facingMode = camera === 'front' ? { facingMode: "user" } : { facingMode: "environment" };
+            var constraints = {video: facingMode, audio: true};
+            
+            // Loop through each card to get the corresponding video-record element
+            document.querySelectorAll('.video-record').forEach(videoRecord => {
+                getUserMedia(constraints, function (stream) {
+                    var mediaControl = videoRecord;
+                    if (navigator.mozGetUserMedia) {
+                        mediaControl.mozSrcObject = stream;
+                    } else {
+                        mediaControl.srcObject = stream;
+                    }
+        
+                    theStream = stream;
+                }, function (err) {
+                    alert('Error: ' + err);
+                });
+            });
+        }
+
+        function showElements(elements) {
+            hideElements(allElements);
+
+            elements.split(" ").forEach(e => {
+                $(e).css({
+                    'display': 'flex'
+                });
+            });
+        }
+
+        function hideElements(elements) {
+            elements.split(" ").forEach(e => {
+                $(e).css({
+                    'display': 'none'
+                });
+            });
+        }
+
+        function stopAllMediaTracks() {
+            theStream.getTracks().forEach(track => track.stop());
+        }
+        
+    </script>
+</body>
+</html>

@@ -69,17 +69,17 @@
             width: 60vw;
             height: 40vw;
             border: .1vw solid #ccc;
-            margin: 4vw auto; /* Use auto for left and right margins to center the card horizontally */
+            margin: 4vw auto; 
             position: relative;
             transition: 1s ease-out;
-            perspective: 150vw; /* Adjust the perspective value */
+            perspective: 150vw; 
             transform-style: preserve-3d;
             cursor: pointer;
             font-weight: bold;
             font-size: 1.5rem;
             background-color: #F9F7E7;
             border-color: #F9F7E7;
-            border-radius: 2vw; /* Adjust the value based on your preference for the curve */
+            border-radius: 2vw; 
         }
 
         .back {
@@ -241,7 +241,8 @@
             align-items: center; 
         }
 
-        .info {
+        .info-front,
+        .info-back {
             border: none;
             border-radius: 80vw;
             padding: 0vw;
@@ -376,7 +377,8 @@
             opacity: 1;
         }
 
-        .info::after {
+        .info-front::after,
+        .info-back::after {
             content: "Extra Info";
             position: absolute;
             top: calc(100% + .5vw);
@@ -395,7 +397,8 @@
             white-space: nowrap;
         }
         
-        .info:hover::after {
+        .info-front:hover::after,
+        .info-back:hover::after {
             opacity: 1;
         }
 
@@ -422,6 +425,40 @@
             opacity: 1;
         }
 
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            width: 30vw;
+            height: 45vh;
+            border: .1vw solid black;
+            z-index: 9999;
+            padding: 2vw;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+            max-height: 80vh; 
+            overflow-y: scroll;
+            max-height: 80vh; 
+            overflow-wrap: break-word; 
+            white-space: normal;
+            border-radius: 1vw;
+            box-sizing: border-box;
+            font-family: 'Koh Santepheap';
+            font-size: .1vw;
+        }
+        
+    
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
     </style>
     <title>Signable - Flashcards for ASL Students</title>
 </head>
@@ -437,13 +474,14 @@
             <div class="carousel" id="flashcard-carousel">
                 {% for card in cards %}
                 <div class="card-container">
-                    <div class="card" id = "{{ card.id }}">
+                    <div class="card" id = "{{ card.id }}" mem = "{{ card.mem }}" 
+                    speach = "{{ card.speach }}" sentence = "{{ card.sentence }}">
                         <div class="front">
                             <button class="star">
                                 <img class="card-image" src="/get_star" 
                                 alt="Star">
                             </button>
-                            <button class="info">
+                            <button class="info-back" value = "{{ card.id }}">
                                 <img class="card-image" src="/get_info" 
                                 alt="Info">
                             </button>
@@ -454,7 +492,7 @@
                                 <img class="card-image" src="/get_star" 
                                 alt="Star">
                             </button>
-                            <button class="info">
+                            <button class="info-back" value = "{{ card.id }}">
                                 <img class="card-image" src="/get_info" 
                                 alt="Info">
                             </button>
@@ -465,10 +503,12 @@
                 {% endfor %}
             </div>
 
-            <button class="mirror">
-                <img class="shuffle-image" src="/get_mirror" 
-                alt="Mir">
-            </button>
+            <form method="GET" action="/mirrorsign" style="display: inline;">
+                <button class="mirror">
+                    <img class="shuffle-image" src="/get_mirror" 
+                    alt="Mir">
+                </button>
+            </form>
             <button class="shuffle" onclick="shuffleCards()">
                 <img class="shuffle-image" src="/get_shuffle" 
                 alt="Shuffle">
@@ -509,6 +549,8 @@
 
     <script>
         let currentCard = 1,
+            infofront = document.querySelector(".info-front"),
+            infoback = document.querySelector(".info-back"),
             carousel = document.querySelector(".carousel"),
             next = document.querySelector(".next"),
             prev = document.querySelector(".prev"),
@@ -578,12 +620,86 @@
                 currentCardElement.classList.toggle("active");
             }
         });
+
+        document.querySelectorAll('.info-back').forEach(infoBackButton => {
+            infoBackButton.addEventListener('click', function() {
+
+                let currentCardElements = document.querySelectorAll(".card-container");
+                currentCardElements.forEach((cardContainer, index) => {
+                    if (cardContainer.querySelector(".card").id == this.value) {
+                        createinfo(cardContainer.querySelector(".card"));
+                    }
+                });
+            });
+        });
+        
     
         shuffleButton.addEventListener("click", function(e) {
             shuffleCards();
             resetCards();
             cardFly();
         });
+
+        function createinfo(card){
+            disableButtons();
+        
+            let extraInfo = "Term: " + card.querySelector('.back').textContent;; // Get the text content of the back of the card
+        
+            var modal = document.createElement("div");
+            modal.classList.add("modal");
+        
+            var extraInfoContent = document.createElement("p");
+            extraInfoContent.textContent = extraInfo;
+            extraInfoContent.style.fontSize = "3vw";
+            extraInfoContent.style.textAlign = "left";
+            modal.appendChild(extraInfoContent);
+
+            var extraInfoContent = document.createElement("p");
+            extraInfo = "Memory aid: " + card.getAttribute('mem');
+            extraInfoContent.textContent = extraInfo;
+            extraInfoContent.style.fontSize = "1vw";
+            extraInfoContent.style.textAlign = "left";
+            modal.appendChild(extraInfoContent);
+            
+            var extraInfoContent = document.createElement("p");
+            extraInfo = "Part of Speach: " + card.getAttribute('speach');
+            extraInfoContent.textContent = extraInfo;
+            extraInfoContent.style.fontSize = "1vw";
+            extraInfoContent.style.textAlign = "left";
+            modal.appendChild(extraInfoContent);
+
+            var extraInfoContent = document.createElement("p");
+            extraInfo = "Example Sentence: " + card.getAttribute('sentence');
+            extraInfoContent.textContent = extraInfo;
+            extraInfoContent.style.fontSize = "1vw";
+            extraInfoContent.style.textAlign = "left";
+            modal.appendChild(extraInfoContent);
+        
+            var closeButton = document.createElement("button");
+            closeButton.textContent = "Close";
+            closeButton.classList.add("close-button");
+            closeButton.addEventListener("click", function() {
+                enableButtons();
+                modal.style.display = "none";
+            });
+        
+            modal.appendChild(closeButton);
+        
+            document.body.appendChild(modal);
+        }
+        
+
+        function disableButtons() {
+            document.querySelectorAll('button').forEach(button => {
+                button.disabled = true;
+            });
+        }
+
+        function enableButtons() {
+            document.querySelectorAll('button').forEach(button => {
+                button.disabled = false;
+            });
+        }
 
         function resetSpeed() {
             let currentCardElements = document.querySelectorAll(".card-container");

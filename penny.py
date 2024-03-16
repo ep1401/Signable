@@ -30,47 +30,74 @@ def lessons():
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO1',
-            'id': 1
+            'id': 1,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO2',
-            'id': 2
+            'id': 2,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO3',
-            'id': 3
+            'id': 3,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO4',
-            'id': 4
+            'id': 4,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO5',
-            'id': 5
+            'id': 5,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO6',
-            'id': 6
+            'id': 6,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO7',
-            'id': 7
+            'id': 7,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO8',
-            'id': 8
+            'id': 8,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         },
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO9',
-            'id': 9
+            'id': 9,
+            'mem': "Think of a salute",
+            'speach': "noun",
+            'sentence': "When I walked in he told me hello"
         }
     ]
     
@@ -126,6 +153,60 @@ def get_mirror():
 @app.route('/get_star', methods=['GET'])
 def get_star():
     return send_file("star.png")
+
+@app.route('/mirrorsign', methods=['GET'])
+def mirrorsign():   
+    # Your existing code for rendering the template
+    cards = [
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO1',
+            'id': 1
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO2',
+            'id': 2
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO3',
+            'id': 3
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO4',
+            'id': 4
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO5',
+            'id': 5
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO6',
+            'id': 6
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO7',
+            'id': 7
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO8',
+            'id': 8
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO9',
+            'id': 9
+        }
+    ]
+    html_code = flask.render_template('mirrorsign.html', cards = cards)
+    response = flask.make_response(html_code)
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
