@@ -402,6 +402,11 @@
             opacity: 1;
         }
 
+        .card.back .star,
+        .card.back .info-back {
+            display: none;
+        }
+
         .star::after {
             content: "Star Card";
             position: absolute;
@@ -476,28 +481,28 @@
                 <div class="card-container">
                     <div class="card" id = "{{ card.id }}" mem = "{{ card.mem }}" 
                     speach = "{{ card.speach }}" sentence = "{{ card.sentence }}">
-                        <div class="front">
-                            <button class="star">
-                                <img class="card-image" src="/get_star" 
-                                alt="Star">
-                            </button>
-                            <button class="info-back" value = "{{ card.id }}">
-                                <img class="card-image" src="/get_info" 
-                                alt="Info">
-                            </button>
-                            {{ card.front | safe }}
-                        </div>
-                        <div class="back">
-                            <button class="star">
-                                <img class="card-image" src="/get_star" 
-                                alt="Star">
-                            </button>
-                            <button class="info-back" value = "{{ card.id }}">
-                                <img class="card-image" src="/get_info" 
-                                alt="Info">
-                            </button>
-                            {{ card.back | safe}}
-                        </div>
+                    <div class="front">
+                        <button class="star">
+                            <img class="card-image" src="/get_star" 
+                            alt="Star">
+                        </button>
+                        <button class="info-back" value = "{{ card.id }}">
+                            <img class="card-image" src="/get_info" 
+                            alt="Info">
+                        </button>
+                        {{ card.front | safe }}
+                    </div>
+                    <div class="back">
+                        <button class="star">
+                            <img class="card-image" src="/get_star" 
+                            alt="Star">
+                        </button>
+                        <button class="info-back" value = "{{ card.id }}">
+                            <img class="card-image" src="/get_info" 
+                            alt="Info">
+                        </button>
+                        {{ card.back | safe}}
+                    </div>
                     </div>
                 </div>
                 {% endfor %}
