@@ -629,14 +629,6 @@
             let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
             if (currentCardElement) {
                 currentCardElement.classList.toggle("active");
-                
-                // Set transition duration to 0 for all buttons
-                let allButtons = document.querySelectorAll('button');
-
-                // Iterate over each button and set transition duration to 0
-                allButtons.forEach(button => {
-                    button.style.transitionDuration = '0s';
-                });
             }
         });
 
