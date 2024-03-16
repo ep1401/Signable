@@ -402,8 +402,7 @@
             opacity: 1;
         }
 
-        .card-container .card.back .star,
-        .card-container .card.back .info-back {
+        .card.active .back .star-front .info-front {
             display: none;
         }
 
@@ -482,22 +481,22 @@
                     <div class="card" id = "{{ card.id }}" mem = "{{ card.mem }}" 
                     speach = "{{ card.speach }}" sentence = "{{ card.sentence }}">
                     <div class="front">
-                        <button class="star">
+                        <button class="star star-front">
                             <img class="card-image" src="/get_star" 
                             alt="Star">
                         </button>
-                        <button class="info-back" value = "{{ card.id }}">
+                        <button class="info info-front" value = "{{ card.id }}">
                             <img class="card-image" src="/get_info" 
                             alt="Info">
                         </button>
                         {{ card.front | safe }}
                     </div>
                     <div class="back">
-                        <button class="star">
+                        <button class="star star-back">
                             <img class="card-image" src="/get_star" 
                             alt="Star">
                         </button>
-                        <button class="info-back" value = "{{ card.id }}">
+                        <button class="info info-back" value = "{{ card.id }}">
                             <img class="card-image" src="/get_info" 
                             alt="Info">
                         </button>
