@@ -629,9 +629,9 @@
             let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
             if (currentCardElement) {
                 currentCardElement.classList.toggle("active");
-        
+                
                 // Set transition duration to 0 for all buttons
-                allButtons.forEach(button => {
+                document.querySelectorAll('info').forEach(button => {
                     button.style.transitionDuration = '0s';
                 });
             }
