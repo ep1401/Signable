@@ -402,12 +402,14 @@
             opacity: 1;
         }
 
-        .card.active .back .star-front {
-            display: none;
+        .card.flip .star-front,
+        .card.flip .info-front {
+            display: none; /* Hide buttons on the front side when card is flipped */
         }
 
-        .card.active .back .info-front {
-            display: none;
+        .card.flip .star-back,
+        .card.flip .info-back {
+            display: block; /* Show buttons on the back side when card is flipped */
         }
 
         .star::after {
