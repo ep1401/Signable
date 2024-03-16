@@ -631,8 +631,11 @@
                 currentCardElement.classList.toggle("active");
                 
                 // Set transition duration to 0 for all buttons
-                document.querySelectorAll('info').forEach(button => {
-                    button.style.transitionDuration = '5s';
+                let allButtons = document.querySelectorAll('button');
+
+                // Iterate over each button and set transition duration to 0
+                allButtons.forEach(button => {
+                    button.style.transitionDuration = '0s';
                 });
             }
         });
