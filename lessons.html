@@ -402,7 +402,11 @@
             opacity: 1;
         }
 
-        .card.active .back .star-front .info-front {
+        .card.active .back .star-front {
+            display: none;
+        }
+
+        .card.active .back .info-front {
             display: none;
         }
 
@@ -553,8 +557,7 @@
 
     <script>
         let currentCard = 1,
-            infofront = document.querySelector(".info-front"),
-            infoback = document.querySelector(".info-back"),
+            infoback = document.querySelector(".info"),
             carousel = document.querySelector(".carousel"),
             next = document.querySelector(".next"),
             prev = document.querySelector(".prev"),
@@ -625,7 +628,7 @@
             }
         });
 
-        document.querySelectorAll('.info-back').forEach(infoBackButton => {
+        document.querySelectorAll('.info').forEach(infoBackButton => {
             infoBackButton.addEventListener('click', function() {
 
                 let currentCardElements = document.querySelectorAll(".card-container");
