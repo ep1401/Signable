@@ -82,6 +82,11 @@
             border-radius: 2vw; 
         }
 
+
+        .card.active .front button {
+            visibility: hidden; /* Make buttons visible when card is flipped */
+        }
+
         .back {
             transform: rotateX(180deg);
         }
@@ -400,16 +405,6 @@
         .info-front:hover::after,
         .info-back:hover::after {
             opacity: 1;
-        }
-
-        .card.flip .star-front,
-        .card.flip .info-front {
-            display: none; /* Hide buttons on the front side when card is flipped */
-        }
-
-        .card.flip .star-back,
-        .card.flip .info-back {
-            display: block; /* Show buttons on the back side when card is flipped */
         }
 
         .star::after {
