@@ -565,6 +565,13 @@
 
         let bool = false;
 
+        let allButtons = document.querySelectorAll('button');
+
+        // Iterate over each button and set transition duration to 0
+        allButtons.forEach(button => {
+            button.style.transitionDuration = '0s';
+        });
+
 
         backButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -622,12 +629,6 @@
             let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
             if (currentCardElement) {
                 currentCardElement.classList.toggle("active");
-        
-                // Adjust the transition duration for hiding buttons
-                let frontButton = currentCardElement.querySelector('.front button');
-                if (frontButton) {
-                    frontButton.style.transitionDuration = '0s'; // Change transition duration here
-                }
             }
         });
 
