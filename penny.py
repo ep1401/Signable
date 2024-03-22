@@ -219,11 +219,12 @@ def mirrorsign():
     # Your existing code for rendering the template
 
     input = request.args.get('mirror', default=None)
+    values = input.split()
     course = values[0]
     courseid = int(course[3:6])
     lessonid = values[1]
 
-    # query_result = dbconnect.get_flashcards(courseid, lessonid)
+    query_result = dbconnect.get_flashcards(courseid, lessonid)
     if True is True:
         flashcards = query_result[1]
         html_code = flask.render_template('mirrorsign.html', flashcards = cards)
