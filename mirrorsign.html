@@ -313,10 +313,10 @@
                     <div class="front">
                         <video id="video-record-{{ flashcard['cardid'] }}" class="video-record" autoplay playsinline muted></video>
                         <video id="video-playback-{{ flashcard['cardid'] }}" class="video-playback" controls></video>
-                        
-                        <div class="btn stop-btn" style="display: none;" onclick="onStreamStop('{{ flashcard[\'cardid\']}}')"><i class="fas fa-stop"></i></div>
-                        <div class="btn record-btn" onclick="onStreamRecord('{{ flashcard[\'cardid\'] }}')"><i class="fas fa-video"></i></div>
-                        <div class="go-back-btn" style="display: none;" onClick="onBackClick('{{ flashcard[\'cardid\'] }}')"><i class="fas fa-arrow-left"></i></div>     
+                        {% set cardid = flashcard['cardid'] %}
+                        <div class="btn stop-btn" style="display: none;" onclick="onStreamStop('{{ cardid }}')"><i class="fas fa-stop"></i></div>
+                        <div class="btn record-btn" onclick="onStreamRecord('{{ cardid }}')"><i class="fas fa-video"></i></div>
+                        <div class="go-back-btn" style="display: none;" onClick="onBackClick('{{ cardid }}')"><i class="fas fa-arrow-left"></i></div>     
                     </div>
             </div>
             </div>
