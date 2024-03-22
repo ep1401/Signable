@@ -282,30 +282,30 @@
     </section>
     <div class="wrapper">
         <div class="carousel" id="flashcard-carousel">
-            {% for card in cards %}
+            {% for flashcard in flashcards %}
             <div class="card-container">
-                <div class="card" id = "{{ card.id }}">
+                <div class="card" id = "{{ flashcard['cardid'] }}">
                     <div class="back">
                         <button class="star">
                             <img class="card-image" src="/get_star" 
                             alt="Star">
                         </button>
-                        <button class="info-front" value = "{{ card.id }}">
+                        <button class="info-front" value = "{{ flashcard['cardid'] }}">
                             <img class="card-image" src="/get_info" 
                             alt="Info">
                         </button>
-                        {{ card.front | safe }}
+                        {{ flashcard['translation'] | safe}}
                     </div>
                     <div class="front">
                         <button class="star">
                             <img class="card-image" src="/get_star" 
                             alt="Star">
                         </button>
-                        <button class="info-back" value = "{{ card.id }}">
+                        <button class="info-back" value = "{{ flashcard['cardid'] }}">
                             <img class="card-image" src="/get_info" 
                             alt="Info">
                         </button>
-                        {{ card.back }}
+                        <iframe width="100%" height="100%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="card">

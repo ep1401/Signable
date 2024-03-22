@@ -93,6 +93,53 @@ cards = [
         }
     ]
 
+flash_cards = [
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO1',
+            'id': 1
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO2',
+            'id': 2
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO3',
+            'id': 3
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO4',
+            'id': 4
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO5',
+            'id': 5
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO6',
+            'id': 6
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO7',
+            'id': 7
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO8',
+            'id': 8
+        },
+        {
+            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
+            'back': 'HELLO9',
+            'id': 9
+        }
+    ]
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
@@ -170,56 +217,26 @@ def get_star():
 @app.route('/mirrorsign', methods=['GET'])
 def mirrorsign():   
     # Your existing code for rendering the template
-    cards = [
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO1',
-            'id': 1
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO2',
-            'id': 2
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO3',
-            'id': 3
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO4',
-            'id': 4
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO5',
-            'id': 5
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO6',
-            'id': 6
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO7',
-            'id': 7
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO8',
-            'id': 8
-        },
-        {
-            'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
-            'back': 'HELLO9',
-            'id': 9
-        }
-    ]
-    html_code = flask.render_template('mirrorsign.html', cards = cards)
+
+    input = request.args.get('mirror', default=None)
+    values = input.split()
+    course = values[0]
+    courseid = int(course[3:6])
+    lessonid = values[1]
+
+    query_result = dbconnect.get_flashcards(courseid, lessonid)
+    if query_result[0] is True:
+        flashcards = query_result[1]
+        html_code = flask.render_template('mirrorsign.html', flashcards = flashcards)
+    else: 
+        html_code = flask.render_template('index.html')
+    
+    
     response = flask.make_response(html_code)
     return response
+   
+    
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
