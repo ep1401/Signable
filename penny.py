@@ -105,7 +105,7 @@ def lessons():
     input = request.args.get('course', default=None)
     values = input.split()
     course = values[0]
-    courseid = int(course[2:6])
+    courseid = int(course[3:6])
     lessonid = values[1]
 
     query_result = dbconnect.get_flashcards(courseid, lessonid)
