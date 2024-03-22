@@ -84,13 +84,6 @@ def mirrorsign():
     return response
    
     
-@app.route('/logoutapp', methods=['GET'])
-def logoutapp():
-    return auth.logoutapp()
-
-@app.route('/logoutcas', methods=['GET'])
-def logoutcas():
-    return auth.logoutcas()
 
 if __name__ == '__main__':
     app.run(debug=True)
