@@ -483,22 +483,22 @@
                     speach = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                     <div class="front">
                         <button class="star star-front">
-                            <img class="card-image" src="/get_star" 
+                            <img class="card-image" src="/images/star.png" 
                             alt="Star">
                         </button>
                         <button class="info info-front" value = "{{ flashcard['cardid'] }}">
-                            <img class="card-image" src="/get_info" 
+                            <img class="card-image" src="/images/info.png" 
                             alt="Info">
                         </button>
                         <iframe width="100%" height="100%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="back">
                         <button class="star star-back">
-                            <img class="card-image" src="/get_star" 
+                            <img class="card-image" src="/images/star.png" 
                             alt="Star">
                         </button>
                         <button class="info info-back" value = "{{ flashcard['cardid'] }}">
-                            <img class="card-image" src="/get_info" 
+                            <img class="card-image" src="/images/info.png" 
                             alt="Info">
                         </button>
                         {{ flashcard['translation'] | safe}}
@@ -510,35 +510,35 @@
 
             <form method="GET" action="/mirrorsign" style="display: inline;">
                 <button type="submit" class="mirror" name ="mirror" value="{{ course }} {{ lesson_num }}">
-                    <img class="shuffle-image" src="/get_mirror" 
+                    <img class="shuffle-image" src="/images/mirror.png" 
                     alt="Mir">
                 </button>
             </form>
             <button class="shuffle" onclick="shuffleCards()">
-                <img class="shuffle-image" src="/get_shuffle" 
+                <img class="shuffle-image" src="/images/shuffle.png" 
                 alt="Shuffle">
             </button>
 
 
             <button class="prev">
-                <img class="arrow-image" src="/get_arrowleft" 
+                <img class="arrow-image" src="/images/arrowleft.png" 
                 alt="Prev">
             </button>
             <button class="flip">
-                <img class="flip-image" src="/get_flip" 
+                <img class="flip-image" src="/images/flip.png" 
                 alt="Flip">
             </button>
             <button class="next">
-                <img class="arrow-image" src="/get_arrowright" 
+                <img class="arrow-image" src="/images/arrowright.png" 
                 alt="Next">
             </button>
 
             <button class="opp">
-                <img class="shuffle-image" src="/get_mirror" 
+                <img class="shuffle-image" src="/images/mirror.png" 
                 alt="Opp">
             </button>
             <button class="quiz">
-                <img class="shuffle-image" src="/get_mirror" 
+                <img class="shuffle-image" src="/images/mirror.png" 
                 alt="Quiz">
             </button>
 

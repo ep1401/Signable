@@ -595,7 +595,7 @@
         }
 
         function getStream() {
-            var facingMode = camera === 'back' ? { facingMode: "user" } : { facingMode: "environment" };
+            var facingMode = camera === 'front' ? { facingMode: "user" } : { facingMode: "environment" };
             var constraints = {video: facingMode, audio: true};
             
             // Loop through each card to get the corresponding video-record element
