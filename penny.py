@@ -29,7 +29,6 @@ def index():
 
 @app.route('/lessons', methods=['GET'])
 def lessons():
-    auth.authenticate()
     input = request.args.get('course', default=None)
     values = input.split()
     course = values[0]
@@ -51,7 +50,7 @@ def lessons():
 
 @app.route('/selectlessons', methods=['GET'])
 def selectlessons():
-    auth.authenticate()
+    
     course = request.args.get('course', default=None)
     
     # Your existing code for rendering the template
@@ -65,7 +64,7 @@ def selectlessons():
 @app.route('/mirrorsign', methods=['GET'])
 def mirrorsign():   
     # Your existing code for rendering the template
-    auth.authenticate()
+   
     input = request.args.get('mirror', default=None)
     values = input.split()
     course = values[0]
