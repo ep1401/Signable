@@ -112,7 +112,7 @@ def lessons():
     if query_result[0] is True:
         flashcards = query_result[1]
         html_code = flask.render_template('lessons.html', course=course, 
-        lesson_num = lessonid, flashcardscards = flashcards)
+        lesson_num = lessonid, flashcards = flashcards)
     else: 
         html_code = flask.render_template('index.html')
     
