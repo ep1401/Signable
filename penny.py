@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 
 import flask
+import os
 from flask import request
 from flask import send_file
+import dbconnect
+
+
 
 app = flask.Flask(__name__, template_folder='.')
+_DATABASE_URL = os.environ['DATABASE_URL']
 
 course_lessonsnum = {
     'ASL101': 14,
@@ -13,20 +18,7 @@ course_lessonsnum = {
     'ASL107': 9
 }
 
-
-@app.route('/', methods=['GET'])
-@app.route('/index', methods=['GET'])
-def index():
-    html_code = flask.render_template('index.html')
-    response = flask.make_response(html_code)
-    return response
-
-@app.route('/lessons', methods=['GET'])
-def lessons():
-    input = request.args.get('course', default=None)
-    values = input.split()
-    
-    cards = [
+cards = [
         {
             'front': '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/NXRzRZFgSco" frameborder="0" allowfullscreen></iframe>',
             'back': 'HELLO1',
@@ -100,10 +92,31 @@ def lessons():
             'sentence': "When I walked in he told me hello"
         }
     ]
+
+@app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
+def index():
+    html_code = flask.render_template('index.html')
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/lessons', methods=['GET'])
+def lessons():
+    input = request.args.get('course', default=None)
+    values = input.split()
+    course = values[0]
+    courseid = int(course[2:6])
+    lessonid = values[1]
+
+    query_result = dbconnect.get_flashcards(courseid, lessonid)
+    if query_result[0] is True:
+        flashcards = query_result[1]
+        html_code = flask.render_template('lessons.html', course=course, 
+        lesson_num = lessonid, flashcardscards = flashcards)
+    else: 
+        html_code = flask.render_template('index.html')
     
-    # Your existing code for rendering the template
-    html_code = flask.render_template('lessons.html', course=values[0], 
-        lesson_num = values[1], cards = cards)
+    
     response = flask.make_response(html_code)
     return response
 

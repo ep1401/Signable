@@ -9,3 +9,4 @@ CREATE TABLE studentusers(netid TEXT, firstname TEXT, lastname TEXT);
 CREATE TABLE starredflashcards(netid TEXT, cardid INTEGER);
 
 CREATE TABLE admin(adminid INTEGER, firstname text, lastname TEXT);
+
