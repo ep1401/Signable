@@ -545,9 +545,9 @@
             <h2>Select a term:</h2>
         </div>
 
-        {% for card in cards %}
+        {% for flashcard in flashcards %}
             <button class="back-button" name="number" value="{{ card.id }}">
-                {{ card.back }}
+                {{ flashcard["translation"] }}
             </button>
         {% endfor %}
     </section>
