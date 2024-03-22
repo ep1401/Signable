@@ -294,7 +294,8 @@
                             <img class="card-image" src="/get_info" 
                             alt="Info">
                         </button>
-                        {{ flashcard['translation'] | safe}}
+                        <iframe width="100%" height="100%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
+                        
                     </div>
                     <div class="front">
                         <button class="star">
@@ -305,7 +306,7 @@
                             <img class="card-image" src="/get_info" 
                             alt="Info">
                         </button>
-                        <iframe width="100%" height="100%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
+                        {{ flashcard['translation'] | safe}}
                     </div>
                 </div>
                 <div class="card">
@@ -313,9 +314,9 @@
                         <video id="video-record-{{ flashcard['cardid'] }}" class="video-record" autoplay playsinline muted></video>
                         <video id="video-playback-{{ flashcard['cardid'] }}" class="video-playback" controls></video>
                         
-                        <div class="btn stop-btn" style="display: none;" onclick="onStreamStop('{{ flashcard['cardid']}}')"><i class="fas fa-stop"></i></div>
-                        <div class="btn record-btn" onclick="onStreamRecord('{{ flashcard['cardid'] }}')"><i class="fas fa-video"></i></div>
-                        <div class="go-back-btn" style="display: none;" onClick="onBackClick('{{ flashcard['cardid'] }}')"><i class="fas fa-arrow-left"></i></div>     
+                        <div class="btn stop-btn" style="display: none;" onclick="onStreamStop('{{ flashcard[\'cardid\']}}')"><i class="fas fa-stop"></i></div>
+                        <div class="btn record-btn" onclick="onStreamRecord('{{ flashcard[\'cardid\'] }}')"><i class="fas fa-video"></i></div>
+                        <div class="go-back-btn" style="display: none;" onClick="onBackClick('{{ flashcard[\'cardid\'] }}')"><i class="fas fa-arrow-left"></i></div>     
                     </div>
             </div>
             </div>
