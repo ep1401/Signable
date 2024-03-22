@@ -34,7 +34,7 @@ def get_flashcards(courseid, lessonid):
     try:
         with connection.cursor() as cursor:
             query_str = "SELECT cardid, videolink, translation, memorytip, speech, sentence "
-            query_str += "FROM flashcards WHERE courseid = %d AND lessonid = %d "
+            query_str += "FROM flashcards WHERE courseid = %s AND lessonid = %s "
             cursor.execute(query_str, [courseid, lessonid])
             table = cursor.fetchall()
 
