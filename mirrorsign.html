@@ -310,12 +310,12 @@
                 </div>
                 <div class="card">
                     <div class="front">
-                        <video id="video-record-{{ card.id }}" class="video-record" autoplay playsinline muted></video>
-                        <video id="video-playback-{{ card.id }}" class="video-playback" controls></video>
+                        <video id="video-record-{{ flashcard['cardid'] }}" class="video-record" autoplay playsinline muted></video>
+                        <video id="video-playback-{{ flashcard['cardid'] }}" class="video-playback" controls></video>
                         
-                        <div class="btn stop-btn" style="display: none;" onclick="onStreamStop('{{ card.id }}')"><i class="fas fa-stop"></i></div>
-                        <div class="btn record-btn" onclick="onStreamRecord('{{ card.id }}')"><i class="fas fa-video"></i></div>
-                        <div class="go-back-btn" style="display: none;" onClick="onBackClick('{{ card.id }}')"><i class="fas fa-arrow-left"></i></div>     
+                        <div class="btn stop-btn" style="display: none;" onclick="onStreamStop('{{ flashcard['cardid']}}')"><i class="fas fa-stop"></i></div>
+                        <div class="btn record-btn" onclick="onStreamRecord('{{ flashcard['cardid'] }}')"><i class="fas fa-video"></i></div>
+                        <div class="go-back-btn" style="display: none;" onClick="onBackClick('{{ flashcard['cardid'] }}')"><i class="fas fa-arrow-left"></i></div>     
                     </div>
             </div>
             </div>
@@ -363,7 +363,11 @@
             next = document.querySelector(".next"),
             prev = document.querySelector(".prev"),
             flip = document.querySelector(".flip"),
+            btn_stop_record = document.querySelector(".btn stop-btn"),
+            btn_record_btn = document.querySelector(".btn record-btn"),
+            go_back_btn = document.querySelector(".go-back-btn")
             backButtons = document.querySelectorAll('.back-button');
+
 
         let bool = false;
         let stopped = false;
