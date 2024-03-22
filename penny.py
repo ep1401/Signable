@@ -227,7 +227,7 @@ def mirrorsign():
     query_result = dbconnect.get_flashcards(courseid, lessonid)
     if True is True:
         flashcards = query_result[1]
-        html_code = flask.render_template('mirrorsign.html', flashcards = cards)
+        html_code = flask.render_template('mirrorsign.html', flashcards = flashcards)
     else: 
         html_code = flask.render_template('index.html')
     
