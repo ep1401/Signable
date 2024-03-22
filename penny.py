@@ -219,7 +219,6 @@ def mirrorsign():
     # Your existing code for rendering the template
 
     input = request.args.get('mirror', default=None)
-    values = input.split()
     course = values[0]
     courseid = int(course[3:6])
     lessonid = values[1]
