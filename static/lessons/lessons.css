@@ -1,0 +1,505 @@
+body {
+    font-family: 'Koh Santepheap';
+    text-align: center;
+    background-color: #fbfafa;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #ccf2f4;
+    background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
+    color: #000000;
+    padding: 5vw;
+    
+}
+section {
+    padding: 0vw;
+}
+
+* {
+    font-family: 'Koh Santepheap';
+    font-size: 4vw;
+}
+
+h1 {
+    font-size: 3vw;
+}
+
+h2 {
+    font-size: 2vw;
+}
+
+.wrapper {
+    max-width: 100vw;
+    overflow: hidden;
+    text-align: center;
+}
+
+.carousel {
+    display: flex;
+    justify-content: flex-start;
+    transition: 0.4s;
+}
+
+.card-container {
+    width: 60vw; 
+    height: 40vw;
+    margin-right: 20vw; 
+    margin-left: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    top: 3.1vw;
+    width: 60vw;
+    height: 40vw;
+    border: .1vw solid #ccc;
+    margin: 4vw auto; 
+    position: relative;
+    transition: 1s ease-out;
+    perspective: 150vw; 
+    transform-style: preserve-3d;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 2vw; 
+}
+
+
+.card.active .front button {
+    visibility: hidden; /* Make buttons visible when card is flipped */
+}
+
+.back {
+    transform: rotateX(180deg);
+}
+
+.card div {
+    position: absolute;
+    top: 4vw; 
+    left: 4vw;
+    right: 4vw; 
+    bottom: 4vw; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    transition: 2s;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.active {
+    transform: rotateX(180deg);
+}
+
+.prev,
+.next,
+.flip {
+    top: 3vw;
+    height: 3.5vw;
+    border: .1vw solid #ccc;
+    border-radius: 2vw;
+    padding: 1vw;
+    margin: 1vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    position: relative;
+    box-shadow: 10px 10px #fbfafa;
+}
+
+.shuffle {
+    top: 3vw;
+    height: 3.5vw;
+    border: .1vw solid #ccc;
+    border-radius: 2vw;
+    padding: 1vw;
+    margin-right: 7vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    justify-content: center; 
+    align-items: center; 
+    position: relative;
+}
+
+.opp {
+    top: 3vw;
+    height: 3.5vw;
+    border: .1vw solid #ccc;
+    border-radius: 2vw;
+    padding: 1vw;
+    margin-left: 7vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    justify-content: center; 
+    align-items: center; 
+    position: relative;
+}
+
+.opp:hover,
+.shuffle:hover,
+.back-button:hover,
+.mirror:hover,
+.quiz:hover,
+.prev:hover,
+.next:hover,
+.flip:hover {
+    background-color: #ccc;
+    border-color: #ccc;
+}
+
+.mirror,
+.quiz {
+    top: 3vw;
+    height: 3.5vw;
+    border: .1vw solid #ccc;
+    border-radius: 2vw;
+    padding: 1vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    justify-content: center; 
+    align-items: center; 
+    position: relative;
+}
+
+
+
+.shuffle-image {
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+.back-button {
+    width: 40vw;
+    height: 4vw;
+    border: .1vw solid #ccc;
+    border-radius: 2vw;
+    padding: 1vw;
+    margin: 1vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.star {
+    border: none;
+    border-radius: 80vw;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: -2.8vw;
+    margin-top: -2.8vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.info-front,
+.info-back {
+    border: none;
+    border-radius: 80vw;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: -2.8vw;
+    margin-top: -2.8vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.card-image {
+    width: 2.5vw;
+    height: 2.5vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.arrow-image {
+    width: 3vw;
+    height: 1.5vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.flip-image {
+    width: 1.5vw;
+    height: 1.5vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.shuffle::after {
+    content: "Shuffle Cards";
+    position: absolute;
+    top: calc(100% + .5vw);
+    left: 1.7vw;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; 
+    text-transform: none;
+    font-size: .8vw;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.shuffle:hover::after {
+    opacity: 1;
+}
+
+.mirror::after {
+    content: "MirrorSign";
+    position: absolute;
+    top: calc(100% + .5vw);
+    left: 1.7vw;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; 
+    text-transform: none;
+    font-size: .8vw;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.mirror:hover::after {
+    opacity: 1;
+}
+
+.opp::after {
+    content: "Toggle Front Size";
+    position: absolute;
+    top: calc(100% + .5vw);
+    left: 1.7vw;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; 
+    text-transform: none;
+    font-size: .8vw;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.opp:hover::after {
+    opacity: 1;
+}
+
+.quiz::after {
+    content: "Quiz";
+    position: absolute;
+    top: calc(100% + .5vw);
+    left: 1.7vw;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; 
+    text-transform: none;
+    font-size: .8vw;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.quiz:hover::after {
+    opacity: 1;
+}
+
+.info-front::after,
+.info-back::after {
+    content: "Extra Info";
+    position: absolute;
+    top: calc(100% + .5vw);
+    left: 1vw;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; 
+    text-transform: none;
+    font-size: .8vw;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.info-front:hover::after,
+.info-back:hover::after {
+    opacity: 1;
+}
+
+.star::after {
+    content: "Star Card";
+    position: absolute;
+    top: calc(100% + .5vw);
+    left: 1vw;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; 
+    text-transform: none;
+    font-size: .8vw;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.star:hover::after {
+    opacity: 1;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 30vw;
+    height: 25vw;
+    border: .1vw solid black;
+    z-index: 9999;
+    padding: 2vw;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    max-height: 80vh; 
+    overflow-y: scroll;
+    max-height: 80vh; 
+    overflow-wrap: break-word; 
+    white-space: normal;
+    border-radius: 1vw;
+    box-sizing: border-box;
+    font-family: 'Koh Santepheap';
+    font-size: .1vw;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.logo {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    left: 0vw;
+    top: 0vw;
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.logo-image {
+    width: 18vw;
+    height: 8vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.princeton-image {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    right: 2vw;
+    top: 1.5vw;
+    width: 11vw;
+    height: 6vw;
+    justify-content: center; 
+    align-items: center; 
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
