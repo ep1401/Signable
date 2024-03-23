@@ -1,27 +1,20 @@
 body {
     font-family: 'Koh Santepheap';
     text-align: center;
-    background-color: #B9D6DF;
+    background-color: #fbfafa;
     margin: 0;
     padding: 0;
 }
 header {
-    background-color: #d6eaf0;
-    font-family: 'Koh Santepheap';
+    background-color: #ccf2f4;
+    background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
     color: #000000;
-    padding: 1vw;
+    padding: 5vw;
 }
 section {
     padding: 0vw;
 }
-footer {
-    background-color: #B9D6DF;
-    color: #000000;
-    padding: 1vw;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
+
 * {
     font-family: 'Koh Santepheap';
     font-size: 4vw;
@@ -58,6 +51,7 @@ h2 {
 }
 
 .card {
+    top: 3.1vw;
     width: 60vw;
     height: 40vw;
     border: .1vw solid #ccc;
@@ -69,8 +63,7 @@ h2 {
     cursor: pointer;
     font-weight: bold;
     font-size: 1.5rem;
-    background-color: #F9F7E7;
-    border-color: #F9F7E7;
+    background-color: #ffffff;
     border-radius: 2vw; 
 }
 
@@ -95,7 +88,7 @@ h2 {
     backface-visibility: hidden;
     transition: 2s;
     text-align: center;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
 }
 
 .active {
@@ -105,6 +98,7 @@ h2 {
 .prev,
 .next,
 .flip {
+    top: 3vw;
     height: 3.5vw;
     border: .1vw solid #ccc;
     border-radius: 2vw;
@@ -114,14 +108,16 @@ h2 {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
     position: relative;
+    box-shadow: 10px 10px #fbfafa;
 }
 
 .shuffle {
+    top: 3vw;
     height: 3.5vw;
     border: .1vw solid #ccc;
     border-radius: 2vw;
@@ -131,7 +127,7 @@ h2 {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -141,6 +137,7 @@ h2 {
 }
 
 .opp {
+    top: 3vw;
     height: 3.5vw;
     border: .1vw solid #ccc;
     border-radius: 2vw;
@@ -150,7 +147,7 @@ h2 {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -173,6 +170,7 @@ h2 {
 
 .mirror,
 .quiz {
+    top: 3vw;
     height: 3.5vw;
     border: .1vw solid #ccc;
     border-radius: 2vw;
@@ -181,7 +179,7 @@ h2 {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -208,7 +206,7 @@ h2 {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -230,7 +228,7 @@ h2 {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -253,7 +251,7 @@ h2 {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -454,4 +452,53 @@ h2 {
     border: none;
     font-size: 20px;
     cursor: pointer;
+}
+
+.logo {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    left: 0vw;
+    top: 0vw;
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.logo-image {
+    width: 18vw;
+    height: 8vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.princeton-image {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    right: 2vw;
+    top: 1.5vw;
+    width: 11vw;
+    height: 6vw;
+    justify-content: center; 
+    align-items: center; 
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
 }

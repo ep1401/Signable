@@ -7,79 +7,129 @@
     <link href="https://fonts.googleapis.com/css?family=Koh+Santepheap" rel="stylesheet">
     <title>Signable - Courses</title>
     <style>
-        body, header, section, footer, * {
-            font-family: 'Koh Santepheap', sans-serif;
-        }
-
-        body {
-            text-align: center;
-            background-color: #B9D6DF;
+        body, header, section, footer, *, a {
+            font-family: 'Koh Santepheap';
             margin: 0;
             padding: 0;
         }
-
-        header, footer {
-            background-color: #B9D6DF;
+        
+        body {
+            text-align: center;
+            background-color: #fbfafa;
+        }
+        
+        header {
+            background-color: #ccf2f4;
+            background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
             color: #000000;
-            padding: 1vw;
+            padding: 5vw;
         }
-
-        section {
-            padding: 0;
-        }
-
+        
         footer {
             position: fixed;
             bottom: 0;
             width: 100%;
         }
-
+        
         * {
             font-size: 2.2vw;
         }
-
+        
         h1 {
             font-size: 3vw;
         }
-
+        
         h2 {
             font-size: 2vw;
         }
-
+        
         .lesson {
             width: calc((100% - 20vw) / 3);
             height: 15vw;
             border: .1vw solid #ccc;
             border-radius: 2vw;
-            padding: 1vw;
-            margin: 3vw;
+            margin: 1vw;
             text-transform: uppercase;
             cursor: pointer;
             text-decoration: none;
             color: #222;
-            background-color: #F9F7E7;
+            background-color: #ffffff;
             font-size: 2vw;
             font-weight: bold;
             transition: 0.2s;
         }
-
+        
         .lesson:hover {
             background-color: #ccc;
             border-color: #ccc;
         }
-
+        
         a {
             text-decoration: none;
         }
+        
+        .logo {
+            border: none;
+            background: none;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            left: 0vw;
+            top: 0vw;
+            
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        
+        .logo-image {
+            width: 18vw;
+            height: 8vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .princeton-image {
+            border: none;
+            background: none;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            right: 2vw;
+            top: 1.5vw;
+            width: 11vw;
+            height: 6vw;
+            justify-content: center; 
+            align-items: center; 
+            
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
     </style>
 </head>
 <body>
-    <header>
-        <h1>Signable</h1>
-    </header>
+    {% include 'header.html' %}
+
+    <br>
+
     <section>
         <h2>Welcome to {{course}}. Now select a lesson!</h2>
     </section>
+
+    <br>
+    
     <form method="GET" action="/lessons">
         {% for lesson_num in range(1, lesson_num + 1) %}
             <button type="submit" class="lesson" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</button>

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" 
-        href="{{ url_for('static', filename='index/index.css') }}">
-    <title>Signable</title>
+        href="{{ url_for('static', filename='courses/courses.css') }}">
+    <title>Signable - Courses</title>
 </head>
 <body>
     {% include 'header.html' %}
@@ -15,19 +15,16 @@
     <br>
 
     <section>
-        <h1>Welcome to Signable!</h1>
-        <br>
-        <h2>Select a mode:</h2>
+        <h2>Select a learning tool:</h2>
     </section>
 
     <br>
 
-    <form method="GET" action="/courses" style="display: inline;">
-        <button class="option">Flashcard</button>
-    </form>
-
-    <form method="GET" action="/learn" style="display: inline;">
-        <button class="option">Learn</button>
+    <form method="GET" action="/selectlessons">
+        <button class="course-button asl101">Quiz</button>
+        <button class="course-button asl102">Gloss</button>
+        <button class="course-button asl105">Mirror Sign</button>
+        <button class="course-button asl107">Review Stack</button>
     </form>
 </body>
 </html>

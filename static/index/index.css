@@ -1,0 +1,110 @@
+body, header, section, footer, *, a {
+    font-family: 'Koh Santepheap';
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    text-align: center;
+    background-color: #fbfafa;
+}
+
+header {
+    background-color: #ccf2f4;
+    background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
+    color: #000000;
+    padding: 5vw;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+* {
+    font-size: 2.2vw;
+}
+
+h1 {
+    font-size: 3vw;
+}
+
+h2 {
+    font-size: 2vw;
+}
+
+.option {
+    width: 40vw;
+    height: 20vw;
+    border: .1vw solid #ccc;
+    border-radius: 2vw;
+    padding: 1vw;
+    margin: 1vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 3vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.option:hover {
+    background-color: #ccc;
+    border-color: #ccc;
+}
+
+a {
+    text-decoration: none;
+}
+
+.logo {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    left: 0vw;
+    top: 0vw;
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.logo-image {
+    width: 18vw;
+    height: 8vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.princeton-image {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    right: 2vw;
+    top: 1.5vw;
+    width: 11vw;
+    height: 6vw;
+    justify-content: center; 
+    align-items: center; 
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}

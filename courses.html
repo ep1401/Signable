@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" 
+        href="{{ url_for('static', filename='courses/courses.css') }}">
+    <title>Signable - Courses</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <br>
+
+    <section>
+        <h2>Select a course to start learning!</h2>
+    </section>
+
+    <br>
+
+    <form method="GET" action="/selectlessons">
+        <button class="course-button asl101" name="course" value="ASL101">ASL101</button>
+        <button class="course-button asl102" name="course" value="ASL102">ASL102</button>
+        <button class="course-button asl105" name="course" value="ASL105">ASL105</button>
+        <button class="course-button asl107" name="course" value="ASL107">ASL107</button>
+    </form>
+</body>
+</html>

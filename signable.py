@@ -6,9 +6,6 @@ from flask import request
 from flask import send_file
 import dbconnect
 
-
-
-
 app = flask.Flask(__name__, template_folder='.')
 _DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -24,6 +21,18 @@ course_lessonsnum = {
 @app.route('/index', methods=['GET'])
 def index():
     html_code = flask.render_template('index.html')
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/courses', methods=['GET'])
+def courses():
+    html_code = flask.render_template('courses.html')
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/learn', methods=['GET'])
+def learn():
+    html_code = flask.render_template('learn.html')
     response = flask.make_response(html_code)
     return response
 
