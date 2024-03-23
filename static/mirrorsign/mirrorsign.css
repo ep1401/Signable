@@ -1,15 +1,16 @@
 body {
     font-family: 'Koh Santepheap';
     text-align: center;
-    background-color: #B9D6DF;
+    background-color: #fbfafa;
     margin: 0;
     padding: 0;
 }
 header {
-    background-color: #B9D6DF;
+    background-color: #ccf2f4;
+    background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
     font-family: 'Koh Santepheap';
     color: #000000;
-    padding: 1vw;
+    padding: 5vw;
 }
 section {
     padding: 0vw;
@@ -75,7 +76,7 @@ body, div, p {
     cursor: pointer;
     font-weight: bold;
     font-size: 1.5rem;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     border-radius: 2vw;
     display: flex; /* Add display flex */
     justify-content: center; /* Horizontally center */
@@ -95,7 +96,7 @@ body, div, p {
     backface-visibility: hidden;
     transition: 2s;
     text-align: center;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
 }
 
 .back {
@@ -178,7 +179,7 @@ body, div, p {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -199,7 +200,7 @@ body, div, p {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -222,7 +223,7 @@ body, div, p {
     cursor: pointer;
     text-decoration: none;
     color: #222;
-    background-color: #F9F7E7;
+    background-color: #ffffff;
     font-size: 1vw;
     font-weight: bold;
     transition: 0.2s;
@@ -258,4 +259,53 @@ body, div, p {
 
 .file-input-video {
     display:none;
+}
+
+.logo {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    left: 0vw;
+    top: 0vw;
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.logo-image {
+    width: 18vw;
+    height: 8vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.princeton-image {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    right: 2vw;
+    top: 1.5vw;
+    width: 11vw;
+    height: 6vw;
+    justify-content: center; 
+    align-items: center; 
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
 }
