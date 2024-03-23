@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
     <style>
-        body {
+        body, header, section, footer, *, a {
             font-family: 'Koh Santepheap';
-            text-align: center;
-            background-color: #B9D6DF;
             margin: 0;
             padding: 0;
         }
+
+        body {
+            text-align: center;
+            background-color: #B9D6DF;
+        }
+
         header {
             background-color: #B9D6DF;
-            font-family: 'Koh Santepheap';
             color: #000000;
             padding: 1vw;
         }
-        section {
-            padding: 0vw;
-        }
+
         footer {
-            background-color: #B9D6DF;
-            color: #000000;
-            padding: 1vw;
             position: fixed;
             bottom: 0;
             width: 100%;
         }
+
         * {
-            font-family: 'Koh Santepheap';
             font-size: 2.2vw;
         }
 
@@ -42,12 +40,8 @@
         h2 {
             font-size: 2vw;
         }
-          
 
-        .asl101,
-        .asl102,
-        .asl105,
-        .asl107 {
+        .course-button {
             width: 40vw;
             height: 20vw;
             border: .1vw solid #ccc;
@@ -59,15 +53,12 @@
             text-decoration: none;
             color: #222;
             background-color: #F9F7E7;
-            font-family: 'Koh Santepheap';font-size: 3vw;
+            font-size: 3vw;
             font-weight: bold;
             transition: 0.2s;
         }
 
-        .asl101:hover,
-        .asl102:hover,
-        .asl105:hover,
-        .asl107:hover {
+        .course-button:hover {
             background-color: #ccc;
             border-color: #ccc;
         }
@@ -75,25 +66,22 @@
         a {
             text-decoration: none;
         }
-
     </style>
-    
     <title>Signable - Courses</title>
-    </head>
-    <body>
-        <header>
-            <h1>Signable</h1>
-        </header>
-        <section>
-            <h2>Please select a course to start learning!</h2>
-        </section>
+</head>
+<body>
+    <header>
+        <h1>Signable</h1>
+    </header>
+    <section>
+        <h2>Please select a course to start learning!</h2>
+    </section>
 
-        <form method="GET" action="/selectlessons">
-            <button class="asl101" name="course" value="ASL101">ASL101</button>
-            <button class="asl102" name="course" value="ASL102">ASL102</button>
-            <button class="asl105" name="course" value="ASL105">ASL105</button>
-            <button class="asl107" name="course" value="ASL107">ASL107</button>
-        </form>
- 
-    </body>
+    <form method="GET" action="/selectlessons">
+        <button class="course-button asl101" name="course" value="ASL101">ASL101</button>
+        <button class="course-button asl102" name="course" value="ASL102">ASL102</button>
+        <button class="course-button asl105" name="course" value="ASL105">ASL105</button>
+        <button class="course-button asl107" name="course" value="ASL107">ASL107</button>
+    </form>
+</body>
 </html>

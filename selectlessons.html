@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Koh+Santepheap" rel="stylesheet">
+    <title>Signable - Courses</title>
     <style>
+        body, header, section, footer, * {
+            font-family: 'Koh Santepheap', sans-serif;
+        }
+
         body {
-            font-family: 'Koh Santepheap';
             text-align: center;
             background-color: #B9D6DF;
             margin: 0;
             padding: 0;
         }
-        header {
+
+        header, footer {
             background-color: #B9D6DF;
-            font-family: 'Koh Santepheap';
             color: #000000;
             padding: 1vw;
         }
+
         section {
-            padding: 0vw;
+            padding: 0;
         }
+
         footer {
-            background-color: #B9D6DF;
-            color: #000000;
-            padding: 1vw;
             position: fixed;
             bottom: 0;
             width: 100%;
         }
+
         * {
-            font-family: 'Koh Santepheap';
             font-size: 2.2vw;
         }
 
@@ -42,8 +45,7 @@
         h2 {
             font-size: 2vw;
         }
-          
-        
+
         .lesson {
             width: calc((100% - 20vw) / 3);
             height: 15vw;
@@ -56,45 +58,32 @@
             text-decoration: none;
             color: #222;
             background-color: #F9F7E7;
-            font-family: 'Koh Santepheap';
             font-size: 2vw;
             font-weight: bold;
             transition: 0.2s;
-            
         }
-        
-        /* Hover effect for all lessons */
+
         .lesson:hover {
             background-color: #ccc;
             border-color: #ccc;
         }
+
         a {
             text-decoration: none;
         }
-
     </style>
-    
-    <title>Signable - Courses</title>
-    </head>
-    <body>
-        <header>
-            <h1>Signable</h1>
-        </header>
-        <section>
-            <h2>Welcome to {{course}}. Now select a lesson!</h2>
-        </section>
-
-        <form method="GET" action="/lessons">
-            {% for lesson_num in range(1, lesson_num + 1) %}
-                <button type="submit" class="lesson" name="course"
-                    value="{{ course }} {{ lesson_num }}">
-                    Lesson {{ lesson_num }}</button>
-            {% endfor %}
-        </form>
-
-        
-        
-        
-        
-    </body>
+</head>
+<body>
+    <header>
+        <h1>Signable</h1>
+    </header>
+    <section>
+        <h2>Welcome to {{course}}. Now select a lesson!</h2>
+    </section>
+    <form method="GET" action="/lessons">
+        {% for lesson_num in range(1, lesson_num + 1) %}
+            <button type="submit" class="lesson" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</button>
+        {% endfor %}
+    </form>
+</body>
 </html>
