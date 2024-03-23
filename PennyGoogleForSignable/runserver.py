@@ -6,7 +6,7 @@
 #-----------------------------------------------------------------------
 
 import sys
-import penny
+import signable
 
 # Google expects the application to run on port 5000.
 PORT = 5000
@@ -18,7 +18,7 @@ def main():
         sys.exit(1)
 
     try:
-        penny.app.run(host='0.0.0.0', port=PORT,
+        signable.app.run(host='0.0.0.0', port=PORT,
             ssl_context=('cert.pem', 'key.pem'))
     except Exception as ex:
         print(ex, file=sys.stderr)

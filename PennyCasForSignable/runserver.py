@@ -2,11 +2,11 @@
 
 #-----------------------------------------------------------------------
 # runserver.py
-# Author: Bob Dondero
+# Author: Bob Donderoß
 #-----------------------------------------------------------------------
 
 import sys
-import penny
+import signable
 
 def main():
 
@@ -21,7 +21,7 @@ def main():
         sys.exit(1)
 
     try:
-        penny.app.run(host='0.0.0.0', port=port, debug=True)
+        signable.app.run(host='0.0.0.0', port=port, debug=True)
     except Exception as ex:
         print(ex, file=sys.stderr)
         sys.exit(1)
