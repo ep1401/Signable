@@ -81,12 +81,20 @@
         
         .option1 {
             position: relative;
+            margin-right: 0vw;
+            color: #222;
+            font-size: 1.3vw;
+        }
+        
+        .option2 {
+            position: relative;
             margin-right: 11vw;
             color: #222;
             font-size: 1.3vw;
         }
 
-        .option1::after {
+        .option1::after,
+        .option2::after {
             content: '';
             position: absolute;
             left: 0;
@@ -97,7 +105,8 @@
             transition: background-color 0.3s ease; 
         }
 
-        .option1:hover::after {
+        .option1:hover::after,
+        .option2:hover::after {
             background-color: #000; 
         }
         
@@ -167,6 +176,8 @@
         
         <div class="options">
             <a href="/learncourses" class="option1" name="type" value="{{ type }}">New Course</a>
+            <div class="option-divider"></div> 
+            <a href="/learn" class="option2" name="type" value="{{ type }}">New Tool</a>
         </div>
     </header>
     
