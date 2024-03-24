@@ -19,10 +19,12 @@
         }
         
         header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: #ccf2f4;
             background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
-            color: #000000;
-            padding: 5vw;
+            padding: 4vw;
         }
         
         footer {
@@ -62,6 +64,49 @@
         .lesson:hover {
             background-color: #ccc;
             border-color: #ccc;
+        }
+
+        .options {
+            display: flex;
+        }
+
+        .option-divider {
+            position: relative;
+            width: 1px;
+            background-color: #222;
+            margin: 0 1vw; /* Adjust as needed */
+        }
+
+        
+        .option1 {
+            position: relative;
+            margin-right: 0vw;
+            color: #222;
+            font-size: 1.3vw;
+        }
+        
+        .option2 {
+            position: relative;
+            margin-right: 11vw;
+            color: #222;
+            font-size: 1.3vw;
+        }
+
+        .option1::after,
+        .option2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px; 
+            width: 100%;
+            height: 2px;
+            background-color: transparent;
+            transition: background-color 0.3s ease; 
+        }
+
+        .option1:hover::after,
+        .option2:hover::after {
+            background-color: #000; 
         }
         
         a {
@@ -119,8 +164,23 @@
 
     </style>
 </head>
-<body>
-    {% include 'header.html' %}
+<body> 
+    <header>
+        <form method="GET" action="/index" style="display: inline;">
+            <button class="logo">
+                <img class="logo-image" src="static/images/logo.png" alt="Logo">
+            </button>
+        </form>
+        <img class="princeton-image" src="static/images/princeton.png" alt="Logo"> 
+        
+        <div class="options">
+            <a href="/courses" class="option1">New Course</a>
+            <div class="option-divider"></div> <!-- Add a divider -->
+            <a href="/searchterm" class="option2">Term Search</a>
+        </div>
+    </header>
+    
+    
 
     <br>
 
@@ -129,6 +189,7 @@
     </section>
 
     <br>
+
     
     <form method="GET" action="/lessons">
         {% for lesson_num in range(1, lesson_num + 1) %}

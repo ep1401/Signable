@@ -36,6 +36,12 @@ def learn():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/searchterm', methods=['GET'])
+def searchterm():
+    html_code = flask.render_template('searchterm.html')
+    response = flask.make_response(html_code)
+    return response
+
 @app.route('/lessons', methods=['GET'])
 def lessons():
     input = request.args.get('course', default=None)
@@ -62,7 +68,6 @@ def selectlessons():
     
     course = request.args.get('course', default=None)
     
-    # Your existing code for rendering the template
     html_code = flask.render_template('selectlessons.html', course=course,
         lesson_num = course_lessonsnum[course])
     response = flask.make_response(html_code)
@@ -72,7 +77,6 @@ def selectlessons():
 
 @app.route('/mirrorsign', methods=['GET'])
 def mirrorsign():   
-    # Your existing code for rendering the template
    
     input = request.args.get('mirror', default=None)
     values = input.split()
