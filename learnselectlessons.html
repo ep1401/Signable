@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Koh+Santepheap" rel="stylesheet">
+    <title>Signable - Courses</title>
+    <style>
+        body, header, section, footer, *, a {
+            font-family: 'Koh Santepheap';
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            text-align: center;
+            background-color: #fbfafa;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ccf2f4;
+            background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
+            padding: 4vw;
+        }
+        
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        * {
+            font-size: 2.2vw;
+        }
+        
+        h1 {
+            padding-top: 1vw;
+            font-size: 3vw;
+        }
+        
+        h2 {
+            font-size: 2vw;
+        }
+        
+        .lesson {
+            width: calc((100% - 20vw) / 3);
+            height: 15vw;
+            border: .1vw solid #ccc;
+            border-radius: 2vw;
+            margin: 1vw;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: #ffffff;
+            font-size: 2vw;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        
+        .lesson:hover {
+            background-color: #ccc;
+            border-color: #ccc;
+        }
+
+        .options {
+            display: flex;
+        }
+
+        .option-divider {
+            position: relative;
+            width: 1px;
+            background-color: #222;
+            margin: 0 1vw; /* Adjust as needed */
+        }
+
+        
+        .option1 {
+            position: relative;
+            margin-right: 11vw;
+            color: #222;
+            font-size: 1.3vw;
+        }
+
+        .option1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px; 
+            width: 100%;
+            height: 2px;
+            background-color: transparent;
+            transition: background-color 0.3s ease; 
+        }
+
+        .option1:hover::after {
+            background-color: #000; 
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .logo {
+            border: none;
+            background: none;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            left: 0vw;
+            top: 0vw;
+            
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        
+        .logo-image {
+            width: 18vw;
+            height: 8vw;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .princeton-image {
+            border: none;
+            background: none;
+            padding: 0vw;
+            margin: 0vw;
+            position: absolute;
+            right: 2vw;
+            top: 1.5vw;
+            width: 11vw;
+            height: 6vw;
+            justify-content: center; 
+            align-items: center; 
+            
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            color: #222;
+            background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+            font-size: 1vw;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+    </style>
+</head>
+<body> 
+    <header>
+        <form method="GET" action="/index" style="display: inline;">
+            <button class="logo">
+                <img class="logo-image" src="static/images/logo.png" alt="Logo">
+            </button>
+        </form>
+        <img class="princeton-image" src="static/images/princeton.png" alt="Logo"> 
+        
+        <div class="options">
+            <a href="/learncourses" class="option1" name="type" value="{{ type }}">New Course</a>
+        </div>
+    </header>
+    
+    <br>
+
+    
+    <h1>{{ type }}</h1>
+    <br>
+    <h2>Welcome to {{course}}. Now select a lesson!</h2>
+   
+
+    <br>
+
+    
+    <form method="GET" action="/mirrorquiz">
+        {% for lesson_num in range(1, lesson_num + 1) %}
+            <button type="submit" class="lesson" name="value" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</button>
+        {% endfor %}
+    </form>
+</body>
+</html>

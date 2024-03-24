@@ -20,11 +20,15 @@
 
     <br>
 
-    <form method="GET" action="/selectlessons">
-        <button class="course-button asl101">Quiz</button>
-        <button class="course-button asl102">Gloss</button>
-        <button class="course-button asl105">Mirror Sign</button>
-        <button class="course-button asl107">Review Stack</button>
+    <form method="GET" action="/learncourses" style="display: inline;">
+        <button class="course-button" name = "type" value = "Quiz">Quiz</button>
+    </form>
+    <form method="GET" action="/learncourses" style="display: inline;">
+        <button class="course-button" name = "type" value = "Mirror Sign">Mirror Sign</button>
+    </form>
+    <form method="GET" action="/error" style="display: inline;">
+        <button class="course-button">Gloss</button>
+        <button class="course-button">Review Stack</button>
     </form>
 </body>
 </html>

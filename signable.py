@@ -30,6 +30,16 @@ def courses():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/learncourses', methods=['GET'])
+def learncourses():
+    input = request.args.get('type')
+    if input is None:
+        input = flask.request.cookies.get('type')
+    html_code = flask.render_template('learncourses.html', type = input)
+    response = flask.make_response(html_code)
+    response.set_cookie('type', input)
+    return response
+
 @app.route('/learn', methods=['GET'])
 def learn():
     html_code = flask.render_template('learn.html')
@@ -45,6 +55,7 @@ def searchterm():
 @app.route('/lessons', methods=['GET'])
 def lessons():
     input = request.args.get('course', default=None)
+        
     values = input.split()
     course = values[0]
     courseid = int(course[3:6])
@@ -73,6 +84,18 @@ def selectlessons():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/learnselectlessons', methods=['GET'])
+def learnselectlessons():
+    
+    course = request.args.get('course', default=None)
+    type = flask.request.cookies.get('type')
+    
+    html_code = flask.render_template('learnselectlessons.html', course=course,
+        lesson_num = course_lessonsnum[course], type = type)
+    response = flask.make_response(html_code)
+    response.set_cookie('type', type)
+    return response
+
 
 
 @app.route('/mirrorsign', methods=['GET'])
@@ -94,7 +117,37 @@ def mirrorsign():
     
     response = flask.make_response(html_code)
     return response
-   
+
+@app.route('/mirrorquiz', methods=['GET'])
+def mirrorquiz():
+    input = request.args.get('value', default=None)
+    type = flask.request.cookies.get('type')
+    
+    if type == "Mirror Sign":
+        values = input.split()
+        course = values[0]
+        courseid = int(course[3:6])
+        lessonid = values[1]
+
+        query_result = dbconnect.get_flashcards(courseid, lessonid)
+        if True is True:
+            flashcards = query_result[1]
+            html_code = flask.render_template('mirrorsign.html', 
+                flashcards = flashcards, type = type)
+        else: 
+            html_code = flask.render_template('index.html')
+        
+        
+        response = flask.make_response(html_code)
+        response.set_cookie('type', type)
+        return response
+    
+    html_code = flask.render_template('quiz.html')
+    response = flask.make_response(html_code)
+    response.set_cookie('type', type)
+    return response
+    
+    
     
 
 if __name__ == '__main__':
