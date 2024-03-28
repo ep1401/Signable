@@ -79,13 +79,16 @@
             </button>
 
             <button class="opp">
-                <img class="shuffle-image" src="static/images/shuffle.png" 
+                <img class="shuffle-image" src="static/images/switchfront.png" 
                 alt="Opp">
             </button>
-            <button class="quiz">
-                <img class="shuffle-image" src="static/images/mirror.png" 
-                alt="Quiz">
-            </button>
+
+            <form method="GET" action="/quiz" style="display: inline;">
+                <button class="quiz">
+                    <img class="shuffle-image" src="static/images/quiz.png"
+                    alt="Quiz">
+                </button>
+            </form>
 
             <div id="card-counter">
                 <span id="current-card">1</span> / <span id="total-cards"></span>
