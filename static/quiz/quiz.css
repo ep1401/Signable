@@ -1,0 +1,217 @@
+body {
+    font-family: 'Koh Santepheap';
+    text-align: center;
+    background-color: #fbfafa;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #ccf2f4;
+    background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
+    color: #000000;
+    padding: 5vw;
+    
+}
+section {
+    padding: 0vw;
+}
+
+* {
+    font-family: 'Koh Santepheap';
+    font-size: 4vw;
+}
+
+h1 {
+    font-size: 3vw;
+}
+
+h2 {
+    font-size: 2vw;
+}
+
+.wrapper {
+    max-width: 100vw;
+    overflow: hidden;
+    text-align: center;
+}
+
+.carousel {
+    display: flex;
+    justify-content: flex-start;
+    transition: 0.4s;
+}
+
+.card-container {
+    width: 60vw; 
+    height: 40vw;
+    margin-right: 20vw; 
+    margin-left: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    top: 3.1vw;
+    width: 60vw;
+    height: 40vw;
+    border: .1vw solid #ccc;
+    margin: 4vw auto; 
+    position: relative;
+    transition: 1s ease-out;
+    perspective: 150vw; 
+    transform-style: preserve-3d;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 2vw; 
+}
+
+.card.active .front button {
+    visibility: hidden; /* Make buttons visible when card is flipped */
+}
+
+.card div {
+    position: absolute;
+    top: 4vw; 
+    left: 4vw;
+    right: 4vw; 
+    bottom: 4vw; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    transition: 2s;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.active {
+    transform: rotateX(180deg);
+}
+
+.back-button {
+    background-color: #ccc;
+    border-color: #ccc;
+    width: 40vw;
+    height: 4vw;
+    border: .1vw solid #ccc;
+    border-radius: 2vw;
+    padding: 1vw;
+    margin: 1vw;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: #ffffff;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.card-image {
+    width: 2.5vw;
+    height: 2.5vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 30vw;
+    height: 25vw;
+    border: .1vw solid black;
+    z-index: 9999;
+    padding: 2vw;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    max-height: 80vh; 
+    overflow-y: scroll;
+    max-height: 80vh; 
+    overflow-wrap: break-word; 
+    white-space: normal;
+    border-radius: 1vw;
+    box-sizing: border-box;
+    font-family: 'Koh Santepheap';
+    font-size: .1vw;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.logo {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    left: 0vw;
+    top: 0vw;
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.logo-image {
+    width: 18vw;
+    height: 8vw;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.princeton-image {
+    border: none;
+    background: none;
+    padding: 0vw;
+    margin: 0vw;
+    position: absolute;
+    right: 2vw;
+    top: 1.5vw;
+    width: 11vw;
+    height: 6vw;
+    justify-content: center; 
+    align-items: center; 
+    
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
+    font-size: 1vw;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#card-counter {
+    position: relative;
+    font-family: 'Koh Santepheap';
+    margin-top: 6vw;
+    margin-bottom: 0vw;
+    font-size: 1.5vw;
+}
+
+#current-card, #total-cards {
+    font-family: 'Koh Santepheap';
+    font-size: 1.5vw; 
+}
