@@ -309,3 +309,16 @@ body, div, p {
     font-weight: bold;
     transition: 0.2s;
 }
+
+#card-counter {
+    position: relative;
+    font-family: 'Koh Santepheap';
+    margin-top: 0vw;
+    margin-bottom: 03vw;
+    font-size: 1.5vw;
+}
+
+#current-card, #total-cards {
+    font-family: 'Koh Santepheap';
+    font-size: 1.5vw; 
+}

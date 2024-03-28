@@ -1,4 +1,5 @@
 let currentCard = 1,
+    totalCards = document.querySelectorAll('.card-container').length,
     infoback = document.querySelector(".info"),
     carousel = document.querySelector(".carousel"),
     next = document.querySelector(".next"),
@@ -11,6 +12,8 @@ let currentCard = 1,
 let bool = false;
 
 let allButtons = document.querySelectorAll('button');
+
+updateCardCounter();
 
 // Iterate over each button and set transition duration to 0
 allButtons.forEach(button => {
@@ -55,6 +58,7 @@ next.addEventListener("click", function(e) {
     if (currentCard < document.querySelectorAll(".card-container").length) {
         resetCards();
         currentCard++;
+        updateCardCounter();
         cardFly();
     }
 });
@@ -64,6 +68,7 @@ prev.addEventListener("click", function(e) {
     if (currentCard > 1) {
         resetCards();
         currentCard--;
+        updateCardCounter();
         cardFly();
     }
 });
@@ -195,5 +200,11 @@ function shuffleCards() {
 
 function displayCard(cardnumber) {
     currentCard = cardnumber;
+    updateCardCounter();
     cardFly();
+}
+
+function updateCardCounter() {
+    document.getElementById('current-card').textContent = currentCard;
+    document.getElementById('total-cards').textContent = totalCards;
 }

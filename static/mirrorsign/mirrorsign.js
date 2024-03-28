@@ -18,6 +18,7 @@ let config = {
     identityPoolId: 'us-east-1:0dce9491-45ec-4e98-9f36-cfc7cf7bc70e'
 };
 let currentCard = 1,
+    totalCards = document.querySelectorAll('.card-container').length,
     infofront = document.querySelector(".info-front"),
     infoback = document.querySelector(".info-back"),
     carousel = document.querySelector(".carousel"),
@@ -33,6 +34,8 @@ let bool = false;
 let stopped = false;
 let recording = false;
 let id = 0;
+
+updateCardCounter();
 
 btn_stop_record.forEach(button => {
     button.addEventListener('click', function() {
@@ -90,6 +93,7 @@ next.addEventListener("click", function(e) {
         currentCard++;
         cardFly();
     }
+    updateCardCounter();
 });
 
 prev.addEventListener("click", function(e) {
@@ -110,6 +114,7 @@ prev.addEventListener("click", function(e) {
         currentCard--;
         cardFly();
     }
+    updateCardCounter();
 });
 
 flip.addEventListener("click", function(e) {
@@ -153,6 +158,8 @@ document.querySelectorAll('.info-back').forEach(infoBackButton => {
     });
 });
 
+
+
 function resetSpeed() {
     let currentCardElements = document.querySelectorAll(".card-container");
     currentCardElements.forEach(cardContainer => {
@@ -181,6 +188,12 @@ function resetCards() {
 function displayCard(cardnumber) {
     currentCard = cardnumber;
     cardFly();
+    updateCardCounter();
+}
+
+function updateCardCounter() {
+    document.getElementById('current-card').textContent = currentCard;
+    document.getElementById('total-cards').textContent = totalCards;
 }
 
 $(function() {
