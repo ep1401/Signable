@@ -118,6 +118,12 @@ def mirrorsign():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/quiz', methods=['GET'])
+def quiz():
+    html_code = flask.render_template('quiz.html')
+    response = flask.make_response(html_code)
+    return response
+
 @app.route('/mirrorquiz', methods=['GET'])
 def mirrorquiz():
     input = request.args.get('value', default=None)
