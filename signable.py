@@ -120,7 +120,20 @@ def mirrorsign():
 
 @app.route('/quiz', methods=['GET'])
 def quiz():
-    html_code = flask.render_template('quiz.html')
+    input = request.args.get('value', default=None)
+    values = input.split()
+    course = values[0]
+    courseid = int(course[3:6])
+    lessonid = values[1]
+
+    query_result = dbconnect.get_flashcards(courseid, lessonid)
+    if True is True:
+        flashcards = query_result[1]
+        html_code = flask.render_template('quiz.html', 
+            flashcards = flashcards)
+    else: 
+        html_code = flask.render_template('index.html')
+    
     response = flask.make_response(html_code)
     return response
 
