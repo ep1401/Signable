@@ -191,7 +191,7 @@ h2 {
 
 
 .shuffle-image {
-    filter: brightness(0) saturate(100%) invert(22%) sepia(96%) saturate(983%) hue-rotate(185deg) brightness(99%) contrast(92%);    width: 1.5vw;
+    filter: brightness(0) saturate(100%) invert(5%) sepia(79%) saturate(5690%) hue-rotate(242deg) brightness(90%) contrast(112%);
     height: 1.5vw;
 }
 
@@ -268,7 +268,8 @@ h2 {
 }
 
 .arrow-image {
-    filter: brightness(0) saturate(100%) invert(22%) sepia(96%) saturate(983%) hue-rotate(185deg) brightness(99%) contrast(92%);    width: 3vw;
+    filter: brightness(0) saturate(100%) invert(5%) sepia(79%) saturate(5690%) hue-rotate(242deg) brightness(90%) contrast(112%);
+    width: 3vw;
     height: 1.5vw;
     justify-content: center; 
     align-items: center; 
@@ -277,7 +278,8 @@ h2 {
 
 
 .flip-image {
-    filter: brightness(0) saturate(100%) invert(22%) sepia(96%) saturate(983%) hue-rotate(185deg) brightness(99%) contrast(92%);    width: 1.5vw;
+    filter: brightness(0) saturate(100%) invert(5%) sepia(79%) saturate(5690%) hue-rotate(242deg) brightness(90%) contrast(112%);
+    width: 1.5vw;
     height: 1.5vw;
     justify-content: center; 
     align-items: center; 
