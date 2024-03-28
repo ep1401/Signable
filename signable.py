@@ -124,6 +124,18 @@ def quiz():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/gloss', methods=['GET'])
+def gloss():
+    html_code = flask.render_template('gloss.html')
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/review', methods=['GET'])
+def review():
+    html_code = flask.render_template('reviewstack.html')
+    response = flask.make_response(html_code)
+    return response
+
 @app.route('/mirrorquiz', methods=['GET'])
 def mirrorquiz():
     input = request.args.get('value', default=None)
