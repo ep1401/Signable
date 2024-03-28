@@ -154,19 +154,28 @@ def mirrorquiz():
                 flashcards = flashcards, type = type)
         else: 
             html_code = flask.render_template('index.html')
-        
-        
+               
         response = flask.make_response(html_code)
         response.set_cookie('type', type)
-        return response
     
-    html_code = flask.render_template('quiz.html')
-    response = flask.make_response(html_code)
-    response.set_cookie('type', type)
+    else: # type == "Quiz"
+        values = input.split()
+        course = values[0]
+        courseid = int(course[3:6])
+        lessonid = values[1]
+        
+        query_result = dbconnect.get_flashcards(courseid, lessonid)
+        if True is True:
+            flashcards = query_result[1]
+            html_code = flask.render_template('quiz.html', 
+                flashcards = flashcards, type = type)
+        else: 
+            html_code = flask.render_template('index.html')
+            
+        response = flask.make_response(html_code)
+        response.set_cookie('type', type)
     return response
-    
-    
-    
+
 
 if __name__ == '__main__':
     app.run(debug=True)
