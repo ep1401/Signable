@@ -330,7 +330,7 @@ h2 {
 }
 
 .opp::after {
-    content: "Toggle Front Size";
+    content: "ASL <-> English";
     position: absolute;
     top: calc(100% + .5vw);
     left: 1.7vw;
