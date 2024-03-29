@@ -1,17 +1,19 @@
-<div class = "table-responsive-sm table-wrapper">
+<div class = "table-responsive table-wrapper">
 <table id="displaytable" class="table table-bordered table-styles">
-    <div class="thead-wrapper">
-    <thead>
+    
+    <thead class="fixed">
+      
       <tr>
-        <th>English Translation</th>
+        <th >English Translation</th>
         <th>Video Link</th>
         <th>Memory Tip</th>
         <th>Part of Speech</th>
         <th>Example Sentence</th>
       </tr>
+
     </thead>
-    </div>
-    <tbody>
+  
+    <tbody class="overflow">
         {% for term in terms %}
         <tr>
             <td>{{term["translation"]}}</td>
