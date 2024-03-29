@@ -1,14 +1,14 @@
-<div class = "table-responsive table-wrapper">
-<table id="displaytable" class="table table-bordered table-styles">
+<div class = "table-responsive table-wrapper foot">
+<table id="displaytable" class="table table-styles" >
     
     <thead class="fixed">
       
       <tr>
-        <th >English Translation</th>
-        <th>Video Link</th>
-        <th>Memory Tip</th>
-        <th>Part of Speech</th>
-        <th>Example Sentence</th>
+        <th id="theader">English Translation</th>
+        <th id="theader">Video Link</th>
+        <th id="theader">Memory Tip</th>
+        <th id="theader">Part of Speech</th>
+        <th id="theader">Example Sentence</th>
       </tr>
 
     </thead>
@@ -16,11 +16,11 @@
     <tbody class="overflow">
         {% for term in terms %}
         <tr>
-            <td>{{term["translation"]}}</td>
+          <td>{{term["translation"]}}</td>
             <td>{{term["videolink"]}}</td>
             <td>{{term["memorytip"]}}</td>
-            <td>{{term["speech"]}}/td>
-            <td>{{term["sentence"]}}</td>
+            <td >{{term["speech"]}} </td>
+            <td >{{term["sentence"]}}</td>
     
        </tr>
        {% endfor %}
