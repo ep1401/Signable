@@ -75,7 +75,6 @@ def get_terms(searchterm):
             
             flashcard_list = []
             for row in table:
-                print(row)
                 flashcard = {"videolink": row[0], "translation": row[1],
                              "memorytip": row[2], "speech": row[3], "sentence": row[4] }
                 flashcard_list.append(flashcard)
@@ -85,7 +84,6 @@ def get_terms(searchterm):
             return_list = []
             return_list.append(False)
             return_list.append("A server error occurred. Please contact the system administrator.")
-            print("enter)")
             print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:

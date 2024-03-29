@@ -58,7 +58,6 @@ def searchtermresults():
     query_result = dbconnect.get_terms(input)
     if query_result[0] is True:
         terms = query_result[1]
-        print(terms)
         html_code = flask.render_template('tabledisplay.html', terms = terms)
     else: 
         html_code = flask.render_template('index.html')
