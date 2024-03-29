@@ -1,0 +1,27 @@
+<div class="table-responsive-sm">
+<table id="displaytable" class="table table-bordered table-styles">
+    <thead>
+      <tr>
+        <th>English Translation</th>
+        <th>Video Link</th>
+        <th>Memory Tip</th>
+        <th>Part of Speech</th>
+        <th>Example Sentence</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for term in terms %}
+        <tr>
+            <td>{{term["translation"]}}</td>
+            <td>{{term["videolink"]}}</td>
+            <td>{{term["memorytip"]}}</td>
+            <td>{{term["speech"]}}/td>
+            <td>{{term["sentence"]}}</td>
+    
+       </tr>
+       {% endfor %}
+      
+    </tbody>
+  </table>
+
+</div>

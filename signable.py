@@ -52,6 +52,21 @@ def searchterm():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/searchterm/results', methods=['GET'])
+def searchtermresults():
+    input = request.args.get('query', default="")   
+    query_result = dbconnect.get_terms(input)
+    if query_result[0] is True:
+        terms = query_result[1]
+        print(terms)
+        html_code = flask.render_template('tabledisplay.html', terms = terms)
+    else: 
+        html_code = flask.render_template('index.html')
+
+    response = flask.make_response(html_code)
+    return response
+
+
 @app.route('/lessons', methods=['GET'])
 def lessons():
     input = request.args.get('course', default=None)
