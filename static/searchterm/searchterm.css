@@ -118,7 +118,7 @@ th {
     border-width: 2px;
     padding: 0px !important;
     margin: 0px !important;
-    display: block;
+    top: 0;
 }
 
 .fixed {
