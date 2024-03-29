@@ -35,7 +35,7 @@ backButtons.forEach(button => {
                 currentCard = index + 1;
             }
         });
-
+        updateCardCounter();
         cardFly(); 
     });
 });
