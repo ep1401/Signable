@@ -17,8 +17,8 @@
         {% for term in terms %}
         <tr>
           <td>{{term["translation"]}}</td>
-            <td>{{term["videolink"]}}</td>
-            <td>{{term["memorytip"]}}</td>
+          <td><a href="{{ term['videolink'] }}" target="_blank">{{ term['videolink'] }}</a></td>
+          <td>{{term["memorytip"]}}</td>
             <td >{{term["speech"]}} </td>
             <td >{{term["sentence"]}}</td>
     

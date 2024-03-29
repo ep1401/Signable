@@ -71,6 +71,7 @@ header {
 .margin-add {
 margin-left: 2vh !important;
 margin: 1vh;
+margin-right: 0vh;
 }
 
 .header-margin {
@@ -152,4 +153,5 @@ th {
     border-right: 1px solid rgb(207, 196, 196);
   
 }
+
 

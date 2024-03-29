@@ -58,7 +58,8 @@ def searchtermresults():
     query_result = dbconnect.get_terms(input)
     if query_result[0] is True:
         terms = query_result[1]
-        html_code = flask.render_template('tabledisplay.html', terms = terms)
+        terms_sorted = sorted(terms, key=lambda x: x['translation'])
+        html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
     else: 
         html_code = flask.render_template('index.html')
 
