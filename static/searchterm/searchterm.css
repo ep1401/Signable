@@ -103,9 +103,9 @@ td {
     max-width: 1000px;
     border-radius: 2px;
     margin-right: 2vh !important;
-    border: 1px solid rgb(207, 196, 196);
-    border-left: none;
+  
     z-index: -1;
+    border: 0.5px solid rgb(207, 196, 196);
     
 }
 
@@ -124,11 +124,10 @@ th {
     position: sticky;
     max-width: 150px;
     min-width: 150px;
-    border-radius: 2px;
     word-wrap: break-word;
     z-index: 1;
     background-color: #ccf2f4!important;
-    border-collapse: separate;
+
     
     
         
@@ -150,7 +149,7 @@ th {
 }
 
 #displaytable {
-    border-top: none !important;
-    border: 1px solid rgb(207, 196, 196);
-    border-radius: 2px;
+    border-right: 1px solid rgb(207, 196, 196);
+  
 }
+
