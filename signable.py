@@ -204,6 +204,11 @@ def mirrorquiz():
         response.set_cookie('type', type)
     return response
 
+@app.route('/test', methods=['GET'])
+def testhome():
+    html_code = flask.render_template('sidebar.html')
+    response = flask.make_response(html_code)
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

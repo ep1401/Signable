@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Koh Santepheap' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" 
+        href="{{ url_for('static', filename='sidebar/sidebar.css') }}">
+    <link rel="stylesheet" href= "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Signable</title>
+</head>
+<body>
+  
+        <div class="row flex-nowrap">
+            <div id="sidebar" class="sidebar-wrapper " >
+                <div class="d-flex min-vh-100 flex-column justify-content-left">
+       
+                     
+                    <span id="button" class="btn-styles"> ☰ </span> 
+
+        
+                    <ul class="nav nav-pills nav-flush flex-sm-column text-nowrap"> 
+                        <li class="text-nowrap" style=" display:block"> <i class="fas fa-book"></i> <span class="text">  Flashcards </span></li>
+                        <li class="text-nowrap" style=" display:block"> <i class="fas fa-question"></i> <span class="text">  Quiz </span></li>
+                        <li class="text-nowrap" style=" display:block"> <i class="fas fa-video"></i> <span class="text">  Mirror Sign </span></li>
+                        <li class="text-nowrap"style=" display:block"> <i class="fas fa-pen"></i> <span class="text">  Gloss </span></li>
+                        <li  class="text-nowrap" style=" display:block"> <i class="fas fa-star"></i> <span class="text">  Review Stack </span></li>
+
+                    </ul>
+                    
+                </div>
+            </div>
+            <div >
+
+   
+
+<script src="{{ url_for('static', filename='sidebar/sidebar.js') }}" type="module"></script>
+<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>
+</body>
+</html>
