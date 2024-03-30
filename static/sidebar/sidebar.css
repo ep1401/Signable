@@ -1,91 +1,63 @@
-body {
-    overflow: hidden;
-}
-body {
-    text-align: center;
-    background-color: #fbfafa;
-}
+html, body { 
+	height: 100%; 
+	font-family: 'Ubuntu', sans-serif; 
+} 
 
-
-.course-button:hover {
-    background-color: #ccc;
-    border-color: #ccc;
-}
-.sidebar-size {
-  
-width: 80px !important;
-height: 100vh !important
-}
-body, header, section, footer, *, a {
+* {
     font-family: 'Koh Santepheap';
-    margin: 0;
-    padding: 0;
-}
-
-
-.course-button {
-    width: 30vw;
-    height: 20vw;
-    border: .1vw solid #ccc;
-    border-radius: 2vw;
-    padding: 1vw;
-    margin: 1vw;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    color: #222;
-    background-color: #ffffff;
-    font-size: 3vw;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-.options {
-    display: flex;
-}
-#sidebar {
-    
-    background-color: #ccf2f4;
-    transition: width 0.3s;
-}
-
-li {
-    list-style-type: none;
-    font-family: 'Koh Santepheap';
-    font-size: 20px !important;
-    margin:20px;
-    
- 
-    
-  
-}
-
-.sidebar-wrapper {
-    width: 200px !important;
-    height: 100vh !important;
-}
-
-
-#logo {
-    margin-bottom: 50px;
-    margin-top: 20px;
-   
-}
-.holder {
-    margin-bottom: 60px; 
-}
-
-
-.btn-styles {
-    width:70px;
-    font-size: 26px !important;
-    margin-left: 18px;
-    margin-bottom: 50px;
-    transition: 0.2s
     
 }
 
-.btn-styles:hover {
-    color:#8f8e8e
-    
+.gfg { 
+	height: 50px; 
+	width: 50px; 
+
+} 
+
+.width1 {
+    width: 300px !important;
 }
+
+.width2 {
+    width: 50px !important;
+}
+
+#bdSidebar {
+    transition: all 0.3s !important;
+}
+
+
+
+.mynav { 
+	color: #fff; 
+} 
+
+.mynav li a { 
+	color: #fff; 
+	text-decoration: none; 
+	width: 100%; 
+	display: block; 
+	border-radius: 5px; 
+	padding: 8px 5px;
+    transition: all 0.3s !important; 
+} 
+
+.text {
+    position: fixed;
+    margin-left: 10px;
+}
+
+.mynav li a.active { 
+	background: rgba(255, 255, 255, 0.2); 
+} 
+
+.mynav li a:hover { 
+	background: rgba(255, 255, 255, 0.2); 
+} 
+
+.mynav li a i { 
+	width: 25px; 
+	text-align: center; 
+} 
+
+

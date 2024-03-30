@@ -5,27 +5,29 @@ function handleclick() {
 
    
 
-    $("#sidebar").toggleClass("sidebar-wrapper sidebar-size")
-    let visible = $(".text").attr("display")
-    console.log(visible)
-    if (visible === "none") {
-        setTimeout(() => {
-            $(".text").toggle()
-        }, 1000);
     
-    } else {
+
+        $("#bdSidebar").toggleClass("width1", "width2")
         $(".text").toggle()
         
-    }
+
     
     
    
   
     
 }
+
+function handleclick2() {
+    $("#bdSidebar").removeClass("width2")
+    $("#bdSidebar").addClass("width1")
+    $(".text").show()
+}
 function setup() {
-    $("#button").click(handleclick);
-    $("#logo-2").toggle()
+    $("#hide").click(handleclick);
+    $("#mobileshow").click(handleclick2)
+
+   
 }
 
 $('document').ready(setup);
