@@ -29,53 +29,59 @@
         <div id="bdSidebar" 
              class="d-flex flex-column  
                     flex-shrink-0  
-                    p-3 bg-success 
-                    text-white offcanvas-md offcanvas-start width1" style="width: 70px">
-             <ul class="mynav nav  flex-column d-none d-md-block">   
-                    <li class="nav-item"> 
+                    p-3 
+                    text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+             <ul class="mynav nav  d-flex  d-none d-md-block">   
+                    <li class="nav-item justify-content-right"> 
                         <a href="#"> 
-                            <i id="hide" class="fa-solid fa-bars" ></i> 
-                            
+                            <i id="hide" class="fa-solid fa-x text-black"></i>
                         </a> 
                     </li>
-                </ul>  
+                   
+                </ul> 
+                
+                <ul class="mynav nav  d-flex  ">
+                    <li>
+                        <img class="logo" src="static/images/logo.png" alt="Logo">
+                    </li>
+                </ul>
                 
             
             <a href="#" 
                class="navbar-brand"> 
             </a><hr> 
-            <ul class="mynav nav nav-pills flex-column mb-auto"> 
+            <ul class="mynav nav nav-pills flex-column mb-auto "> 
                 <li class="nav-item mb-1"> 
                     <a href="#"> 
-                        <i class="fa-regular fa-user"></i> 
-                        <span class="text">  Institutions </span>
+                        <i class="fa-regular fa-user text-black"></i> 
+                        <span class="text text-black">  Pr </span>
                     </a> 
                 </li> 
                 
   
                 <li class="nav-item mb-1"> 
                     <a href="#"> 
-                        <i class="fa-regular fa-bookmark"></i> 
-                        <span class="text">   Institutions </span>
+                        <i class="fa-regular fa-bookmark text-black"></i> 
+                        <span class="text text-black">   Flashcards </span>
                     
                     </a> 
                 </li> 
                 <li class="nav-item mb-1"> 
                     <a href="#"> 
-                        <i class="fa-regular fa-newspaper"></i> 
-                        <span class="text"> Institutions </span>
+                        <i class="fa-regular fa-newspaper text-black"></i> 
+                        <span class="text text-black"> Mirror </span>
                     </a> 
                 </li> 
                 <li class="nav-item mb-1"> 
                     <a href="#"> 
-                        <i class="fa-solid fa-archway"></i> 
-                       <span class="text"> Institutions </span>
+                        <i class="fa-solid fa-archway text-black"></i> 
+                       <span class="text text-black"> Institutions </span>
                     </a> 
                 </li> 
                 <li class="nav-item mb-1"> 
                     <a href="#"> 
-                        <i class="fa-solid fa-graduation-cap"></i> 
-                        <span class="text"> Institutions </span>
+                        <i class="fa-solid fa-graduation-cap text-black"></i> 
+                        <span class="text text-black"> Review Stack </span>
                     </a> 
                 </li> 
   
@@ -86,8 +92,8 @@
                        data-bs-target="#settings"
                        aria-expanded="false"
                        aria-controls="settings"> 
-                        <i class="fas fa-cog pe-2"></i> 
-                        <span class="topic text">Settings </span> 
+                        <i class="fas fa-cog pe-2 text-black"></i> 
+                        <span class="topic text text-black">Settings </span> 
                     </a> 
                     <ul id="settings" 
                         class="sidebar-dropdown list-unstyled collapse" 
@@ -121,13 +127,13 @@
         </div> 
   
         <div class="bg-light flex-fill"> 
-            <div class="p-2 d-md-none d-flex text-white bg-success"> 
+            <div class="p-2 d-md-none d-flex text-white color"> 
                 <a id="mobileshow" href="#" class="text-white" 
                    data-bs-toggle="offcanvas"
                    data-bs-target="#bdSidebar"> 
-                    <i class="fa-solid fa-bars"></i> 
+                    <i class="fa-solid fa-bars text-black"></i> 
                 </a> 
-                <span class="ms-3">GFG Portal</span> 
+                <span class="ms-3 text-black">Signable</span> 
             </div> 
             <div class="p-4"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 

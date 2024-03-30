@@ -24,13 +24,29 @@ html, body {
 
 #bdSidebar {
     transition: all 0.3s !important;
+    background-color: #ccf2f4 !important;
 }
 
+.logo {
+    width: 200px;
+    display:flex;
+    margin-right: 20px;
+}
 
+#hide {
+    display: flex;
+    margin-left:auto;
+    padding-bottom: 0px;
+}
 
 .mynav { 
 	color: #fff; 
 } 
+
+.color {
+    background-color: #ccf2f4 !important;
+}
+
 
 .mynav li a { 
 	color: #fff; 
