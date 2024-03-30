@@ -61,7 +61,9 @@ def searchtermresults():
         terms_sorted = sorted(terms, key=lambda x: x['translation'])
         html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
     else: 
-        html_code = flask.render_template('index.html')
+        html_code =    flask.render_template('index.html') 
+
+        
 
     response = flask.make_response(html_code)
     return response
