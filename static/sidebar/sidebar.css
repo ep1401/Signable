@@ -59,7 +59,7 @@ html, body {
 } 
 
 .text {
-    position: fixed;
+    position: absolute;
     margin-left: 10px;
 }
 
