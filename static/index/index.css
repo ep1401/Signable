@@ -109,3 +109,12 @@ a {
     transition: 0.2s;
 }
 
+#bdSidebar {
+    /* Your sidebar styles */
+    width: 250px; /* Adjust width as needed */
+}
+
+.flex-grow-1 {
+    /* Main content styles */
+    flex-grow: 1;
+}
