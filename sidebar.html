@@ -52,36 +52,54 @@
             </a><hr> 
             <ul class="mynav nav nav-pills flex-column mb-auto "> 
                 <li class="nav-item mb-1"> 
-                    <a href="#"> 
-                        <i class="fa-regular fa-user text-black"></i> 
-                        <span class="text text-black">  Pr </span>
+                    <a href="/index"> 
+                        <i class="fa-solid fa-home text-black"></i> 
+                        <span class="text text-black">  Home </span>
                     </a> 
                 </li> 
                 
   
                 <li class="nav-item mb-1"> 
-                    <a href="#"> 
-                        <i class="fa-regular fa-bookmark text-black"></i> 
+                    <a href="/courses">  
+                        <i class="fa-regular fa-address-card text-black"></i> 
                         <span class="text text-black">   Flashcards </span>
                     
                     </a> 
                 </li> 
                 <li class="nav-item mb-1"> 
-                    <a href="#"> 
-                        <i class="fa-regular fa-newspaper text-black"></i> 
+                    <a href="#" id="mirrorLink">  
+                        <i class="fa-solid fa-video text-black"></i> 
                         <span class="text text-black"> Mirror </span>
                     </a> 
-                </li> 
+                </li>
+                <form id="mirrorForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Mirror Sign">
+                    <button type="submit"></button>
+                </form>
+                
                 <li class="nav-item mb-1"> 
-                    <a href="#"> 
-                        <i class="fa-solid fa-archway text-black"></i> 
-                       <span class="text text-black"> Institutions </span>
+                    <a href="#" id="quizLink">
+                        <i class="fa-solid fa-graduation-cap text-black"></i> 
+                       <span class="text text-black"> Quiz </span>
                     </a> 
                 </li> 
+
+                <form id="quizForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Quiz">
+                    <button type="submit"></button>
+                </form>
+
                 <li class="nav-item mb-1"> 
-                    <a href="#"> 
-                        <i class="fa-solid fa-graduation-cap text-black"></i> 
+                    <a href="/review"> 
+                        <i class="fa-solid fa-layer-group text-black"></i> 
                         <span class="text text-black"> Review Stack </span>
+                    </a> 
+                </li> 
+
+                <li class="nav-item mb-1"> 
+                    <a href="/gloss"> 
+                        <i class="fa-solid fa-file text-black"></i> 
+                        <span class="text text-black"> Gloss </span>
                     </a> 
                 </li> 
   

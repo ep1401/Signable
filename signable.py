@@ -30,14 +30,15 @@ def courses():
     response = flask.make_response(html_code)
     return response
 
-@app.route('/learncourses', methods=['GET'])
+@app.route('/learncourses', methods=['GET', 'POST'])
 def learncourses():
-    input = request.args.get('type')
-    if input is None:
-        input = flask.request.cookies.get('type')
-    html_code = flask.render_template('learncourses.html', type = input)
+    if request.method == 'POST':
+        input_data = request.form['course_name']
+    else:
+        input_data = request.cookies.get('type', 'Default Value')
+    html_code = flask.render_template('learncourses.html', type=input_data)
     response = flask.make_response(html_code)
-    response.set_cookie('type', input)
+    response.set_cookie('type', input_data)
     return response
 
 @app.route('/learn', methods=['GET'])
