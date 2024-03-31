@@ -25,8 +25,32 @@
   
 
 <body> 
-    {% include 'sidebar.html' %}
-      
+    <div class="container-fluid p-0 d-flex"> 
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <!-- Your content goes here -->
+            <div class="bg-light p-4">
+                <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
+                    <ol class="breadcrumb"> 
+                        <li class="breadcrumb-item"> 
+                            <i class="fa-solid fa-house"></i> 
+                        </li> 
+                        <li class="breadcrumb-item">Learning Content</li> 
+                        <li class="breadcrumb-item">Next Page</li> 
+                    </ol> 
+                </nav> 
+                <hr> 
+                <div class="row"> 
+                    <div class="col"> 
+                        <p >Page content goes here</p> 
+                    </div> 
+                </div>
+            </div>
+        </div> 
+    </div>        
 </body> 
   
 </html>
