@@ -12,15 +12,7 @@ document.getElementById("quizLink").addEventListener("click", function(event) {
     document.getElementById("quizForm").submit();
 });
 
-document.getElementById("hide").addEventListener("click", function(event) {
-    
-    handleclick();
-});
 
-document.getElementById("mobileshow").addEventListener("click", function(event) {
-    
-    handleclick2();
-});
 
 function handleclick() {
 
