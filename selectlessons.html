@@ -1,200 +1,187 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Koh+Santepheap" rel="stylesheet">
-    <title>Signable - Courses</title>
-    <style>
-        body, header, section, footer, *, a {
-            font-family: 'Koh Santepheap';
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            text-align: center;
-            background-color: #fbfafa;
-        }
-        
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #ccf2f4;
-            background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
-            padding: 4vw;
-        }
-        
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        
-        * {
-            font-size: 2.2vw;
-        }
-        
-        h1 {
-            font-size: 3vw;
-        }
-        
-        h2 {
-            font-size: 2vw;
-        }
-        
-        .lesson {
-            width: calc((100% - 20vw) / 3);
-            height: 15vw;
-            border: .1vw solid #ccc;
-            border-radius: 2vw;
-            margin: 1vw;
-            text-transform: uppercase;
-            cursor: pointer;
-            text-decoration: none;
-            color: #222;
-            background-color: #ffffff;
-            font-size: 2vw;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        
-        .lesson:hover {
-            background-color: #ccc;
-            border-color: #ccc;
-        }
-
-        .options {
-            display: flex;
-        }
-
-        .option-divider {
-            position: relative;
-            width: 1px;
-            background-color: #222;
-            margin: 0 1vw; /* Adjust as needed */
-        }
-
-        
-        .option1 {
-            position: relative;
-            margin-right: 0vw;
-            color: #222;
-            font-size: 1.3vw;
-        }
-        
-        .option2 {
-            position: relative;
-            margin-right: 11vw;
-            color: #222;
-            font-size: 1.3vw;
-        }
-
-        .option1::after,
-        .option2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px; 
-            width: 100%;
-            height: 2px;
-            background-color: transparent;
-            transition: background-color 0.3s ease; 
-        }
-
-        .option1:hover::after,
-        .option2:hover::after {
-            background-color: #000; 
-        }
-        
-        a {
-            text-decoration: none;
-        }
-        
-        .logo {
-            border: none;
-            background: none;
-            padding: 0vw;
-            margin: 0vw;
-            position: absolute;
-            left: 0vw;
-            top: 0vw;
-            
-            text-transform: uppercase;
-            cursor: pointer;
-            text-decoration: none;
-            color: #222;
-            background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
-            font-size: 1vw;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        
-        .logo-image {
-            width: 18vw;
-            height: 8vw;
-            justify-content: center; 
-            align-items: center; 
-        }
-
-        .princeton-image {
-            border: none;
-            background: none;
-            padding: 0vw;
-            margin: 0vw;
-            position: absolute;
-            right: 2vw;
-            top: 1.5vw;
-            width: 11vw;
-            height: 6vw;
-            justify-content: center; 
-            align-items: center; 
-            
-            text-transform: uppercase;
-            cursor: pointer;
-            text-decoration: none;
-            color: #222;
-            background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
-            font-size: 1vw;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-    </style>
-</head>
+<!DOCTYPE html> 
+<html lang="en"> 
+  
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport"
+          content="width=device-width, 
+                   initial-scale=1.0"> 
+    <title>Bootstrap5 Sidebar</title> 
+    <link href= 
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" 
+          rel="stylesheet"
+        integrity= 
+"sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
+          crossorigin="anonymous"> 
+    <link rel="stylesheet" 
+          href="{{ url_for('static', filename='selectlessons/selectlessons.css') }}"> 
+    <link rel="stylesheet" href= 
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity= 
+"sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" /> 
+</head> 
+  
 <body> 
-    <header>
-        <form method="GET" action="/index" style="display: inline;">
-            <button class="logo">
-                <img class="logo-image" src="static/images/logo.png" alt="Logo">
-            </button>
-        </form>
-        <img class="princeton-image" src="static/images/princeton.png" alt="Logo"> 
-        
-        <div class="options">
-            <a href="/courses" class="option1">New Course</a>
-            <div class="option-divider"></div> 
-            <a href="/searchterm" class="option2">Term Search</a>
-        </div>
-    </header>
-    
-    
+  
+    <div id="total" class="container-fluid p-0 d-flex "> 
+        <div id="bdSidebar" 
+             class="d-flex flex-column  
+                    flex-shrink-0  
+                    p-3 
+                    text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+             <ul class="mynav nav  d-flex  d-none d-md-block">   
+                    <li class="nav-item justify-content-right"> 
+                        <a href="#"> 
+                            <i id="hide" class="fa-solid fa-x text-black"></i>
+                        </a> 
+                    </li>
+                   
+                </ul> 
+                
+                <ul class="mynav nav  d-flex  ">
+                    <li>
+                        <img class="logo" src="static/images/logo.png" alt="Logo">
+                    </li>
+                </ul>
+                
+            
+            <a href="#" 
+               class="navbar-brand"> 
+            </a><hr> 
+            <ul class="mynav nav nav-pills flex-column mb-auto "> 
+                <li class="nav-item mb-1"> 
+                    <a href="index"> 
+                        <i class="fa-solid fa-home text-black"></i> 
+                        <span class="text text-black">  Home </span>
+                    </a> 
+                </li> 
+                
+  
+                <li class="nav-item mb-1"> 
+                    <a href="/courses">  
+                        <i class="fa-regular fa-address-card text-black"></i> 
+                        <span class="text text-black">   Flashcards </span>
+                    
+                    </a> 
+                </li> 
+                <li class="nav-item mb-1"> 
+                    <a href="#" id="mirrorLink">  
+                        <i class="fa-solid fa-video text-black"></i> 
+                        <span class="text text-black"> Mirror </span>
+                    </a> 
+                </li>
+                <form id="mirrorForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Mirror Sign">
+                    <button type="submit"></button>
+                </form>
+                
+                <li class="nav-item mb-1"> 
+                    <a href="#" id="quizLink">
+                        <i class="fa-solid fa-graduation-cap text-black"></i> 
+                       <span class="text text-black"> Quiz </span>
+                    </a> 
+                </li> 
 
-    <br>
+                <form id="quizForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Quiz">
+                    <button type="submit"></button>
+                </form>
 
-    <section>
-        <h2>Welcome to {{course}}. Now select a lesson!</h2>
-    </section>
+                <li class="nav-item mb-1"> 
+                    <a href="/review"> 
+                        <i class="fa-solid fa-layer-group text-black"></i> 
+                        <span class="text text-black"> Review Stack </span>
+                    </a> 
+                </li> 
 
-    <br>
-
-    
-    <form method="GET" action="/lessons">
-        {% for lesson_num in range(1, lesson_num + 1) %}
-            <button type="submit" class="lesson" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</button>
-        {% endfor %}
-    </form>
-</body>
+                <li class="nav-item mb-1"> 
+                    <a href="/gloss"> 
+                        <i class="fa-solid fa-file text-black"></i> 
+                        <span class="text text-black"> Gloss </span>
+                    </a> 
+                </li> 
+  
+                <li class="sidebar-item  nav-item mb-1"> 
+                    <a href="#" 
+                       class="sidebar-link collapsed" 
+                       data-bs-toggle="collapse"
+                       data-bs-target="#settings"
+                       aria-expanded="false"
+                       aria-controls="settings"> 
+                        <i class="fas fa-cog pe-2 text-black"></i> 
+                        <span class="topic text text-black">Settings </span> 
+                    </a> 
+                    <ul id="settings" 
+                        class="sidebar-dropdown list-unstyled collapse" 
+                        data-bs-parent="#sidebar"> 
+                        <li class="sidebar-item"> 
+                            <a href="#" class="sidebar-link"> 
+                                <i class="fas fa-sign-in-alt pe-2"></i> 
+                                <span class="topic"> Login</span> 
+                            </a> 
+                        </li> 
+                        <li class="sidebar-item"> 
+                            <a href="#" class="sidebar-link"> 
+                                <i class="fas fa-user-plus pe-2"></i> 
+                                <span class="topic">Register</span> 
+                            </a> 
+                        </li> 
+                        <li class="sidebar-item"> 
+                            <a href="#" class="sidebar-link"> 
+                                <i class="fas fa-sign-out-alt pe-2"></i> 
+                                <span class="topic">Log Out</span> 
+                            </a> 
+                        </li> 
+                    </ul> 
+                </li> 
+            </ul> 
+            <hr> 
+            <div class="d-flex"> 
+  
+               
+            </div> 
+        </div> 
+  
+        <div class="bg-light flex-fill"> 
+            <div class="p-2 d-md-none d-flex text-white color"> 
+                <a id="mobileshow" href="#" class="text-white" 
+                   data-bs-toggle="offcanvas"
+                   data-bs-target="#bdSidebar"> 
+                    <i class="fa-solid fa-bars text-black"></i> 
+                </a> 
+                <span class="ms-3 text-black">Signable</span> 
+            </div> 
+            <div class="p-4">  
+                <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
+                    <ol class="breadcrumb"> 
+                        <li class="breadcrumb-item">
+                            <a href="#" style="color: black; text-decoration: none;">Flashcard</a>
+                        </li>   
+                        <li class="breadcrumb-item">
+                            <a href="/searchterm" style="color: black; text-decoration: none;">Search Term</a>
+                        </li>
+                    </ol> 
+                </nav>
+                <hr>
+                <h2>Select a Course to Start Learning!</h2>
+                <br>
+                <div class="container">
+                    <form method="GET" action="/lessons" class="custom-btn-wrapper">
+                        {% for lesson_num in range(1, lesson_num + 1) %}
+                            <button type="submit" class="btn btn-primary custom-btn" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</button>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div> 
+  
+        </div> 
+    </div> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>
+    <script 
+          src="{{ url_for('static', filename='sidebar/sidebar.js') }}">  </script>
+</body> 
+  
 </html>

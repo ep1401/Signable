@@ -1,0 +1,141 @@
+html, body { 
+	height: 100%; 
+	font-family: 'Ubuntu', sans-serif; 
+    background-color: #fbfafa;
+} 
+
+* {
+    font-family: 'Koh Santepheap';
+    
+}
+
+.gfg { 
+	height: 50px; 
+	width: 50px; 
+
+} 
+
+.width1 {
+    width: 300px !important;
+}
+
+.width2 {
+    width: 50px !important;
+}
+
+#bdSidebar {
+    transition: all 0.3s !important;
+    background-color: #ccf2f4 !important;
+}
+
+.logo {
+    width: 200px;
+    display:flex;
+    margin-right: 20px;
+}
+
+#hide {
+    display: flex;
+    margin-left:auto;
+    padding-bottom: 0px;
+}
+
+.mynav { 
+	color: #fff; 
+} 
+
+.color {
+    background-color: #ccf2f4 !important;
+}
+
+
+.mynav li a { 
+	color: #fff; 
+	text-decoration: none; 
+	width: 100%; 
+	display: block; 
+	border-radius: 5px; 
+	padding: 8px 5px;
+    transition: all 0.3s !important; 
+} 
+
+.text {
+    position: absolute;
+    margin-left: 10px;
+}
+
+.mynav li a.active { 
+	background: rgba(255, 255, 255, 0.2); 
+} 
+
+.mynav li a:hover { 
+	background: rgba(255, 255, 255, 0.2); 
+} 
+
+.mynav li a i { 
+	width: 25px; 
+	text-align: center; 
+} 
+
+h2 {
+    font-size: 300%;
+    text-align: center;
+}
+
+.custom-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.custom-btn {
+    border: .1vw solid #ccc;
+    border-radius: 5%;
+    padding: 10% 20%;
+    font-size: 24px;
+    width: 20%; 
+    margin: 20px; 
+    color: #222;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.custom-btn:hover {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #222;
+}
+
+.breadcrumb-item {
+    color: black;
+    text-decoration: none;
+}
+
+.breadcrumb-item:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-link {
+    color: black;
+    text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+    text-decoration: underline;
+}
+
+.top-right-link {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: black;
+}
+.top-right-link:hover {
+    text-decoration: underline;
+}
+
+
