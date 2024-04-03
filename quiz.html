@@ -24,29 +24,31 @@
             <div class="carousel" id="flashcard-carousel">
                 {% for flashcard in flashcards %}
                 <div class="card-container">
-                    <div class="card" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
-                    speach = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
-                    <div class="front">
-                        <iframe id="video{{ loop.index }}" width="100%" height="100%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
-                    </div>
+                    <div class="card" id = "{{ flashcard['cardid'] }}">
+                        <div class="front">
+                            <iframe id="video{{ loop.index }}" width="100%" height="100%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="options">
+                            <!-- Add your options here. Mark the correct one with data-correct="true" -->
+                            <button class="option" data-correct="true">{{ flashcard['translation'] }}</button>
+                            <button class="option">Option 2</button>
+                            <button class="option">Option 3</button>
+                            <button class="option">Option 4</button>
+                        </div>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
 
-            <div id="card-counter">
+            <div id="card-counter" style="display: none;">
                 <span id="current-card">1</span> / <span id="total-cards"></span>
             </div>
 
-            <h2>Select a term:</h2>
+            <button id="next-button" style="display: none;">Next</button>
+            <div id="score" style="display: none;"></div>
         </div>
-
-        {% for flashcard in flashcards %}
-            <button class="back-button" name="number" value="{{ flashcard['cardid'] }}">
-                {{ flashcard["translation"] }}
-            </button>
-        {% endfor %}
     </section>
-    
 </body>
 </html>

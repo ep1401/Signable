@@ -1,198 +1,59 @@
-let currentCard = 1,
-    totalCards = document.querySelectorAll('.card-container').length,
-    infoback = document.querySelector(".info"),
-    carousel = document.querySelector(".carousel"),
-    next = document.querySelector(".next"),
-    prev = document.querySelector(".prev"),
-    flip = document.querySelector(".flip"),
-    shuffleButton = document.querySelector(".shuffle"),
-    opp = document.querySelector(".opp"),
-    backButtons = document.querySelectorAll('.back-button');
-
-let bool = false;
-
-let allButtons = document.querySelectorAll('button');
+let cards = Array.from(document.querySelectorAll('.card-container'));
+let score = 0;
+let currentCardIndex = 0;
+let totalCards = document.querySelectorAll('.card-container').length;
 
 updateCardCounter();
 
-// Iterate over each button and set transition duration to 0
-allButtons.forEach(button => {
-    button.style.transitionDuration = '0s';
+// Randomize the order of the cards
+cards.sort(() => Math.random() - 0.5);
+
+// Hide all cards and show only the first one
+cards.forEach((card, index) => {
+  card.style.display = index === 0 ? 'block' : 'none';
 });
 
-backButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        resetCards();
-
-        let car = document.querySelectorAll(".carousel");
-        car.forEach(cardCar => {
-            cardCar.style.transitionDuration='0s';
-        });
-
-        let currentCardElements = document.querySelectorAll(".card-container");
-        currentCardElements.forEach((cardContainer, index) => {
-            if (cardContainer.querySelector(".card").id == this.value) {
-                currentCard = index + 1;
-            }
-        });
-
-        cardFly(); 
+// Add event listeners to the options
+cards.forEach(card => {
+  let options = card.querySelectorAll('.option');
+  options.forEach(option => {
+    option.addEventListener('click', function() {
+      // Check if the selected option is correct
+      if (option.dataset.correct) {
+        score++;
+      }
+      // Disable all options after one is clicked
+      options.forEach(option => {
+        option.disabled = true;
+      });
+      // Show the next button
+      document.getElementById('next-button').style.display = 'block';
     });
+  });
 });
 
-opp.addEventListener("click", function(e) {
-    let currentCardElements = document.querySelectorAll(".card-container");
-    currentCardElements.forEach(cardContainer => {
-        cardContainer.querySelector(".card").style.transitionDuration='0s';
-        cardContainer.querySelector(".card").classList.toggle("active");
-    });
-
-    // Check if the first card is active after toggling
-    let firstCard = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
-    bool = firstCard.classList.contains("active");
-});
-
-
-next.addEventListener("click", function(e) {
-    resetSpeed();
-    if (currentCard < document.querySelectorAll(".card-container").length) {
-        resetCards();
-        currentCard++;
-        updateCardCounter();
-        cardFly();
-    }
-});
-
-prev.addEventListener("click", function(e) {
-    resetSpeed();
-    if (currentCard > 1) {
-        resetCards();
-        currentCard--;
-        updateCardCounter();
-        cardFly();
-    }
-});
-
-flip.addEventListener("click", function (e) {
-    resetSpeed();
-    let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
-    if (currentCardElement) {
-        currentCardElement.classList.toggle("active");
-    }
-});
-
-document.querySelectorAll('.info').forEach(infoBackButton => {
-    infoBackButton.addEventListener('click', function() {
-
-        let currentCardElements = document.querySelectorAll(".card-container");
-        currentCardElements.forEach((cardContainer, index) => {
-            if (cardContainer.querySelector(".card").id == this.value) {
-                createinfo(cardContainer.querySelector(".card"));
-            }
-        });
-    });
+// Add event listener to the next button
+document.getElementById('next-button').addEventListener('click', function() {
+  // Hide the current card
+  cards[currentCardIndex].style.display = 'none';
+  currentCardIndex++;
+  updateCardCounter();
+  if (currentCardIndex < cards.length) {
+    // Show the next card
+    cards[currentCardIndex].style.display = 'block';
+    // Hide the next button until an option is clicked
+    this.style.display = 'none';
+  } else {
+    // Quiz is over, show the score
+    document.getElementById('score').textContent = `Quiz over! Your score is ${score}`;
+    document.getElementById('score').style.display = 'block';
+    this.style.display = 'none';
+  }
 });
 
 
-shuffleButton.addEventListener("click", function(e) {
-    resetCards();
-    cardFly();
-});
-
-function createinfo(card){
-    disableButtons();
-
-    let extraInfo = "Term: " + card.querySelector('.back').textContent;; // Get the text content of the back of the card
-
-    var modal = document.createElement("div");
-    modal.classList.add("modal");
-
-    var extraInfoContent = document.createElement("p");
-    extraInfoContent.textContent = extraInfo;
-    extraInfoContent.style.fontSize = "3vw";
-    extraInfoContent.style.textAlign = "left";
-    modal.appendChild(extraInfoContent);
-
-    var extraInfoContent = document.createElement("p");
-    extraInfo = "Memory aid: " + card.getAttribute('mem');
-    extraInfoContent.textContent = extraInfo;
-    extraInfoContent.style.fontSize = "1vw";
-    extraInfoContent.style.textAlign = "left";
-    modal.appendChild(extraInfoContent);
-
-    var extraInfoContent = document.createElement("p");
-    extraInfo = "Part of Speach: " + card.getAttribute('speach');
-    extraInfoContent.textContent = extraInfo;
-    extraInfoContent.style.fontSize = "1vw";
-    extraInfoContent.style.textAlign = "left";
-    modal.appendChild(extraInfoContent);
-
-    var extraInfoContent = document.createElement("p");
-    extraInfo = "Example Sentence: " + card.getAttribute('sentence');
-    extraInfoContent.textContent = extraInfo;
-    extraInfoContent.style.fontSize = "1vw";
-    extraInfoContent.style.textAlign = "left";
-    modal.appendChild(extraInfoContent);
-
-    var closeButton = document.createElement("button");
-    closeButton.textContent = "Close";
-    closeButton.classList.add("close-button");
-    closeButton.addEventListener("click", function() {
-        enableButtons();
-        modal.style.display = "none";
-    });
-
-    modal.appendChild(closeButton);
-
-    document.body.appendChild(modal);
-}
-
-
-function disableButtons() {
-    document.querySelectorAll('button').forEach(button => {
-        button.disabled = true;
-    });
-}
-
-function enableButtons() {
-    document.querySelectorAll('button').forEach(button => {
-        button.disabled = false;
-    });
-}
-
-function resetSpeed() {
-    let currentCardElements = document.querySelectorAll(".card-container");
-    currentCardElements.forEach(cardContainer => {
-        cardContainer.querySelector(".card").style.transitionDuration='.4s';
-    });
-
-    let car = document.querySelectorAll(".carousel");
-        car.forEach(cardCar => {
-            cardCar.style.transitionDuration='0.4s';
-        });
-}
-
-function cardFly() {
-    carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
-}
-
-function resetCards() {
-    let cards = document.querySelectorAll(".card-container .card");
-    cards.forEach(card => {
-        if (bool) {
-            card.classList.add("active"); 
-        }
-        else card.classList.remove("active");
-    });
-}
-
-function displayCard(cardnumber) {
-    currentCard = cardnumber;
-    updateCardCounter();
-    cardFly();
-}
 
 function updateCardCounter() {
-    document.getElementById('current-card').textContent = currentCard;
+    document.getElementById('current-card').textContent = currentCardIndex + 1;
     document.getElementById('total-cards').textContent = totalCards;
 }
