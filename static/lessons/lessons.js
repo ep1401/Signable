@@ -5,6 +5,7 @@ let currentCard = 1,
     next = document.querySelector(".next"),
     prev = document.querySelector(".prev"),
     flip = document.querySelector(".flip"),
+    star = document.querySelector(".star"),
     shuffleButton = document.querySelector(".shuffle"),
     opp = document.querySelector(".opp"),
     backButtons = document.querySelectorAll('.back-button');
@@ -81,6 +82,10 @@ flip.addEventListener("click", function (e) {
     }
 });
 
+star.addEventListener("click", function(e) {
+    star.classList.toggle('clicked');
+});
+
 document.querySelectorAll('.info').forEach(infoBackButton => {
     infoBackButton.addEventListener('click', function() {
 
@@ -122,7 +127,7 @@ function createinfo(card){
     modal.appendChild(extraInfoContent);
 
     var extraInfoContent = document.createElement("p");
-    extraInfo = "Part of Speach: " + card.getAttribute('speach');
+    extraInfo = "Part of Speech: " + card.getAttribute('speech');
     extraInfoContent.textContent = extraInfo;
     extraInfoContent.style.fontSize = "1vw";
     extraInfoContent.style.textAlign = "left";
