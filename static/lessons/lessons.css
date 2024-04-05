@@ -235,11 +235,11 @@ h2 {
     transition: 0.2s;
     justify-content: center; 
     align-items: center; 
-    
 }
 
 .star.clicked {
-    background-image: url("/static/images/filledstar.png");
+    filter: brightness(200);
+    background-image: url("/static/images/filledstar.png"); 
 }
 
 .info-front,

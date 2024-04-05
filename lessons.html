@@ -25,9 +25,9 @@
                 {% for flashcard in flashcards %}
                 <div class="card-container">
                     <div class="card" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
-                    speach = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
+                    speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                     <div class="front">
-                        <button class="star star-front">
+                        <button class="star star-front" value = "{{ flashcard['cardid'] }}">
                             <img class="card-image" src="static/images/star.png" 
                             alt="Star">
                         </button>
@@ -38,7 +38,7 @@
                         <iframe id="video{{ loop.index }}" width="100%" height="100%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="back">
-                        <button class="star star-back">
+                        <button class="star star-back" value = "{{ flashcard['cardid'] }}">
                             <img class="card-image" src="static/images/star.png" 
                             alt="Star">
                         </button>

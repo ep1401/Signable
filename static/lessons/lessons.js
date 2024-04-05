@@ -5,7 +5,6 @@ let currentCard = 1,
     next = document.querySelector(".next"),
     prev = document.querySelector(".prev"),
     flip = document.querySelector(".flip"),
-    star = document.querySelector(".star"),
     shuffleButton = document.querySelector(".shuffle"),
     opp = document.querySelector(".opp"),
     backButtons = document.querySelectorAll('.back-button');
@@ -82,9 +81,19 @@ flip.addEventListener("click", function (e) {
     }
 });
 
-star.addEventListener("click", function(e) {
-    star.classList.toggle('clicked');
+document.querySelectorAll('.star').forEach(starButton => {
+    starButton.addEventListener('click', function() {
+
+        let currentCardElements = document.querySelectorAll(".card-container");
+        currentCardElements.forEach((cardContainer, index) => {
+            if (cardContainer.querySelector(".card").id == this.value) {
+                starButton.classList.toggle('clicked');
+            }
+        });
+    });
 });
+
+
 
 document.querySelectorAll('.info').forEach(infoBackButton => {
     infoBackButton.addEventListener('click', function() {
