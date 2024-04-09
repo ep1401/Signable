@@ -20,6 +20,13 @@ course_lessonsnum = {
     'ASL107': 9
 }
 
+@app.route('/logoutapp', methods=['GET'])
+def logoutapp():
+    return auth.logoutapp()
+
+@app.route('/logoutcas', methods=['GET'])
+def logoutcas():
+    return auth.logoutcas()
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
@@ -29,22 +36,16 @@ def index():
     response = flask.make_response(html_code)
     return response
 
-@app.route('/logoutapp', methods=['GET'])
-def logoutapp():
-    return auth.logoutapp()
-
-@app.route('/logoutcas', methods=['GET'])
-def logoutcas():
-    return auth.logoutcas()
-
 @app.route('/courses', methods=['GET'])
 def courses():
+    username = auth.authenticate()
     html_code = flask.render_template('courses.html')
     response = flask.make_response(html_code)
     return response
 
 @app.route('/learncourses', methods=['GET', 'POST'])
 def learncourses():
+    username = auth.authenticate()
     if request.method == 'POST':
         input_data = request.form['course_name']
     else:
@@ -56,18 +57,21 @@ def learncourses():
 
 @app.route('/learn', methods=['GET'])
 def learn():
+    username = auth.authenticate()
     html_code = flask.render_template('learn.html')
     response = flask.make_response(html_code)
     return response
 
 @app.route('/searchterm', methods=['GET'])
 def searchterm():
+    username = auth.authenticate()
     html_code = flask.render_template('searchterm.html')
     response = flask.make_response(html_code)
     return response
 
 @app.route('/searchterm/results', methods=['GET'])
 def searchtermresults():
+    username = auth.authenticate()
     input = request.args.get('query', default="")   
     query_result = dbconnect.get_terms(input)
     if query_result[0] is True:
@@ -85,6 +89,7 @@ def searchtermresults():
 
 @app.route('/lessons', methods=['GET'])
 def lessons():
+    username = auth.authenticate()
     input = request.args.get('course', default=None)
         
     values = input.split()
@@ -107,7 +112,7 @@ def lessons():
 
 @app.route('/selectlessons', methods=['GET'])
 def selectlessons():
-    
+    username = auth.authenticate()
     course = request.args.get('course', default=None)
     
     html_code = flask.render_template('selectlessons.html', course=course,
@@ -117,7 +122,7 @@ def selectlessons():
 
 @app.route('/learnselectlessons', methods=['GET'])
 def learnselectlessons():
-    
+    username = auth.authenticate()
     course = request.args.get('course', default=None)
     type = flask.request.cookies.get('type')
     
@@ -131,7 +136,7 @@ def learnselectlessons():
 
 @app.route('/mirrorsign', methods=['GET'])
 def mirrorsign():   
-   
+    username = auth.authenticate()
     input = request.args.get('mirror', default=None)
     values = input.split()
     course = values[0]
@@ -151,6 +156,7 @@ def mirrorsign():
 
 @app.route('/quiz', methods=['GET'])
 def quiz():
+    username = auth.authenticate()
     input = request.args.get('value', default=None)
     values = input.split()
     course = values[0]
@@ -170,18 +176,21 @@ def quiz():
 
 @app.route('/gloss', methods=['GET'])
 def gloss():
+    username = auth.authenticate()
     html_code = flask.render_template('gloss.html')
     response = flask.make_response(html_code)
     return response
 
 @app.route('/review', methods=['GET'])
 def review():
+    username = auth.authenticate()
     html_code = flask.render_template('reviewstack.html')
     response = flask.make_response(html_code)
     return response
 
 @app.route('/mirrorquiz', methods=['GET'])
 def mirrorquiz():
+    username = auth.authenticate()
     input = request.args.get('value', default=None)
     type = flask.request.cookies.get('type')
     
@@ -222,6 +231,7 @@ def mirrorquiz():
 
 @app.route('/test', methods=['GET'])
 def testhome():
+    username = auth.authenticate()
     html_code = flask.render_template('sidebar.html')
     response = flask.make_response(html_code)
     return response
