@@ -5,9 +5,13 @@ import os
 from flask import request
 from flask import send_file
 import dbconnect
+import auth
+import dotenv
 
 app = flask.Flask(__name__, template_folder='.')
 _DATABASE_URL = os.environ['DATABASE_URL']
+dotenv.load_dotenv()
+app.secret_key = os.environ['APP_SECRET_KEY']
 
 course_lessonsnum = {
     'ASL101': 14,
@@ -20,9 +24,18 @@ course_lessonsnum = {
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
+    username = auth.authenticate()
     html_code = flask.render_template('index.html')
     response = flask.make_response(html_code)
     return response
+
+@app.route('/logoutapp', methods=['GET'])
+def logoutapp():
+    return auth.logoutapp()
+
+@app.route('/logoutcas', methods=['GET'])
+def logoutcas():
+    return auth.logoutcas()
 
 @app.route('/courses', methods=['GET'])
 def courses():
