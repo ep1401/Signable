@@ -20,13 +20,21 @@ course_lessonsnum = {
     'ASL107': 9
 }
 
+@app.route('/login', methods=['GET'])
+def login():
+    return auth.login()
+
+@app.route('/login/callback', methods=['GET'])
+def callback():
+    return auth.callback()
+
 @app.route('/logoutapp', methods=['GET'])
 def logoutapp():
     return auth.logoutapp()
 
-@app.route('/logoutcas', methods=['GET'])
-def logoutcas():
-    return auth.logoutcas()
+@app.route('/logoutgoogle', methods=['GET'])
+def logoutgoogle():
+    return auth.logoutgoogle()
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
