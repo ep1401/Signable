@@ -354,9 +354,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <div class="card-counter">
-                                <span id="current-card">1</span> / <span id="total-cards">{{ flashcards|length }}</span>
-                            </div>
+                            <div id="card-counter" class="text-center mt-4"></div>
                     </div>
                 </div>
             </div> 
@@ -400,12 +398,6 @@
         });
     }
     
-    $('#myCarousel').on('slide.bs.carousel', function (event) {
-        currentCard = $(event.relatedTarget).index() + 1; 
-        updateCardCounter(); 
-        resetCardSide(); 
-    });
-    
     function resetCardSide() {
         if (frontSideFirst) {
             $('.carousel-item').eq(currentCard - 1).find('.flashcard').removeClass('flipped'); // Ensure front side is shown
@@ -431,13 +423,32 @@
     }
     
     function updateCardCounter() {
-        document.getElementById('current-card').textContent = currentCard;
-        document.getElementById('total-cards').textContent = totalCards;
+        document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
     }
 
-    updateCardCounter();
+    $('.carousel-control-prev').on('click', function() {
+        if (currentCard > 1) {
+            currentCard--;
+        }
+        else {
+            currentCard = totalCards;
+        }
+        updateCardCounter();
+    });
+
+    $('.carousel-control-next').on('click', function() {
+        if (currentCard < totalCards) {
+            currentCard++;
+        }
+        else {
+            currentCard = 1;
+        }
+        updateCardCounter();
+    });
+
     
     $(document).ready(function(){
+        updateCardCounter();
         $(document).on('click', '.flashcard', function(){
             $(this).toggleClass('flipped');
         });
