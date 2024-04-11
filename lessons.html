@@ -179,12 +179,29 @@
         background-color: #cccccc; 
         color: #000;
     }
+    .star-button {
+        position: absolute;
+        top: 2%;
+        left: 2%;
+        background: none; 
+        border: none; 
+    }
+
+    
+    .star-button.active {
+        color: #FFD700; 
+    }
     </style>
   
 <body> 
   
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
-        <div id="bdSidebar" class="d-flex flex-column p-3 text-black width1" style="width: 70px">
+        <div id="bdSidebar" 
+             class="d-flex flex-column  
+                    flex-shrink-0  
+                    p-3 
+                    text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+             <ul class="mynav nav  d-flex  d-none d-md-block">  
 
              <ul class="mynav nav  d-flex  d-none d-md-block">   
                     <li class="nav-item justify-content-right"> 
@@ -326,9 +343,15 @@
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                                                         <div class="front">
+                                                            <button class="star-button btn-lg">
+                                                                <i class="fa-solid fa-star"></i>
+                                                            </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
                                                         <div class="back">
+                                                            <button class="star-button btn-lg">
+                                                                <i class="fa-solid fa-star"></i>
+                                                            </button>
                                                             {{ flashcard['translation'] | safe}}
                                                         </div>
                                                     </div>
@@ -461,7 +484,26 @@
     $(document).ready(function(){
         updateCardCounter();
         $(document).on('click', '.flashcard', function(){
-            $(this).toggleClass('flipped');
+            if (!$(event.target).closest('.star-button').length) {
+                $(this).toggleClass('flipped');
+            }
+            
+        });
+        $('.star-button').on('click', function(){
+            var card = $(this).closest('.flashcard');
+            var frontStar = card.find('.front .star-button');
+            var backStar = card.find('.back .star-button');
+            
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active');
+                frontStar.removeClass('active');
+                backStar.removeClass('active');
+            } else {
+                $('.star-button').removeClass('active'); // Remove active class from all star buttons
+                $(this).addClass('active'); // Add active class to the clicked star button
+                frontStar.addClass('active');
+                backStar.addClass('active');
+            }
         });
     });
 </script>
