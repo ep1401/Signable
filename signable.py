@@ -192,7 +192,16 @@ def gloss():
 @app.route('/review', methods=['GET'])
 def review():
     username = auth.authenticate()
-    html_code = flask.render_template('reviewstack.html')
+    input = "ASL101 1"
+        
+    values = input.split()
+    course = values[0]
+    courseid = int(course[3:6])
+    lessonid = values[1]
+
+    query_result = dbconnect.get_flashcards(courseid, lessonid)
+    flashcards = query_result[1]
+    html_code = flask.render_template('reviewstack.html', flashcards = flashcards)
     response = flask.make_response(html_code)
     return response
 
