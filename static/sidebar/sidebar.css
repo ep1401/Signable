@@ -82,5 +82,25 @@ h1 {
     text-align: center;
 }
 
+.breadcrumb-item {
+    color: black;
+    text-decoration: none;
+}
+
+.breadcrumb-item:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-link {
+    color: black;
+    text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+    text-decoration: underline;
+}
+
+
+
 
 

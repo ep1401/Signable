@@ -191,6 +191,28 @@
     .star-button.active {
         color: #FFD700; 
     }
+
+    .breadcrumb {
+        padding: 8px 15px;
+        margin-bottom: 20px;
+        list-style: none;
+        border-radius: 4px;
+        background-color: transparent;
+    }
+    
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: ">";
+        padding: 0 5px;
+        color: #333;
+    }
+    
+    .breadcrumb-item.active {
+        color: #333;
+    }
+
+    hr {
+        border-top: 1px solid #555;
+    }
     </style>
   
 <body> 
@@ -325,7 +347,19 @@
                 </a> 
                 <span class="ms-3 text-black">Signable</span> 
             </div> 
-            <div class="p-4"> 
+            <div class="p-3"> 
+                <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
+                    <ol class="breadcrumb m-0"> 
+                        <li class="breadcrumb-item">Flashcard</li>  
+                        <li class="breadcrumb-item">
+                            <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
+                        </li>   
+                        <li class="breadcrumb-item">
+                            <a href="/selectlessons?course={{course}}" style="color: black; text-decoration: none;">Lesson</a>
+                        </li>
+                    </ol> 
+                    <hr>
+                </nav>
                 <div class="container-xl">
                     <div class="row">
                         <div class="col-md-10  mx-auto container-fluid">
@@ -490,22 +524,22 @@
             
         });
         $('.star-button').on('click', function(){
-            var card = $(this).closest('.flashcard');
-            var frontStar = card.find('.front .star-button');
-            var backStar = card.find('.back .star-button');
-            
-            // Toggle active class for star button
-            $(this).toggleClass('active');
-            
-            // Toggle active class for front and back stars
-            if ($(this).hasClass('active')) {
-                frontStar.addClass('active');
-                backStar.addClass('active');
-            } else {
-                frontStar.removeClass('active');
-                backStar.removeClass('active');
-            }
-        });
+        var card = $(this).closest('.flashcard');
+        var frontStar = card.find('.front .star-button');
+        var backStar = card.find('.back .star-button');
+        
+        // Toggle active class for star button
+        $(this).toggleClass('active');
+        
+        // Toggle active class for front and back stars
+        if ($(this).hasClass('active')) {
+            frontStar.addClass('active');
+            backStar.addClass('active');
+        } else {
+            frontStar.removeClass('active');
+            backStar.removeClass('active');
+        }
+    });
     });
 </script>
 
