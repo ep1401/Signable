@@ -90,9 +90,42 @@ def get_terms(searchterm):
             _put_connection(connection)
     
     return return_list
+
+def get_users(searchterm):
+    connection = _get_connection()
+
+
+    try: 
+        with connection.cursor() as cursor:
+            query_str = "SELECT netid, firstname, lastname "
+            query_str += "FROM studentusers"
+            cursor.execute(query_str, [f"%{searchterm}%"])
+            table = cursor.fetchall()
+
+            return_list = []
+            return_list.append(True)
+            
+            user_list = []
+            for row in table:
+                user = {"netid": row[0], "firstname": row[1],
+                             "lastname": row[2] }
+                user_list.append(user)
+            return_list.append(user_list)
+
+    except Exception as ex:
+            return_list = []
+            return_list.append(False)
+            return_list.append("A server error occurred. Please contact the system administrator.")
+            print(sys.argv[0] + ":", ex, file=sys.stderr)
+
+    finally:
+            _put_connection(connection)
     
-    
-    
+    return return_list
+
+
+
+
 
 
 

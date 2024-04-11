@@ -40,7 +40,7 @@ def logoutgoogle():
 @app.route('/index', methods=['GET'])
 def index():
     username = auth.authenticate()
-    html_code = flask.render_template('index.html')
+    html_code = flask.render_template('index.html', username = username)
     response = flask.make_response(html_code)
     return response
 
