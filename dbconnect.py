@@ -91,7 +91,7 @@ def get_terms(searchterm):
     
     return return_list
 
-def get_users(searchterm):
+def get_users():
     connection = _get_connection()
 
 
@@ -99,7 +99,7 @@ def get_users(searchterm):
         with connection.cursor() as cursor:
             query_str = "SELECT netid, firstname, lastname "
             query_str += "FROM studentusers"
-            cursor.execute(query_str, [f"%{searchterm}%"])
+            cursor.execute(query_str)
             table = cursor.fetchall()
 
             return_list = []
@@ -122,6 +122,26 @@ def get_users(searchterm):
             _put_connection(connection)
     
     return return_list
+
+def add_user(username, firstname, lastname):
+    connection = _get_connection()
+
+    try: 
+        with connection.cursor() as cursor:
+            query_str = "INSERT INTO studentusers (netid, firstname, lastname) VALUES (%s, %s, %s)"
+            cursor.execute(query_str, (username, firstname, lastname))
+            connection.commit()
+            
+            return True, "User added successfully."
+
+    except Exception as ex:
+        error_message = "A server error occurred. Please contact the system administrator."
+        print(sys.argv[0] + ":", ex, file=sys.stderr)
+        return False, error_message
+
+    finally:
+        _put_connection(connection)
+
 
 
 
