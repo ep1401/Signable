@@ -145,7 +145,7 @@ def learnselectlessons():
 @app.route('/mirrorsign', methods=['GET'])
 def mirrorsign():   
     username = auth.authenticate()
-    input = request.args.get('mirror', default=None)
+    input = request.args.get('course', default=None)
     values = input.split()
     course = values[0]
     courseid = int(course[3:6])
@@ -199,7 +199,7 @@ def review():
 @app.route('/mirrorquiz', methods=['GET'])
 def mirrorquiz():
     username = auth.authenticate()
-    input = request.args.get('value', default=None)
+    input = request.args.get('course', default=None)
     type = flask.request.cookies.get('type')
     
     if type == "Mirror Sign":
