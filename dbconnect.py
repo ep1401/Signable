@@ -91,26 +91,29 @@ def get_terms(searchterm):
     
     return return_list
 
-def get_users():
+def get_user(netid):
     connection = _get_connection()
 
 
     try: 
         with connection.cursor() as cursor:
             query_str = "SELECT netid, firstname, lastname "
-            query_str += "FROM studentusers"
-            cursor.execute(query_str)
+            query_str += "FROM studentusers WHERE netid = %s"
+            cursor.execute(query_str, [netid])
             table = cursor.fetchall()
-
+            
             return_list = []
             return_list.append(True)
-            
-            user_list = []
-            for row in table:
+         
+            if table == []: 
+                 return_list.append(False)
+            else:
+                return_list.append(True)
+                row = table[0]
                 user = {"netid": row[0], "firstname": row[1],
                              "lastname": row[2] }
-                user_list.append(user)
-            return_list.append(user_list)
+                return_list.append(user)
+
 
     except Exception as ex:
             return_list = []

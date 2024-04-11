@@ -40,8 +40,9 @@ def logoutgoogle():
 @app.route('/index', methods=['GET'])
 def index():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     html_code = flask.render_template('index.html', username = username)
     response = flask.make_response(html_code)
@@ -50,8 +51,9 @@ def index():
 @app.route('/courses', methods=['GET'])
 def courses():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     html_code = flask.render_template('courses.html')
     response = flask.make_response(html_code)
@@ -60,8 +62,9 @@ def courses():
 @app.route('/learncourses', methods=['GET', 'POST'])
 def learncourses():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     if request.method == 'POST':
         input_data = request.form['course_name']
@@ -75,8 +78,9 @@ def learncourses():
 @app.route('/learn', methods=['GET'])
 def learn():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     html_code = flask.render_template('learn.html')
     response = flask.make_response(html_code)
@@ -85,8 +89,9 @@ def learn():
 @app.route('/searchterm', methods=['GET'])
 def searchterm():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     html_code = flask.render_template('searchterm.html')
     response = flask.make_response(html_code)
@@ -95,8 +100,9 @@ def searchterm():
 @app.route('/searchterm/results', methods=['GET'])
 def searchtermresults():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     input = request.args.get('query', default="")   
     query_result = dbconnect.get_terms(input)
@@ -116,8 +122,9 @@ def searchtermresults():
 @app.route('/lessons', methods=['GET'])
 def lessons():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     input = request.args.get('course', default=None)
         
@@ -142,8 +149,9 @@ def lessons():
 @app.route('/selectlessons', methods=['GET'])
 def selectlessons():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     course = request.args.get('course', default=None)
     
@@ -155,8 +163,9 @@ def selectlessons():
 @app.route('/learnselectlessons', methods=['GET'])
 def learnselectlessons():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     course = request.args.get('course', default=None)
     type = flask.request.cookies.get('type')
@@ -172,8 +181,9 @@ def learnselectlessons():
 @app.route('/mirrorsign', methods=['GET'])
 def mirrorsign():   
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     input = request.args.get('course', default=None)
     values = input.split()
@@ -195,8 +205,9 @@ def mirrorsign():
 @app.route('/quiz', methods=['GET'])
 def quiz():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     input = request.args.get('value', default=None)
     values = input.split()
@@ -218,8 +229,9 @@ def quiz():
 @app.route('/gloss', methods=['GET'])
 def gloss():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     html_code = flask.render_template('gloss.html')
     response = flask.make_response(html_code)
@@ -228,8 +240,9 @@ def gloss():
 @app.route('/review', methods=['GET'])
 def review():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     input = "ASL101 1"
         
@@ -247,8 +260,9 @@ def review():
 @app.route('/mirrorquiz', methods=['GET'])
 def mirrorquiz():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     input = request.args.get('course', default=None)
     type = flask.request.cookies.get('type')
@@ -291,8 +305,9 @@ def mirrorquiz():
 @app.route('/test', methods=['GET'])
 def testhome():
     username = auth.authenticate()
-    users = dbconnect.get_users()
-    if username not in users:
+    userinfo = dbconnect.get_user(username )
+ 
+    if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
     html_code = flask.render_template('sidebar.html')
     response = flask.make_response(html_code)
