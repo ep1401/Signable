@@ -494,15 +494,16 @@
             var frontStar = card.find('.front .star-button');
             var backStar = card.find('.back .star-button');
             
+            // Toggle active class for star button
+            $(this).toggleClass('active');
+            
+            // Toggle active class for front and back stars
             if ($(this).hasClass('active')) {
-                $(this).removeClass('active');
-                frontStar.removeClass('active');
-                backStar.removeClass('active');
-            } else {
-                $('.star-button').removeClass('active'); // Remove active class from all star buttons
-                $(this).addClass('active'); // Add active class to the clicked star button
                 frontStar.addClass('active');
                 backStar.addClass('active');
+            } else {
+                frontStar.removeClass('active');
+                backStar.removeClass('active');
             }
         });
     });
