@@ -165,16 +165,27 @@
     .carousel .carousel-item {
         transition: transform 0.2s; 
     }
+
+    .option {
+        background-color: #ccf2f4; 
+        color: #000; 
+        border: none;
+        width: 60px; 
+        height: 60px; 
+        border-radius: 0%; 
+    }
+
+    .option.btn:hover {
+        background-color: #cccccc; 
+        color: #000;
+    }
     </style>
   
 <body> 
   
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
-        <div id="bdSidebar" 
-             class="d-flex flex-column  
-                    flex-shrink-0  
-                    p-3 
-                    text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+        <div id="bdSidebar" class="d-flex flex-column p-3 text-black width1" style="width: 70px">
+
              <ul class="mynav nav  d-flex  d-none d-md-block">   
                     <li class="nav-item justify-content-right"> 
                         <a href="#"> 
@@ -335,26 +346,26 @@
                                     <i class="fa fa-chevron-right"></i>
                                 </a>
                             </div>
-                            <div class="text-center mt-4">
+                            <div class="text-center mt">
                                 
                                 <form method="GET" action="/mirrorsign" style="display: inline;">
-                                    <button type="submit" class="mirror btn btn-lg btn-light rounded-circle mr-3" name="mirror" value="{{ course }} {{ lesson_num }}">
-                                        <i class="fa fa-refresh"></i> 
+                                    <button type="submit" class="option mirror btn btn-lg btn-light rounded-circle mr-3" name="mirror" value="{{ course }} {{ lesson_num }}">
+                                        <i class="fa-solid fa-video text-black"></i> 
                                     </button>
                                 </form>
-                                <button class="shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
-                                    <i class="fa fa-random"></i> 
+                                <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
+                                    <i class="fa-solid fa-random"></i> 
                                 </button>
-                                <button class="opp btn btn-lg btn-light rounded-circle mr-3">
-                                    <i class="fa fa-exchange"></i> 
+                                <button class="option opp btn btn-lg btn-light rounded-circle mr-3">
+                                    <i class="fa-solid fa-exchange"></i> 
                                 </button>
                                 <form method="GET" action="/quiz" style="display: inline;">
-                                    <button type="submit" class="quiz btn btn-lg btn-light rounded-circle" name="value" value="{{ course }} {{ lesson_num }}">
-                                        <i class="fa fa-question-circle"></i> 
+                                    <button type="submit" class="option quiz btn btn-lg btn-light rounded-circle" name="value" value="{{ course }} {{ lesson_num }}">
+                                        <i class="fa-solid fa-graduation-cap text-black"></i> 
                                     </button>
                                 </form>
                             </div>
-                            <div id="card-counter" class="text-center mt-4"></div>
+                            <div id="card-counter" class="text-center mt-3"></div>
                     </div>
                 </div>
             </div> 
