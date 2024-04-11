@@ -8,5 +8,5 @@ CREATE TABLE studentusers(netid TEXT, firstname TEXT, lastname TEXT);
 
 CREATE TABLE starredflashcards(netid TEXT, cardid INTEGER);
 
-CREATE TABLE admin(adminid INTEGER, firstname text, lastname TEXT);
+CREATE TABLE admin(adminid TEXT, firstname text, lastname TEXT);
 
