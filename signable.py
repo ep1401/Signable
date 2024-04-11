@@ -305,7 +305,7 @@ def mirrorquiz():
 @app.route('/test', methods=['GET'])
 def testhome():
     username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
+    userinfo = dbconnect.get_user(username )
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
