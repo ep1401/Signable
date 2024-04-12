@@ -210,6 +210,7 @@ def get_starred_cards(netid):
             for row in table:
                 flashcard = {"cardid": row[0], "videolink": row[1], "translation": row[2],
                              "memorytip": row[3], "speech": row[4], "sentence": row[5]}
+                flashcard["starred-class"] = "active"
                 flashcard_list.append(flashcard)
             return_list.append(flashcard_list)
     

@@ -351,7 +351,10 @@ def review():
     if (query_result[0] == True):
         
         flashcards = query_result[1]
-        html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin)
+        empty = []
+        if len(flashcards) != 0:
+            empty=[1]
+        html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin, empty=empty)
         response = flask.make_response(html_code)
     else:
         return flask.redirect('/index')
