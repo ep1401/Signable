@@ -278,7 +278,10 @@ def mirrorsign():
     query_result = dbconnect.get_flashcards(username, courseid, lessonid)
     if True is True:
         flashcards = query_result[1]
-        html_code = flask.render_template('mirrorsign.html', flashcards = flashcards, admin = admin)
+        empty = []
+        if len(flashcards) != 0:
+            empty=[1]
+        html_code = flask.render_template('mirrorsign.html', flashcards = flashcards, admin = admin, empty=empty)
     else: 
         html_code = flask.render_template('index.html', admin = admin)
     
@@ -388,8 +391,11 @@ def mirrorquiz():
         query_result = dbconnect.get_flashcards(username, courseid, lessonid)
         if True is True:
             flashcards = query_result[1]
+            empty = []
+            if len(flashcards) != 0:
+                empty=[1]
             html_code = flask.render_template('mirrorsign.html', 
-                flashcards = flashcards, type = type, admin = admin)
+                flashcards = flashcards, type = type, admin = admin, empty = empty)
         else: 
             html_code = flask.render_template('index.html', admin = admin)
                
