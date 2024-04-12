@@ -48,7 +48,7 @@ def get_flashcards(username, courseid, lessonid):
                 
                 flashcard = {"cardid": row[0], "videolink": row[1], "translation": row[2],
                              "memorytip": row[3], "speech": row[4], "sentence": row[5]}
-                
+                flashcard["starred-class"] = "active"
                 if (flashcard in starred_flashcards[1]):
                    
                     flashcard["starred-class"] = "active"
