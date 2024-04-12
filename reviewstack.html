@@ -328,6 +328,12 @@
                                 <span class="topic">Log Out</span> 
                             </a> 
                         </li> 
+                        <li class="sidebar-item"> 
+                            <a href="/admin" class="sidebar-link" id="adminButton"> 
+                                <i class="fas fa-sign-out-alt pe-2"></i> 
+                                <span class="topic">Admin</span> 
+                            </a>
+                        </li>
                     </ul> 
                 </li> 
             </ul> 
@@ -416,6 +422,16 @@
     <script 
           src="{{ url_for('static', filename='sidebar/sidebar.js') }}">  </script>
           <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var adminValue = "{{ admin }}"; 
+                var adminButton = document.getElementById("adminButton"); 
+        
+                if (adminValue === "true") {
+                    adminButton.style.visibility = "visible";
+                } else {
+                    adminButton.style.visibility = "hidden"; 
+                }
+            });        
     let currentCard = 1;
     let totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length;
     let frontSideFirst = true; 

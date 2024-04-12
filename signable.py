@@ -41,10 +41,15 @@ def logoutgoogle():
 def index():
     username = auth.authenticate()
     userinfo = dbconnect.get_user(username)
+    
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    html_code = flask.render_template('index.html', username = username)
+    html_code = flask.render_template('index.html', username = username, admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -55,7 +60,13 @@ def courses():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    html_code = flask.render_template('courses.html')
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
+    html_code = flask.render_template('courses.html', admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -63,6 +74,11 @@ def courses():
 def learncourses():
     username = auth.authenticate()
     userinfo = dbconnect.get_user(username)
+    
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
@@ -70,7 +86,7 @@ def learncourses():
         input_data = request.form['course_name']
     else:
         input_data = request.cookies.get('type', 'Default Value')
-    html_code = flask.render_template('learncourses.html', type=input_data)
+    html_code = flask.render_template('learncourses.html', type=input_data, admin = admin)
     response = flask.make_response(html_code)
     response.set_cookie('type', input_data)
     return response
@@ -82,9 +98,42 @@ def learn():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    html_code = flask.render_template('learn.html')
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
+    html_code = flask.render_template('learn.html', admin = admin)
     response = flask.make_response(html_code)
     return response
+
+@app.route('/admin', methods=['GET'])
+def admin():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_admin(username)
+ 
+    if userinfo[1] == False:
+        return flask.redirect('/index')
+    html_code = flask.render_template('admin.html', admin = admin)
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/add_card', methods=['POST'])
+def add_card():
+    print("enter")
+    aslcourse = request.form.get('aslcourse')
+    asllesson = request.form.get('asllesson')
+    videolink = request.form.get('videolink')
+    translation = request.form.get('translation')
+    memory = request.form.get('memory')
+    speech = request.form.get('speech')
+    sentence = request.form.get('sentence')
+    print(aslcourse)
+    dbconnect.add_card( int(aslcourse), int(asllesson), videolink, translation, memory, speech, sentence)
+
+    return flask.redirect('/admin')
+
 
 @app.route('/searchterm', methods=['GET'])
 def searchterm():
@@ -93,7 +142,13 @@ def searchterm():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    html_code = flask.render_template('searchterm.html')
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
+    html_code = flask.render_template('searchterm.html', admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -104,6 +159,12 @@ def searchtermresults():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
     input = request.args.get('query', default="")   
     query_result = dbconnect.get_terms(input)
     if query_result[0] is True:
@@ -111,7 +172,7 @@ def searchtermresults():
         terms_sorted = sorted(terms, key=lambda x: x['translation'])
         html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
     else: 
-        html_code =    flask.render_template('index.html') 
+        html_code =    flask.render_template('index.html', admin = admin) 
 
         
 
@@ -126,6 +187,12 @@ def lessons():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
     input = request.args.get('course', default=None)
         
     values = input.split()
@@ -133,13 +200,13 @@ def lessons():
     courseid = int(course[3:6])
     lessonid = values[1]
 
-    query_result = dbconnect.get_flashcards(courseid, lessonid)
+    query_result = dbconnect.get_flashcards(username, courseid, lessonid)
     if query_result[0] is True:
         flashcards = query_result[1]
         html_code = flask.render_template('lessons.html', course=course, 
-        lesson_num = lessonid, flashcards = flashcards)
+        lesson_num = lessonid, flashcards = flashcards, admin = admin)
     else: 
-        html_code = flask.render_template('index.html')
+        html_code = flask.render_template('index.html', admin = admin)
     
     
     response = flask.make_response(html_code)
@@ -153,10 +220,15 @@ def selectlessons():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
     course = request.args.get('course', default=None)
     
     html_code = flask.render_template('selectlessons.html', course=course,
-        lesson_num = course_lessonsnum[course])
+        lesson_num = course_lessonsnum[course], admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -167,11 +239,17 @@ def learnselectlessons():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
     course = request.args.get('course', default=None)
     type = flask.request.cookies.get('type')
     
     html_code = flask.render_template('learnselectlessons.html', course=course,
-        lesson_num = course_lessonsnum[course], type = type)
+        lesson_num = course_lessonsnum[course], type = type, admin = admin)
     response = flask.make_response(html_code)
     response.set_cookie('type', type)
     return response
@@ -185,18 +263,24 @@ def mirrorsign():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
     input = request.args.get('course', default=None)
     values = input.split()
     course = values[0]
     courseid = int(course[3:6])
     lessonid = values[1]
 
-    query_result = dbconnect.get_flashcards(courseid, lessonid)
+    query_result = dbconnect.get_flashcards(username, courseid, lessonid)
     if True is True:
         flashcards = query_result[1]
-        html_code = flask.render_template('mirrorsign.html', flashcards = flashcards)
+        html_code = flask.render_template('mirrorsign.html', flashcards = flashcards, admin = admin)
     else: 
-        html_code = flask.render_template('index.html')
+        html_code = flask.render_template('index.html', admin = admin)
     
     
     response = flask.make_response(html_code)
@@ -209,19 +293,25 @@ def quiz():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
     input = request.args.get('value', default=None)
     values = input.split()
     course = values[0]
     courseid = int(course[3:6])
     lessonid = values[1]
 
-    query_result = dbconnect.get_flashcards(courseid, lessonid)
+    query_result = dbconnect.get_flashcards(username, courseid, lessonid)
     if True is True:
         flashcards = query_result[1]
         html_code = flask.render_template('quiz.html', 
-            flashcards = flashcards)
+            flashcards = flashcards, admin = admin)
     else: 
-        html_code = flask.render_template('index.html')
+        html_code = flask.render_template('index.html', admin = admin)
     
     response = flask.make_response(html_code)
     return response
@@ -233,7 +323,13 @@ def gloss():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    html_code = flask.render_template('gloss.html')
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
+    html_code = flask.render_template('gloss.html', admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -244,17 +340,22 @@ def review():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    input = "ASL101 1"
         
-    values = input.split()
-    course = values[0]
-    courseid = int(course[3:6])
-    lessonid = values[1]
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+        
+    query_result = dbconnect.get_starred_cards(username)
 
-    query_result = dbconnect.get_flashcards(courseid, lessonid)
-    flashcards = query_result[1]
-    html_code = flask.render_template('reviewstack.html', flashcards = flashcards)
-    response = flask.make_response(html_code)
+    if (query_result[0] == True):
+        
+        flashcards = query_result[1]
+        html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin)
+        response = flask.make_response(html_code)
+    else:
+        return flask.redirect('/index')
+    
     return response
 
 @app.route('/mirrorquiz', methods=['GET'])
@@ -264,6 +365,14 @@ def mirrorquiz():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+       
+
     input = request.args.get('course', default=None)
     type = flask.request.cookies.get('type')
     
@@ -273,13 +382,13 @@ def mirrorquiz():
         courseid = int(course[3:6])
         lessonid = values[1]
 
-        query_result = dbconnect.get_flashcards(courseid, lessonid)
+        query_result = dbconnect.get_flashcards(username, courseid, lessonid)
         if True is True:
             flashcards = query_result[1]
             html_code = flask.render_template('mirrorsign.html', 
-                flashcards = flashcards, type = type)
+                flashcards = flashcards, type = type, admin = admin)
         else: 
-            html_code = flask.render_template('index.html')
+            html_code = flask.render_template('index.html', admin = admin)
                
         response = flask.make_response(html_code)
         response.set_cookie('type', type)
@@ -290,17 +399,37 @@ def mirrorquiz():
         courseid = int(course[3:6])
         lessonid = values[1]
         
-        query_result = dbconnect.get_flashcards(courseid, lessonid)
+        query_result = dbconnect.get_flashcards(username, courseid, lessonid)
         if True is True:
             flashcards = query_result[1]
             html_code = flask.render_template('quiz.html', 
-                flashcards = flashcards, type = type)
-        else: 
-            html_code = flask.render_template('index.html')
+                flashcards = flashcards, type = type, admin = admin)
+        else:
+            html_code = flask.render_template('index.html', admin = admin)
             
         response = flask.make_response(html_code)
         response.set_cookie('type', type)
     return response
+
+    
+    
+
+@app.route('/deletestarredflashcard', methods=['PUT'])
+def delstarflashcard():
+        username = auth.authenticate()
+        cardid =  request.get_json()["cardid"]
+        result = dbconnect.del_starred_card(username, cardid)
+        return result[1]
+        
+        
+
+@app.route('/addstarredflashcard', methods=['PUT'])
+def starflashcard(): 
+     username = auth.authenticate()
+     cardid =  request.get_json()["cardid"]
+     result = dbconnect.add_starred_card(username, cardid)
+     return result[1]
+        
 
 @app.route('/test', methods=['GET'])
 def testhome():
@@ -309,9 +438,18 @@ def testhome():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    html_code = flask.render_template('sidebar.html')
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
+    html_code = flask.render_template('sidebar.html', admin = admin)
     response = flask.make_response(html_code)
     return response
 
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+

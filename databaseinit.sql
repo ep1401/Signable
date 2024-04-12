@@ -1,7 +1,7 @@
 -- lessonnumber 
 CREATE TABLE classes (courseid INTEGER, lessonid INTEGER, lessonname TEXT);
 -- question: cardid unique among all cards? -> might be good to have it unique so we can easily implement starred flashcards
-CREATE TABLE flashcards (courseid INTEGER, lessonid INTEGER, cardid INTEGER,
+CREATE TABLE flashcards (courseid INTEGER, lessonid INTEGER, cardid SERIAL PRIMARY KEY,
     videolink TEXT, translation TEXT, memorytip TEXT, speech TEXT, sentence TEXT);
 
 CREATE TABLE studentusers(netid TEXT, firstname TEXT, lastname TEXT);
