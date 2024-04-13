@@ -246,12 +246,15 @@ def learnselectlessons():
         admin = "true"
 
     course = request.args.get('course', default=None)
+    if course is None:
+        course = flask.request.cookies.get('lesson')
     type = flask.request.cookies.get('type')
     
     html_code = flask.render_template('learnselectlessons.html', course=course,
         lesson_num = course_lessonsnum[course], type = type, admin = admin)
     response = flask.make_response(html_code)
     response.set_cookie('type', type)
+    response.set_cookie('lesson', course)
     return response
 
 

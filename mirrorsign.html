@@ -127,6 +127,7 @@
         transform-style: preserve-3d;
         transition: transform 0.2s;
         margin: auto; 
+        padding: auto;
     }
 
     .flashcardvideo {
@@ -136,6 +137,26 @@
         transform-style: preserve-3d;
         transition: transform 0.2s;
         margin: auto; 
+        padding: auto;
+    }
+    
+    .flashcardvideo video {
+        position: flex;
+        max-width: 100%;
+        max-height: 75%;
+        width: auto;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        right: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #record {
+        position: relative;
+        z-index: 1;
+        margin-top: 420px;
     }
     
     .front, .back {
@@ -360,7 +381,13 @@
             <div class="p-3"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
                     <ol class="breadcrumb m-0"> 
-                        <li class="breadcrumb-item">Mirror</li>  
+                        <li class="breadcrumb-item">{{type}}</li> 
+                        <li class="breadcrumb-item">
+                            <a href="/learncourses" style="color: black; text-decoration: none;">Courses</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="/learnselectlessons" style="color: black; text-decoration: none;">Lessons</a>
+                        </li> 
                     </ol> 
                     <hr>
                 </nav>
@@ -419,19 +446,16 @@
                                             <div class="col-sm-10">
                                                 <div class="flashcardvideo">
                                                     <div class="front">
-                                                        <div id="container mx-auto">
-                                                            <video id="gum" class="mx-auto w-50 d-flex justify-content-center" autoplay muted></video>
-                                                            <video id="recorded" class="mx-auto w-50 d-flex justify-content-center" playsinline loop></video>
-                                                      
+                                                        <div id="container" class="d-flex flex-column justify-content-center align-items-center">
+                                                            <video id="gum" class="w-75" autoplay muted></video>
+                                                            <video id="recorded" class="w-75" playsinline loop></video> 
                                                             <div class="my-2">
-                                                              <button class="btn btn-success" id="record" disabled>Record</button>
+                                                                <button class="btn btn-success" id="record">Record</button>
                                                             </div>
-                                                            
-                                                      
                                                             <div>
-                                                              <span id="errorMsg"></span>
+                                                                <span id="errorMsg"></span>
                                                             </div>
-                                                          </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -444,12 +468,7 @@
                         </div>
                         {% for num in empty %}
                             <div class="text-center mt">
-                                <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
-                                    <i class="fa-solid fa-random"></i> 
-                                </button>
-                                <button class="option opp btn btn-lg btn-light rounded-circle">
-                                    <i class="fa-solid fa-exchange"></i> 
-                                </button>
+                                
                             </div>
                             <div id="card-counter" class="text-center mt-3"></div>
                             {% endfor %}
@@ -480,116 +499,99 @@
             
             let mediaRecorder;
             let recordedBlobs;
-            
+            let isRecording = false;
+
             const errorMsgElement = document.querySelector('span#errorMsg');
-            const recordedVideo = document.querySelector('video#recorded');
+            const videoElement = document.querySelector('video#recorded');
             const recordButton = document.querySelector('button#record');
-            
-            
+
             recordButton.addEventListener('click', () => {
-              if (recordButton.textContent === 'Record') {
-                startRecording();
-              } else {
-                stopRecording();
-                recordButton.textContent = 'Record';                
-              }
+                if (!isRecording) {
+                    startRecording();
+                } else {
+                    stopRecording();
+                }
             });
 
-            function playRecording(){
-                const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
-                recordedVideo.src = null;
-                recordedVideo.srcObject = null;
-                recordedVideo.src = window.URL.createObjectURL(superBuffer);
-                recordedVideo.controls = true;
-                recordedVideo.loop = false;
+            function playRecording() {
+                const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
+                videoElement.src = null;
+                videoElement.srcObject = null;
+                videoElement.src = window.URL.createObjectURL(superBuffer);
+                videoElement.controls = true;
+                videoElement.loop = false;
+                videoElement.play();
             }
-            
+
             function handleDataAvailable(event) {
                 console.log('handleDataAvailable', event);
                 if (event.data && event.data.size > 0) {
-                  recordedBlobs.push(event.data);
-                  playRecording(); 
+                    recordedBlobs.push(event.data);
+                    playRecording();
                 }
-              }
-            
-            function startRecording() {
-              recordedBlobs = [];
-              let options = {mimeType: 'video/webm;codecs=vp9,opus'};
-              try {
-                mediaRecorder = new MediaRecorder(window.stream, options);
-              } catch (e) {
-                console.error('Exception while creating MediaRecorder:', e);
-                errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
-                return;
-              }
-            
-              console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
-              recordButton.textContent = 'Stop Recording';
-              mediaRecorder.onstop = (event) => {
-                console.log('Recorder stopped: ', event);
-                console.log('Recorded Blobs: ', recordedBlobs);
-              };
-              mediaRecorder.ondataavailable = handleDataAvailable;
-              mediaRecorder.start();
-              console.log('MediaRecorder started', mediaRecorder);
             }
-            
+
+            async function startRecording() {
+                recordedBlobs = [];
+                let options = { mimeType: 'video/webm;codecs=vp9,opus' };
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    mediaRecorder = new MediaRecorder(stream, options);
+                    mediaRecorder.ondataavailable = handleDataAvailable;
+                    mediaRecorder.start();
+                    isRecording = true;
+                    recordButton.textContent = 'Stop Recording';
+                    playStream(stream);
+                } catch (e) {
+                    console.error('Exception while creating MediaRecorder:', e);
+                    errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
+                    return;
+                }
+            }
+
             function stopRecording() {
                 mediaRecorder.stop();
+                isRecording = false;
+                recordButton.textContent = 'Record';
             }
-            
+
             function handleSuccess(stream) {
-              recordButton.disabled = false;
-              console.log('getUserMedia() got stream:', stream);
-              window.stream = stream;
-            
-              const gumVideo = document.querySelector('video#gum');
-              gumVideo.srcObject = stream;
+                recordButton.disabled = false;
+                console.log('getUserMedia() got stream:', stream);
+                window.stream = stream;
+                playStream(stream);
             }
-            
+
             async function init(constraints) {
-              try {
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                handleSuccess(stream);
-              } catch (e) {
-                console.error('navigator.getUserMedia error:', e);
-                errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-              }
-            }
-            
-            window.addEventListener("load", async () => {
-              const constraints = {
-                video: {
-                  width: 1280, height: 720
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    handleSuccess(stream);
+                } catch (e) {
+                    console.error('navigator.getUserMedia error:', e);
+                    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
                 }
-              };
-              console.log('Using media constraints:', constraints);
-              await init(constraints);
+            }
+
+            window.addEventListener("load", async () => {
+                const constraints = {
+                    video: {
+                        width: 1280,
+                        height: 1720
+                    }
+                };
+                console.log('Using media constraints:', constraints);
+                await init(constraints);
             });
+
+function playStream(stream) {
+    videoElement.srcObject = stream;
+    videoElement.play();
+}
+
     let currentCard = 1;
     let totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length -1;
     let frontSideFirst = true; 
-    
-    let shuffleButton = document.querySelector(".shuffle");
-    shuffleButton.addEventListener("click", shuffleCards);
-    
-    let oppButton = document.querySelector(".opp");
-    oppButton.addEventListener("click", toggleSide);
-    
-    function shuffleCards() {
-        let cardContainers = Array.from(document.querySelectorAll(".carousel-item"));
-        let shuffledCards = shuffleArray(cardContainers);
-        $('.carousel-inner').empty();
-        shuffledCards.forEach(card => {
-            $('.carousel-inner').append(card);
-        });
-        $('.carousel-item').removeClass('active'); 
-        $('.carousel-item').first().addClass('active'); 
-        totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length; 
-        currentCard = 1; 
-        updateCardCounter();
-        resetCardSide();
-    }
+
     
     function toggleSide() {
         frontSideFirst = !frontSideFirst; 
@@ -604,22 +606,6 @@
         } else {
             $('.carousel-item').eq(currentCard - 1).find('.flashcard').addClass('flipped'); // Ensure back side is shown
         }
-    }
-    
-    function shuffleArray(array) {
-        let currentIndex = array.length, temporaryValue, randomIndex;
-      
-        while (0 !== currentIndex) {
-      
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-      
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-      
-        return array;
     }
     
     function updateCardCounter() {
