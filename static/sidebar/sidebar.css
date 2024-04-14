@@ -86,18 +86,11 @@ h1 {
     text-decoration: none;
 }
 
-.breadcrumb-item:hover {
+.breadcrumb-item:not(:first-child):hover {
     text-decoration: underline;
 }
 
-.breadcrumb-link {
-    color: black;
-    text-decoration: none;
-}
 
-.breadcrumb-link:hover {
-    text-decoration: underline;
-}
 
 
 

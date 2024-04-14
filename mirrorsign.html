@@ -384,7 +384,7 @@
             <div class="p-3"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
                     <ol class="breadcrumb m-0"> 
-                        <li class="breadcrumb-item">{{type}}</li> 
+                        <li class="breadcrumb-item helper">Mirror</li> 
                         <li class="breadcrumb-item">
                             <a href="/learncourses" style="color: black; text-decoration: none;">Courses</a>
                         </li>
@@ -409,13 +409,13 @@
                                                 <div class="col-sm-10">
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
-                                                        <div class="front">
+                                                        <div class="back">
                                                             <button class="star-button btn-lg {{flashcard['starred-class']}}">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
-                                                        <div class="back">
+                                                        <div class="front">
                                                             <button class="star-button btn-lg {{flashcard['starred-class']}}">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
