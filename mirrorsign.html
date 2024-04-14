@@ -473,6 +473,24 @@
                             <div id="card-counter" class="text-center mt-3"></div>
                             {% endfor %}
                     </div>
+                    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="errorModalLabel">Recording Not Supported</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              Recording is not supported on this browser. Please try on a different device.
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </div>
             </div> 
   
@@ -544,7 +562,7 @@
                     playStream(stream);
                 } catch (e) {
                     console.error('Exception while creating MediaRecorder:', e);
-                    errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
+                    $('#errorModal').modal('show');
                     return;
                 }
             }
@@ -580,15 +598,6 @@
                     }
                 };
                 console.log('Using media constraints:', constraints);
-                recordedBlobs = [];
-                let options = { mimeType: 'video/webm;codecs=vp9,opus' };
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    mediaRecorder = new MediaRecorder(stream, options);
-                }
-                catch {
-                    recordButton.sytle.display = "none"
-                }
                 await init(constraints);
             });
 
