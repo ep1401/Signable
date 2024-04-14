@@ -211,6 +211,63 @@
     hr {
         border-top: 1px solid #555;
     }
+
+    .tooltip-text {
+        display: none;
+        position: absolute;
+        bottom: -25px; 
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option:hover .tooltip-text {
+        display: block;
+    }
+
+    .option-wrapper {
+        position: relative;
+        display: inline-block; 
+    }
+    
+    .option-wrapper {
+        position: relative;
+        display: inline-block; /* Ensure buttons appear in a row */
+    }
+    
+    .tooltip-text {
+        display: none;
+        position: absolute;
+        bottom: -35px; 
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 12px; 
+        white-space: nowrap; 
+    }
+    .option-wrapper:nth-child(1) .tooltip-text {
+        left: 40%;
+    }
+    
+    .option-wrapper:nth-child(2) .tooltip-text {
+        left: 40%; 
+    }
+    
+    .option-wrapper:nth-child(3) .tooltip-text {
+        left: 40%; 
+    }
+    
+    .option-wrapper:nth-child(4) .tooltip-text {
+        left: 40%;
+    }    
     </style>
   
 <body> 
@@ -404,24 +461,40 @@
                                 </a>
                             </div>
                             <div class="text-center mt">
-                                
                                 <form method="GET" action="/mirrorsign" style="display: inline;">
-                                    <button type="submit" class="option mirror btn btn-lg btn-light rounded-circle mr-3" name="course" value="{{ course }} {{ lesson_num }}">
-                                        <i class="fa-solid fa-video text-black"></i> 
-                                    </button>
+                                    <div class="option-wrapper">
+                                        <button class="option mirror btn btn-lg btn-light rounded-circle mr-3" name="course" value="{{ course }} {{ lesson_num }}">
+                                            <i class="fa-solid fa-video text-black"></i>
+                                            <span class="tooltip-text">Mirror</span>
+                                        </button>
+                                    </div>
                                 </form>
-                                <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
-                                    <i class="fa-solid fa-random"></i> 
-                                </button>
-                                <button class="option opp btn btn-lg btn-light rounded-circle mr-3">
-                                    <i class="fa-solid fa-exchange"></i> 
-                                </button>
+                                
+                                <div class="option-wrapper">
+                                    <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
+                                        <i class="fa-solid fa-random"></i>
+                                        <span class="tooltip-text">Shuffle</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="option-wrapper">
+                                    <button class="option opp btn btn-lg btn-light rounded-circle mr-3">
+                                        <i class="fa-solid fa-exchange"></i>
+                                        <span class="tooltip-text">ASL<-->English</span>
+                                    </button>
+                                </div>
+
                                 <form method="GET" action="/quiz" style="display: inline;">
-                                    <button type="submit" class="option quiz btn btn-lg btn-light rounded-circle" name="value" value="{{ course }} {{ lesson_num }}">
-                                        <i class="fa-solid fa-graduation-cap text-black"></i> 
-                                    </button>
+                                    <div class="option-wrapper">
+                                        <button class="option quiz btn btn-lg btn-light rounded-circle mr-3" name="value" value="{{ course }} {{ lesson_num }}">
+                                            <i class="fa-solid fa-graduation-cap text-black"></i>
+                                            <span class="tooltip-text">Quiz</span>
+                                        </button>
+                                    </div>
                                 </form>
+
                             </div>
+                            <br>
                             <div id="card-counter" class="text-center mt-3"></div>
                     </div>
                 </div>
