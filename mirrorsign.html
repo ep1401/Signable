@@ -70,7 +70,7 @@
     .carousel .carousel-item {
         text-align: center;
         overflow: hidden;
-        height: 600px;
+        height: 630px;
         width: 100%;
         align-items: center;
     }
@@ -126,7 +126,7 @@
         width: 100%; 
         transform-style: preserve-3d;
         transition: transform 0.2s;
-        margin: auto; 
+        margin: 30px auto;
         padding: auto;
     }
 
@@ -136,7 +136,7 @@
         width: 100%; 
         transform-style: preserve-3d;
         transition: transform 0.2s;
-        margin: auto; 
+        margin: 30px auto;        
         padding: auto;
     }
     
@@ -156,7 +156,7 @@
     #record {
         position: relative;
         z-index: 1;
-        margin-top: 420px;
+        margin-bottom:-420px;
     }
     
     .front, .back {
@@ -449,12 +449,12 @@
                                                         <div id="container" class="d-flex flex-column justify-content-center align-items-center">
                                                             <video id="gum" class="w-75" autoplay muted></video>
                                                             <video id="recorded" class="w-75" playsinline loop></video> 
-                                                            <div class="my-2">
-                                                                <button class="btn btn-success" id="record">Record</button>
-                                                            </div>
                                                             <div>
                                                                 <span id="errorMsg"></span>
                                                             </div>
+                                                        </div>
+                                                        <div class="">
+                                                            <button class="btn btn-success" id="record">Record</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -512,6 +512,19 @@
                     stopRecording();
                 }
             });
+
+            async function checkRecordingSupport() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    recordButton.disabled = false; 
+                    stream.getTracks().forEach(track => track.stop()); 
+                } catch (error) {
+                    console.error('Recording not supported:', error);
+                    recordButton.style.display = 'none'; 
+                }
+            }
+
+            checkRecordingSupport();
 
             function playRecording() {
                 const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
