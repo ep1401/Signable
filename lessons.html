@@ -149,12 +149,6 @@
         transform: rotateY(180deg);
     }
     
-    .flip-button {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
     .card-counter {
         text-align: center;
         margin-top: 20px;
@@ -171,6 +165,7 @@
         width: 60px; 
         height: 60px; 
         border-radius: 0%; 
+        margin-left: 20px;
     }
 
     .option.btn:hover {
@@ -228,15 +223,10 @@
     .option:hover .tooltip-text {
         display: block;
     }
-
-    .option-wrapper {
-        position: relative;
-        display: inline-block; 
-    }
     
     .option-wrapper {
         position: relative;
-        display: inline-block; /* Ensure buttons appear in a row */
+        display: inline-block; 
     }
     
     .tooltip-text {
@@ -253,21 +243,7 @@
         font-size: 12px; 
         white-space: nowrap; 
     }
-    .option-wrapper:nth-child(1) .tooltip-text {
-        left: 40%;
-    }
     
-    .option-wrapper:nth-child(2) .tooltip-text {
-        left: 40%; 
-    }
-    
-    .option-wrapper:nth-child(3) .tooltip-text {
-        left: 40%; 
-    }
-    
-    .option-wrapper:nth-child(4) .tooltip-text {
-        left: 40%;
-    }    
     </style>
   
 <body> 

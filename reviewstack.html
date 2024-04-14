@@ -173,6 +173,7 @@
         width: 60px; 
         height: 60px; 
         border-radius: 0%; 
+        margin-left: 20px;
     }
 
     .option.btn:hover {
@@ -213,6 +214,31 @@
     hr {
         border-top: 1px solid #555;
     }
+
+    .option:hover .tooltip-text {
+        display: block;
+    }
+    
+    .option-wrapper {
+        position: relative;
+        display: inline-block; 
+    }
+    
+    .tooltip-text {
+        display: none;
+        position: absolute;
+        bottom: -35px; 
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 12px; 
+        white-space: nowrap; 
+    }
+
     </style>
   
 <body> 
@@ -401,13 +427,20 @@
                             </div>
                             {% for num in empty %}
                             <div class="text-center mt">
-                                <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
-                                    <i class="fa-solid fa-random"></i> 
-                                </button>
-                                <button class="option opp btn btn-lg btn-light rounded-circle">
-                                    <i class="fa-solid fa-exchange"></i> 
-                                </button>
+                                <div class="option-wrapper">
+                                    <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
+                                        <i class="fa-solid fa-random"></i>
+                                        <span class="tooltip-text">Shuffle</span>
+                                    </button>
+                                </div>
+                                <div class="option-wrapper">
+                                    <button class="option opp btn btn-lg btn-light rounded-circle mr-3">
+                                        <i class="fa-solid fa-exchange"></i>
+                                        <span class="tooltip-text">ASL<-->English</span>
+                                    </button>
+                                </div>
                             </div>
+                            <br>
                             <div id="card-counter" class="text-center mt-3"></div>
                             {% endfor %}
                     </div>
