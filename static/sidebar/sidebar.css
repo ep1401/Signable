@@ -3,6 +3,20 @@ html, body {
     background-color: #fbfafa;
 } 
 
+#total {
+    min-height: 100vh;
+    display: flex;
+}
+
+.bg-light {
+    flex-grow: 1;
+    min-height: 100%; 
+}
+
+#bdSidebar {
+    min-height: 100vh;
+}
+
 * {
     font-family: 'Koh Santepheap';
     
@@ -89,6 +103,7 @@ h1 {
 .breadcrumb-item:not(:first-child):hover {
     text-decoration: underline;
 }
+
 
 
 
