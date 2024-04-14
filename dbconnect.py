@@ -275,7 +275,8 @@ def add_card(courseid, lessonid, videolink, translation, memorytip, speech, sent
     try: 
         with connection.cursor() as cursor:
             query_str = "INSERT INTO flashcards (courseid, lessonid, videolink, translation, memorytip, speech, sentence) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(query_str, (courseid, lessonid, videolink, translation, memorytip, speech, sentence))
+            videolink_url = 'https://www.youtube.com/embed/' + videolink + '?controls=0&showinfo=0&rel=0&loop=1&mute=1'
+            cursor.execute(query_str, (courseid, lessonid, videolink_url, translation, memorytip, speech, sentence))
             connection.commit()
             
             return True, "Flashcard added successfully."
