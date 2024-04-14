@@ -549,6 +549,8 @@
                 } catch (e) {
                     console.error('Exception while creating MediaRecorder:', e);
                     alert('Recording is not supported on this browser. Please try on a different device.');
+                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    handleSuccess(stream);
                     return;
                 }
             }
