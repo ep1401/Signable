@@ -504,6 +504,28 @@
         }
     }
     
+    $('.carousel-control-prev').on('click', function() {
+        if (currentCard > 1) {
+            currentCard--;
+        }
+        else {
+            currentCard = totalCards;
+        }
+        resetCardSide();
+        updateCardCounter();
+    });
+    
+    $('.carousel-control-next').on('click', function() {
+        if (currentCard < totalCards) {
+            currentCard++;
+        }
+        else {
+            currentCard = 1;
+        }
+        resetCardSide(); 
+        updateCardCounter();
+    });
+    
     function shuffleArray(array) {
         let currentIndex = array.length, temporaryValue, randomIndex;
       
@@ -523,26 +545,6 @@
     function updateCardCounter() {
         document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
     }
-
-    $('.carousel-control-prev').on('click', function() {
-        if (currentCard > 1) {
-            currentCard--;
-        }
-        else {
-            currentCard = totalCards;
-        }
-        updateCardCounter();
-    });
-
-    $('.carousel-control-next').on('click', function() {
-        if (currentCard < totalCards) {
-            currentCard++;
-        }
-        else {
-            currentCard = 1;
-        }
-        updateCardCounter();
-    });
 
     
     $(document).ready(function(){
