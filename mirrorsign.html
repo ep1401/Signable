@@ -513,15 +513,6 @@
                 }
             });
 
-            if (typeof MediaRecorder === 'undefined') {
-                console.error('MediaRecorder not supported');
-                recordButton.style.display = 'none'; 
-            } else {
-                recordButton.disabled = false; 
-            }
-
-            checkRecordingSupport();
-
             function playRecording() {
                 const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
                 videoElement.src = null;
@@ -589,6 +580,15 @@
                     }
                 };
                 console.log('Using media constraints:', constraints);
+                recordedBlobs = [];
+                let options = { mimeType: 'video/webm;codecs=vp9,opus' };
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    mediaRecorder = new MediaRecorder(stream, options);
+                }
+                catch {
+                    recordButton.sytle.display = "none"
+                }
                 await init(constraints);
             });
 
