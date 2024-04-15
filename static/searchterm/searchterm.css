@@ -12,53 +12,6 @@ header {
     padding: 5vw;
 }
 
-.logo {
-    border: none;
-    background: none;
-    padding: 0vw;
-    margin: 0vw;
-    position: absolute;
-    left: 0vw;
-    top: 0vw;
-    
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    color: #222;
-    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
-    font-size: 1vw;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-.logo-image {
-    width: 18vw;
-    height: 8vw;
-    justify-content: center; 
-    align-items: center; 
-}
-.princeton-image {
-    border: none;
-    background: none;
-    padding: 0vw;
-    margin: 0vw;
-    position: absolute;
-    right: 2vw;
-    top: 1.5vw;
-    width: 11vw;
-    height: 6vw;
-    justify-content: center; 
-    align-items: center; 
-    
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    color: #222;
-    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
-    font-size: 1vw;
-    font-weight: bold;
-    transition: 0.2s;
-}
 
 .input-adjustements {
     margin: 0.6vh;
