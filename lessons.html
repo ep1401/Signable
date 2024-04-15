@@ -181,6 +181,16 @@
         border: none; 
     }
 
+    .info-button {
+        position: absolute;
+        top: 0%;
+        right: 0%;
+        background: none; 
+        border: none; 
+        padding: 15px 25px;
+        font-size: 24px; 
+    }
+
     
     .star-button.active {
         color: #FFD700; 
@@ -412,11 +422,17 @@
                                                             <button class="star-button btn-lg {{flashcard['starred-class']}}">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
+                                                            <button class="info-button btn-lg">
+                                                                <i class="fa-solid fa-circle-info"></i>
+                                                            </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
                                                         <div class="back">
                                                             <button class="star-button btn-lg {{flashcard['starred-class']}}">
                                                                 <i class="fa-solid fa-star"></i>
+                                                            </button>
+                                                            <button class="info-button btn-lg">
+                                                                <i class="fa-solid fa-circle-info"></i>
                                                             </button>
                                                             {{ flashcard['translation'] | safe}}
                                                         </div>
@@ -578,11 +594,13 @@
     
     $(document).ready(function(){
         updateCardCounter();
+        $('.info-button').on('click', function(event){
+            event.stopPropagation();
+        });
         $(document).on('click', '.flashcard', function(){
             if (!$(event.target).closest('.star-button').length) {
                 $(this).toggleClass('flipped');
             }
-            
         });
         
         $('.star-button').on('click', function(){
