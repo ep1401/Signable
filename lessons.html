@@ -608,17 +608,15 @@
     $('.info-button').on('click', function() {
         var flashcard = $(this).closest('.flashcard');
 
-    // Extract information from the flashcard attributes
-    var translation = flashcard.attr('mem');
-    var memorytip = flashcard.attr('speech');
-    var speech = flashcard.attr('sentence');
+        var translation = flashcard.attr('mem');
+        var memorytip = flashcard.attr('speech');
+        var speech = flashcard.attr('sentence');
 
-    // Populate the modal body with the extracted information
-    var modalBody = $('#cardInfo');
-    modalBody.html('');
-    modalBody.append('<p><strong>Memory Tip:</strong> ' + translation + '</p>');
-    modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
-    modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
+        var modalBody = $('#cardInfo');
+        modalBody.html('');
+        modalBody.append('<p><strong>Memory Tip:</strong> ' + translation + '</p>');
+        modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
+        modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
       });
 
     

@@ -181,12 +181,6 @@
         transform: rotateY(180deg);
     }
     
-    .flip-button {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
     .card-counter {
         text-align: center;
         margin-top: 20px;
@@ -215,9 +209,20 @@
         left: 2%;
         background: none; 
         border: none; 
+        color: #000;
     }
 
-    
+    .info-button {
+        position: absolute;
+        top: 0%;
+        right: 0%;
+        background: none; 
+        border: none; 
+        padding: 15px 25px;
+        font-size: 24px; 
+        color: #000;
+    }
+
     .star-button.active {
         color: #FFD700; 
     }
@@ -407,17 +412,23 @@
                                                 <div class="col-sm-10">
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
+                                                    <div class="front">
+                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <i class="fa-solid fa-star"></i>
+                                                        </button>
+                                                        <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <i class="fa-solid fa-circle-info"></i>
+                                                          </button>
+                                                        {{ flashcard['translation'] | safe}}
+                                                    </div>
                                                         <div class="back">
                                                             <button class="star-button btn-lg {{flashcard['starred-class']}}">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
+                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                                <i class="fa-solid fa-circle-info"></i>
+                                                              </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
-                                                        </div>
-                                                        <div class="front">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
-                                                                <i class="fa-solid fa-star"></i>
-                                                            </button>
-                                                            {{ flashcard['translation'] | safe}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -425,6 +436,18 @@
                                             </div>
                                         </div>
                                         {% endfor %}
+                                        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="infoModalLabel">Extra Info</h5>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body" id="cardInfo">
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>  
                                     </div>
                                 </div>
                                 {% for num in empty %}
@@ -635,14 +658,31 @@ function playStream(stream) {
         updateCardCounter();
     });
 
+    $('.info-button').on('click', function() {
+        var flashcard = $(this).closest('.flashcard');
+
+        var translation = flashcard.attr('mem');
+        var memorytip = flashcard.attr('speech');
+        var speech = flashcard.attr('sentence');
+
+        var modalBody = $('#cardInfo');
+        modalBody.html('');
+        modalBody.append('<p><strong>Memory Tip:</strong> ' + translation + '</p>');
+        modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
+        modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
+      });
+
     
     $(document).ready(function(){
         updateCardCounter();
+        $('.info-button').on('click', function(event){
+            event.stopPropagation();
+            $('#infoModal').modal('show');
+        });
         $(document).on('click', '.flashcard', function(){
             if (!$(event.target).closest('.star-button').length) {
                 $(this).toggleClass('flipped');
             }
-            
         });
         
         $('.star-button').on('click', function(){
