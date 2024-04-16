@@ -212,6 +212,33 @@ def lessons():
     response = flask.make_response(html_code)
     return response
 
+@app.route('/lessons/results', methods=['GET'])
+def searchlessonresults():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
+    input_query = request.args.get('query', default="")
+    lesson_id = request.args.get('lessonid', default="")
+    course_id = request.args.get('courseid', default="")
+    
+    query_result = dbconnect.get_lessonterms(input_query, lesson_id, course_id)
+    if query_result[0] is True:
+        terms = query_result[1]
+        terms_sorted = sorted(terms, key=lambda x: x['translation'])
+        html_code = flask.render_template('tabledisplay.html', terms=terms_sorted, lessonid=lesson_id, courseid=course_id)
+    else: 
+        html_code = flask.render_template('index.html', admin=admin)
+
+    return html_code
+
 
 @app.route('/selectlessons', methods=['GET'])
 def selectlessons():
