@@ -3,6 +3,7 @@
 import flask
 import os
 from flask import request
+from flask import render_template
 from flask import send_file
 import dbconnect
 import auth
@@ -20,6 +21,10 @@ course_lessonsnum = {
     'ASL107': 9
 }
 
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('home.html')
+
 @app.route('/login', methods=['GET'])
 def login():
     return auth.login()
@@ -36,7 +41,7 @@ def logoutapp():
 def logoutgoogle():
     return auth.logoutgoogle()
 
-@app.route('/', methods=['GET'])
+# @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
     username = auth.authenticate()
