@@ -254,6 +254,18 @@
     </style>
   
 <body> 
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="infoModalLabel">Extra Info</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="cardInfo">
+                    </div>
+                </div>
+            </div>
+        </div>
   
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
         <div id="bdSidebar" 
@@ -494,158 +506,152 @@
                     adminButton.style.visibility = "hidden"; 
                 }
             });
-    let currentCard = 1;
-    let totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length;
-    let frontSideFirst = true; 
-    
-    let shuffleButton = document.querySelector(".shuffle");
-    shuffleButton.addEventListener("click", shuffleCards);
-    
-    let oppButton = document.querySelector(".opp");
-    oppButton.addEventListener("click", toggleSide);
-    
-    function shuffleCards() {
-        let cardContainers = Array.from(document.querySelectorAll(".carousel-item"));
-        let shuffledCards = shuffleArray(cardContainers);
-        $('.carousel-inner').empty();
-        shuffledCards.forEach(card => {
-            $('.carousel-inner').append(card);
-        });
-        $('.carousel-item').removeClass('active'); 
-        $('.carousel-item').first().addClass('active'); 
-        totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length; 
-        currentCard = 1; 
-        updateCardCounter();
-        resetCardSide();
-    }
-    
-    function toggleSide() {
-        frontSideFirst = !frontSideFirst; 
-        $('.flashcard').each(function(index) {
-            $(this).toggleClass('flipped', !frontSideFirst); 
-        });
-    }
-    
-    function resetCardSide() {
-        if (frontSideFirst) {
-            $('.carousel-item').eq(currentCard - 1).find('.flashcard').removeClass('flipped'); // Ensure front side is shown
-        } else {
-            $('.carousel-item').eq(currentCard - 1).find('.flashcard').addClass('flipped'); // Ensure back side is shown
-        }
-    }
-    
-    $('.carousel-control-prev').on('click', function() {
-        if (currentCard > 1) {
-            currentCard--;
-        }
-        else {
-            currentCard = totalCards;
-        }
-        resetCardSide();
-        updateCardCounter();
-    });
-    
-    $('.carousel-control-next').on('click', function() {
-        if (currentCard < totalCards) {
-            currentCard++;
-        }
-        else {
-            currentCard = 1;
-        }
-        resetCardSide(); 
-        updateCardCounter();
-    });
-    
-    function shuffleArray(array) {
-        let currentIndex = array.length, temporaryValue, randomIndex;
-      
-        while (0 !== currentIndex) {
-      
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-      
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-      
-        return array;
-    }
-    
-    function updateCardCounter() {
-        document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
-    }
-
-    
-    $('.info-button').on('click', function() {
-        var flashcard = $(this).closest('.flashcard');
-
-        var translation = flashcard.attr('mem');
-        var memorytip = flashcard.attr('speech');
-        var speech = flashcard.attr('sentence');
-
-        var modalBody = $('#cardInfo');
-        modalBody.html('');
-        modalBody.append('<p><strong>Memory Tip:</strong> ' + translation + '</p>');
-        modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
-        modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
-      });
-
-    
-    $(document).ready(function(){
-        updateCardCounter();
-        $('.info-button').on('click', function(event){
-            event.stopPropagation();
-            $('#infoModal').modal('show');
-        });
-        $(document).on('click', '.flashcard', function(){
-            if (!$(event.target).closest('.star-button').length) {
-                $(this).toggleClass('flipped');
-            }
-        });
-        
-        $('.star-button').on('click', function(){
-        var card = $(this).closest('.flashcard');
-        let cardid = card.attr("id")
-        var frontStar = card.find('.front .star-button');
-        var backStar = card.find('.back .star-button');
-        
-        // Toggle active class for star button
-        $(this).toggleClass('active');
-       
-        // Toggle active class for front and back stars
-        if ($(this).hasClass('active')) {
-
+            let currentCard = 1;
+            let totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length;
+            let frontSideFirst = true; 
             
-            $.ajax({
-            url: "/addstarredflashcard",
-            type: 'PUT',    
-            data: JSON.stringify({"cardid": cardid}),
-            contentType: "application/JSON",
-            error: function(data) {
-                alert(data);
-            }
-             });
-            frontStar.addClass('active');
-            backStar.addClass('active');   
- 
-        } else {
-            $.ajax({
-            url: "/deletestarredflashcard",
-            type: 'PUT',    
-            data: JSON.stringify({"cardid": cardid}),
-            contentType: "application/JSON",
-            error: function(data) {
-                alert(data);
-            }
-             });
-            frontStar.removeClass('active');
-            backStar.removeClass('active');
-
+            let shuffleButton = document.querySelector(".shuffle");
+            shuffleButton.addEventListener("click", shuffleCards);
             
-        }
-    });
-    });
+            let oppButton = document.querySelector(".opp");
+            oppButton.addEventListener("click", toggleSide);
+            
+            function shuffleCards() {
+                let cardContainers = Array.from(document.querySelectorAll(".carousel-item"));
+                let shuffledCards = shuffleArray(cardContainers);
+                $('.carousel-inner').empty();
+                shuffledCards.forEach(card => {
+                    $('.carousel-inner').append(card);
+                });
+                $('.carousel-item').removeClass('active'); 
+                $('.carousel-item').first().addClass('active'); 
+                totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length; 
+                currentCard = 1; 
+                updateCardCounter();
+                resetCardSide();
+            }
+            
+            function toggleSide() {
+                frontSideFirst = !frontSideFirst; 
+                $('.flashcard').each(function(index) {
+                    $(this).toggleClass('flipped', !frontSideFirst); 
+                });
+            }
+            
+            function resetCardSide() {
+                if (frontSideFirst) {
+                    $('.carousel-item').eq(currentCard - 1).find('.flashcard').removeClass('flipped'); 
+                } else {
+                    $('.carousel-item').eq(currentCard - 1).find('.flashcard').addClass('flipped'); 
+                }
+            }
+            
+            $('.carousel-control-prev').on('click', function() {
+                if (currentCard > 1) {
+                    currentCard--;
+                }
+                else {
+                    currentCard = totalCards;
+                }
+                resetCardSide();
+                updateCardCounter();
+            });
+            
+            $('.carousel-control-next').on('click', function() {
+                if (currentCard < totalCards) {
+                    currentCard++;
+                }
+                else {
+                    currentCard = 1;
+                }
+                resetCardSide(); 
+                updateCardCounter();
+            });
+            
+            
+            function shuffleArray(array) {
+                let currentIndex = array.length, temporaryValue, randomIndex;
+              
+                while (0 !== currentIndex) {
+              
+                  randomIndex = Math.floor(Math.random() * currentIndex);
+                  currentIndex -= 1;
+              
+                  temporaryValue = array[currentIndex];
+                  array[currentIndex] = array[randomIndex];
+                  array[randomIndex] = temporaryValue;
+                }
+              
+                return array;
+            }
+            
+            function updateCardCounter() {
+                document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
+            }
+            
+            $(document).ready(function(){
+                updateCardCounter();
+            });
+            
+            $(document).on('click', '.info-button', function(event){
+                event.stopPropagation();
+                var flashcard = $(this).closest('.flashcard');
+            
+                var translation = flashcard.attr('mem');
+                var memorytip = flashcard.attr('speech');
+                var speech = flashcard.attr('sentence');
+            
+                var modalBody = $('#cardInfo');
+                modalBody.html('');
+                modalBody.append('<p><strong>Memory Tip:</strong> ' + translation + '</p>');
+                modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
+                modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
+                $('#infoModal').modal('show'); 
+            });
+            
+            $(document).on('click', '.flashcard', function(event){
+                if (!$(event.target).closest('.star-button').length) {
+                    $(this).toggleClass('flipped');
+                }
+            });
+            
+            $(document).on('click', '.star-button', function(event){
+                event.stopPropagation();
+                var card = $(this).closest('.flashcard');
+                let cardid = card.attr("id")
+                var frontStar = card.find('.front .star-button');
+                var backStar = card.find('.back .star-button');
+            
+                // Toggle active class for star button
+                $(this).toggleClass('active');
+            
+                // Toggle active class for front and back stars
+                if ($(this).hasClass('active')) {
+                    $.ajax({
+                        url: "/addstarredflashcard",
+                        type: 'PUT',    
+                        data: JSON.stringify({"cardid": cardid}),
+                        contentType: "application/JSON",
+                        error: function(data) {
+                            alert(data);
+                        }
+                    });
+                    frontStar.addClass('active');
+                    backStar.addClass('active');   
+                } else {
+                    $.ajax({
+                        url: "/deletestarredflashcard",
+                        type: 'PUT',    
+                        data: JSON.stringify({"cardid": cardid}),
+                        contentType: "application/JSON",
+                        error: function(data) {
+                            alert(data);
+                        }
+                    });
+                    frontStar.removeClass('active');
+                    backStar.removeClass('active');
+                }
+            });
 </script>
 
 </body> 

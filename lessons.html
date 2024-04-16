@@ -612,16 +612,11 @@ $(document).ready(function(){
 
 $(document).on('click', '.info-button', function(event){
     event.stopPropagation();
-    console.log("Info button clicked");
     var flashcard = $(this).closest('.flashcard');
 
     var translation = flashcard.attr('mem');
     var memorytip = flashcard.attr('speech');
     var speech = flashcard.attr('sentence');
-
-    console.log("Translation: ", translation);
-console.log("Memory Tip: ", memorytip);
-console.log("Example Sentence: ", speech);
 
     var modalBody = $('#cardInfo');
     modalBody.html('');
