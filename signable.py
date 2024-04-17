@@ -22,8 +22,8 @@ course_lessonsnum = {
 }
 
 @app.route('/', methods=['GET'])
-def home():
-    return render_template('home.html')
+def start_page():
+    return render_template('startpage.html')
 
 @app.route('/login', methods=['GET'])
 def login():
@@ -41,9 +41,8 @@ def logoutapp():
 def logoutgoogle():
     return auth.logoutgoogle()
 
-# @app.route('/', methods=['GET'])
-@app.route('/index', methods=['GET'])
-def index():
+@app.route('/home', methods=['GET'])
+def home():
     username = auth.authenticate()
     userinfo = dbconnect.get_user(username)
     
@@ -54,7 +53,7 @@ def index():
  
     if userinfo[1] == False:
         dbconnect.add_user(username, "", "")
-    html_code = flask.render_template('index.html', username = username, admin = admin)
+    html_code = flask.render_template('home.html', username = username, admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -119,7 +118,7 @@ def admin():
     userinfo = dbconnect.get_admin(username)
  
     if userinfo[1] == False:
-        return flask.redirect('/index')
+        return flask.redirect('/home')
     html_code = flask.render_template('admin.html', admin = admin)
     response = flask.make_response(html_code)
     return response
@@ -177,7 +176,7 @@ def searchtermresults():
         terms_sorted = sorted(terms, key=lambda x: x['translation'])
         html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
     else: 
-        html_code =    flask.render_template('index.html', admin = admin) 
+        html_code =    flask.render_template('home.html', admin = admin) 
 
         
 
@@ -211,7 +210,7 @@ def lessons():
         html_code = flask.render_template('lessons.html', course=course, 
         lesson_num = lessonid, flashcards = flashcards, admin = admin)
     else: 
-        html_code = flask.render_template('index.html', admin = admin)
+        html_code = flask.render_template('home.html', admin = admin)
     
     
     response = flask.make_response(html_code)
@@ -240,7 +239,7 @@ def searchlessonresults():
         terms_sorted = sorted(terms, key=lambda x: x['translation'])
         html_code = flask.render_template('tabledisplay.html', terms=terms_sorted, lessonid=lesson_id, courseid=course_id)
     else: 
-        html_code = flask.render_template('index.html', admin=admin)
+        html_code = flask.render_template('home.html', admin=admin)
 
     return html_code
 
@@ -318,7 +317,7 @@ def mirrorsign():
             empty=[1]
         html_code = flask.render_template('mirrorsign.html', flashcards = flashcards, admin = admin, empty=empty)
     else: 
-        html_code = flask.render_template('index.html', admin = admin)
+        html_code = flask.render_template('home.html', admin = admin)
     
     
     response = flask.make_response(html_code)
@@ -349,7 +348,7 @@ def quiz():
         html_code = flask.render_template('quiz.html', 
             flashcards = flashcards, admin = admin)
     else: 
-        html_code = flask.render_template('index.html', admin = admin)
+        html_code = flask.render_template('home.html', admin = admin)
     
     response = flask.make_response(html_code)
     return response
@@ -395,7 +394,7 @@ def review():
         html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin, empty=empty)
         response = flask.make_response(html_code)
     else:
-        return flask.redirect('/index')
+        return flask.redirect('/home')
     
     return response
 
@@ -432,7 +431,7 @@ def mirrorquiz():
             html_code = flask.render_template('mirrorsign.html', 
                 flashcards = flashcards, type = type, admin = admin, empty = empty)
         else: 
-            html_code = flask.render_template('index.html', admin = admin)
+            html_code = flask.render_template('home.html', admin = admin)
                
         response = flask.make_response(html_code)
         response.set_cookie('type', type)
@@ -449,7 +448,7 @@ def mirrorquiz():
             html_code = flask.render_template('quiz.html', 
                 flashcards = flashcards, type = type, admin = admin)
         else:
-            html_code = flask.render_template('index.html', admin = admin)
+            html_code = flask.render_template('home.html', admin = admin)
             
         response = flask.make_response(html_code)
         response.set_cookie('type', type)
