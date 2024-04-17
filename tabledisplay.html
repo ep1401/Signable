@@ -4,8 +4,7 @@
     <thead class="fixed">
       
       <tr>
-        <th id="theader">English Translation</th>
-        <th id="theader">Video Link</th>
+        <th id="theader">Term</th>
         <th id="theader">Memory Tip</th>
         <th id="theader">Part of Speech</th>
         <th id="theader">Example Sentence</th>
@@ -16,8 +15,7 @@
     <tbody class="overflow">
         {% for term in terms %}
         <tr>
-          <td>{{term["translation"]}}</td>
-          <td><a href="{{ term['videolink'] }}" target="_blank">{{ term['videolink'] }}</a></td>
+          <td><a href="{{ term['videolink'] }}" target="_blank">{{term["translation"]}}</a></td>
           <td>{{term["memorytip"]}}</td>
             <td >{{term["speech"]}} </td>
             <td >{{term["sentence"]}}</td>

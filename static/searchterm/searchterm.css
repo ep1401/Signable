@@ -3,6 +3,8 @@
     background-color: #fbfafa;
     overflow-x: hidden;
     box-sizing: border-box;
+    margin: 0; /* Ensure no default margin */
+    padding: 0;
 }
 
 header {
@@ -12,99 +14,62 @@ header {
     padding: 5vw;
 }
 
-
-.input-adjustements {
+.input-adjustments {
     margin: 0.6vh;
     margin-left: 2vh !important;
     width: 20%;
     max-width: 300px;
-
 }
 
 .margin-add {
-margin-left: 2vh !important;
-margin: 1vh;
-margin-right: 0vh;
+    margin-left: 2vh !important;
+    margin: 1vh;
+    margin-right: 0vh;
 }
 
 .header-margin {
     margin: 2vh;
 }
 
-
-
-
-.set-font{
+.set-font {
     font-family: 'Koh Santepheap';
 }
 
-
-td { 
-    max-width: 150px;
-    min-width: 150px;
-    word-wrap: break-word;
-    z-index: -1;
-    border-radius: 2px;
-    border: 1px solid rgb(207, 196, 196);
-    background-color:  #fbfafa !important;
-}
-
-
-
-
 .table-wrapper {
-    max-height: 459px;
+    max-height: 459px; 
     max-width: 1000px;
+    overflow-x: auto;
+    overflow-y: auto;
     border-radius: 2px;
     margin-right: 2vh !important;
-  
-    z-index: -1;
     border: 0.5px solid rgb(207, 196, 196);
-    
 }
-
 
 .fixed {
     top: 0;
     position: sticky;
     z-index: 1;
 }
-.foot {
+
+
+
+.table-styles {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-styles thead th {
     background-color: #ccf2f4!important;
 }
 
+.table-styles tfoot th {
+    background-color: #ccf2f4!important;
+}
 
-th {
-    position: sticky;
+.table-styles th, .table-styles td {
+    padding: 8px;
+    border: 1px solid rgb(207, 196, 196);
+    text-align: left;
     max-width: 150px;
-    min-width: 150px;
-    word-wrap: break-word;
-    z-index: 1;
-    background-color: #ccf2f4!important;
-
-    
-    
-        
-    
-    
 }
-
-   
- td + td {
-    border-left: 1px solid rgb(207, 196, 196);
-
- 
-}
-
- th + th {
-    border-left: 1px solid rgb(207, 196, 196);
-  
-    
-}
-
-#displaytable {
-    border-right: 1px solid rgb(207, 196, 196);
-  
-}
-
-
