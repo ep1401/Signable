@@ -1,0 +1,5 @@
+export DATABASE_URL=postgres://signabledatabase_1j0k_user:Fs1oc8TRJDbCokpQ8gGzCm4F6MtFT8c2@dpg-coca460l5elc739pg870-a.ohio-postgres.render.com/signabledatabase_1j0k
+export GOOGLE_CLIENT_ID=155326518943-oumvnina0u0atsvl8fihgu6mu9e72kq2.apps.googleusercontent.com
+export GOOGLE_CLIENT_SECRET=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
+export APP_SECRET_KEY=123
+export OAUTHLIB_INSECURE_TRANSPORT=1

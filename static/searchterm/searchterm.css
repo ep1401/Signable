@@ -3,7 +3,7 @@
     background-color: #fbfafa;
     overflow-x: hidden;
     box-sizing: border-box;
-    margin: 0; /* Ensure no default margin */
+    margin: 0;
     padding: 0;
 }
 
@@ -11,7 +11,7 @@ header {
     background-color: #ccf2f4;
     background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
     color: #000000;
-    padding: 5vw;
+
 }
 
 .input-adjustments {
@@ -64,6 +64,11 @@ header {
 .table-styles tfoot th {
     background-color: #ccf2f4!important;
 }
+
+.table-styles tfoot {
+    background-color: #ccf2f4!important;
+}
+
 
 .table-styles th, .table-styles td {
     padding: 8px;
