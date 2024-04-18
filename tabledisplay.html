@@ -1,29 +1,48 @@
-<div class = "table-responsive table-wrapper foot">
-<table id="displaytable" class="table table-styles" >
-    
-    <thead class="fixed">
-      
-      <tr>
-        <th id="theader">Term</th>
-        <th id="theader">Memory Tip</th>
-        <th id="theader">Part of Speech</th>
-        <th id="theader">Example Sentence</th>
-      </tr>
-
-    </thead>
-  
-    <tbody class="overflow">
-        {% for term in terms %}
-        <tr>
-          <td><a href="{{ term['videolink'] }}" target="_blank">{{term["translation"]}}</a></td>
-          <td>{{term["memorytip"]}}</td>
-            <td >{{term["speech"]}} </td>
-            <td >{{term["sentence"]}}</td>
-    
-       </tr>
-       {% endfor %}
-      
-    </tbody>
-  </table>
-
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="infoModalLabel">Term</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="cardInfo">
+          </div>
+      </div>
+  </div>
 </div>
+
+<div class="table-responsive table-wrapper foot">
+  <table id="displaytable" class="table table-styles">
+      <thead class="fixed">
+          <tr>
+              <th id="theader">Term</th>
+              <th id="theader">Memory Tip</th>
+              <th id="theader">Part of Speech</th>
+              <th id="theader">Example Sentence</th>
+          </tr>
+      </thead>
+      <tbody class="overflow">
+          {% for term in terms %}
+          <tr>
+              <td><a href="#" onclick="openModal('{{ term.videolink }}', '{{ term.translation }}')">{{ term.translation }}</a></td>
+              <td>{{ term.memorytip }}</td>
+              <td>{{ term.speech }}</td>
+              <td>{{ term.sentence }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+<script>
+  function openModal(videoLink, translation) {
+      var modalBody = $('#cardInfo');
+      modalBody.html('');
+      modalBody.append('<iframe width="100%" height="100%" src="' + videoLink + '" frameborder="0" allowfullscreen></iframe>');
+      
+      $('#infoModalLabel').text(translation);
+      $('#infoModal').modal('show');
+      
+      return false;
+  }
+</script>
