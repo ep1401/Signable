@@ -435,7 +435,7 @@
                                         {% for flashcard in flashcards %}
                                         <div class="carousel-item {% if loop.first %} active{% endif %}">
                                             <div class="row">
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                                 <div class="col-sm-10">
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
@@ -459,7 +459,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                             </div>
                                         </div>
                                         {% endfor %}
