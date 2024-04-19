@@ -57,3 +57,4 @@ function updateCardCounter() {
     document.getElementById('current-card').textContent = currentCardIndex + 1;
     document.getElementById('total-cards').textContent = totalCards;
 }
+

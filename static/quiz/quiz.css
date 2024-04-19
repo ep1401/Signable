@@ -68,7 +68,7 @@ h2 {
 }
 
 .card.active .front button {
-    visibility: hidden; /* Make buttons visible when card is flipped */
+    visibility: hidden; 
 }
 
 .card div {
@@ -119,7 +119,7 @@ h2 {
 }
 
 #next-button {
-  position: fixed; /* Add this line */
+  position: fixed; 
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -131,8 +131,8 @@ h2 {
   font-size: 1vw;
   font-weight: bold;
   transition: 0.2s;
-  right: 10vw; /* Change this line */
-  bottom: 10vw; /* Change this line */
+  right: 10vw; 
+  bottom: 10vw; 
 }
   
 #next-button:hover {
@@ -206,3 +206,4 @@ h2 {
     font-weight: bold;
     transition: 0.2s;
 }
+
