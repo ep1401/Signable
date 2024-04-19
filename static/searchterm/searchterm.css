@@ -74,5 +74,13 @@ header {
     padding: 8px;
     border: 1px solid rgb(207, 196, 196);
     text-align: left;
-    max-width: 150px;
+}
+
+.table-styles td {
+    word-wrap: break-word;
+}
+
+.modal-body {
+    height:500px; 
+    overflow-y: auto;
 }
