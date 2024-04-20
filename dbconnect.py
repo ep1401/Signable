@@ -1,5 +1,4 @@
 import os
-import contextlib
 import sys
 import queue
 import psycopg2
@@ -312,6 +311,16 @@ def add_card(courseid, lessonid, videolink, translation, memorytip, speech, sent
             cursor.execute(query_str, (courseid, lessonid, videolink_url, translation, memorytip, speech, sentence))
             connection.commit()
             
+            query_str = "SELECT lessonid "
+            query_str += "FROM classes WHERE lessonid = %s"
+            cursor.execute(query_str, [lessonid])
+            table = cursor.fetchall()
+            
+            if len(table) == 0:
+                query_str = "INSERT INTO classes (courseid, lessonid) VALUES (%s, %s)"
+                cursor.execute(query_str, [courseid, lessonid])
+                connection.commit()
+            
             return True, "Flashcard added successfully."
 
     except Exception as ex:
@@ -321,7 +330,33 @@ def add_card(courseid, lessonid, videolink, translation, memorytip, speech, sent
 
     finally:
         _put_connection(connection)
+        
 
+def get_lessonlength(course):
+    connection = _get_connection()
+
+
+    try: 
+        with connection.cursor() as cursor:
+            query_str = "SELECT lessonid "
+            query_str += "FROM classes WHERE courseid = %s"
+            cursor.execute(query_str, [course])
+            table = cursor.fetchall()
+
+            return_list = []
+            return_list.append(True)
+            return_list.append(table)
+
+    except Exception as ex:
+            return_list = []
+            return_list.append(False)
+            return_list.append("A server error occurred. Please contact the system administrator.")
+            print(sys.argv[0] + ":", ex, file=sys.stderr)
+
+    finally:
+            _put_connection(connection)
+    
+    return return_list
 
 
 

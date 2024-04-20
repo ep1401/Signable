@@ -4,7 +4,6 @@ import flask
 import os
 from flask import request
 from flask import render_template
-from flask import send_file
 import dbconnect
 import auth
 import dotenv
@@ -258,8 +257,14 @@ def selectlessons():
         admin = "true"
     course = request.args.get('course', default=None)
     
-    html_code = flask.render_template('selectlessons.html', course=course,
-        lesson_num = course_lessonsnum[course], admin = admin)
+    query_result = dbconnect.get_lessonlength(int(course[3:6]))
+    if query_result[0] is True:
+        lesson_length = query_result[1]
+        html_code = flask.render_template('selectlessons.html', course=course,
+        lesson_num = len(lesson_length), admin = admin)
+    else: 
+        html_code = flask.render_template('home.html', admin = admin)
+
     response = flask.make_response(html_code)
     return response
 
@@ -281,8 +286,14 @@ def learnselectlessons():
         course = flask.request.cookies.get('lesson')
     type = flask.request.cookies.get('type')
     
-    html_code = flask.render_template('learnselectlessons.html', course=course,
-        lesson_num = course_lessonsnum[course], type = type, admin = admin)
+    query_result = dbconnect.get_lessonlength(int(course[3:6]))
+    if query_result[0] is True:
+        lesson_length = query_result[1]
+        html_code = flask.render_template('learnselectlessons.html', course=course,
+        lesson_num = len(lesson_length), type = type, admin = admin)
+    else: 
+        html_code = flask.render_template('home.html', admin = admin)
+
     response = flask.make_response(html_code)
     response.set_cookie('type', type)
     response.set_cookie('lesson', course)
