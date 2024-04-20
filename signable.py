@@ -13,13 +13,6 @@ _DATABASE_URL = os.environ['DATABASE_URL']
 dotenv.load_dotenv()
 app.secret_key = os.environ['APP_SECRET_KEY']
 
-course_lessonsnum = {
-    'ASL101': 14,
-    'ASL102': 11,
-    'ASL105': 8,
-    'ASL107': 9
-}
-
 @app.route('/', methods=['GET'])
 def start_page():
     return render_template('startpage.html')
@@ -118,7 +111,23 @@ def admin():
  
     if userinfo[1] == False:
         return flask.redirect('/home')
-    html_code = flask.render_template('admin.html', admin = admin)
+    
+    asl101len = dbconnect.get_lessonlength(101)
+    asl102len = dbconnect.get_lessonlength(102)
+    asl105len = dbconnect.get_lessonlength(105)
+    asl107len = dbconnect.get_lessonlength(107)
+    
+    if asl101len[0] is True and asl102len[0] is True and asl105len[0] is True and asl107len[0] is True:
+        lesson_length101 = len(asl101len[1])
+        lesson_length102 = len(asl102len[1])
+        lesson_length105 = len(asl105len[1])
+        lesson_length107 = len(asl107len[1])
+        
+        html_code = flask.render_template('admin.html', admin = admin, asl101len = lesson_length101, 
+            asl102len = lesson_length102, asl105len = lesson_length105, asl107len = lesson_length107)
+    else: 
+        html_code = flask.render_template('home.html', admin = admin)
+        
     response = flask.make_response(html_code)
     return response
 

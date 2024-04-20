@@ -149,26 +149,34 @@
                                 <div class="col"> 
                                     <form action="/add_card" method="POST">
                                         <div class="form-group">
-                                        <label for="aslcourse">ASL Course</label>
-                                        <small id="inputhelp" class="form-text text-muted">(for example: 101 or 107)</small>
-                                        <input type="number" class="form-control" name="aslcourse" placeholder="Enter Course" required>
+                                            <div class="form-group">
+                                                <label for="aslcourse">ASL Course</label>
+                                                <small id="inputhelp" class="form-text text-muted"><span style="color: red;">*</span></small>
+                                                <select class="form-control" name="aslcourse" required>
+                                                    <option value="">Select Course</option>
+                                                    <option value="101">101</option>
+                                                    <option value="102">102</option>
+                                                    <option value="105">105</option>
+                                                    <option value="107">107</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="asllesson">ASL Lesson</label>
-                                            <small id="inputhelp" class="form-text text-muted">(for example: 3 or 12)</small>
+                                            <small id="inputhelp" class="form-text text-muted">(for example: 3 or 12)<span style="color: red;">*</span></small>
                                             <input type="number" class="form-control" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="videolink">Video ID</label>
-                                            <small id="inputhelp" class="form-text text-muted">(for example: enter NXRzRZFgSco from https://youtu.be/NXRzRZFgSco)</small>
-                                            <input class="form-control" name="videolink" aria-describedby="emailHelp" placeholder="Enter Videolink" required>
+                                            <small id="inputhelp" class="form-text text-muted">(for example: enter NXRzRZFgSco from https://youtu.be/NXRzRZFgSco)<span style="color: red;">*</span></small>
+                                            <input class="form-control" name="videolink" aria-describedby="emailHelp" placeholder="Enter Video ID" required>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="translation">English Translation</label>
-                                            <small id="inputhelp" class="form-text text-muted">(for example: to-run or hello)</small>
+                                            <small id="inputhelp" class="form-text text-muted">(for example: to-run or hello)<span style="color: red;">*</span></small>
                                             <input class="form-control" name="translation" aria-describedby="emailHelp" placeholder="English Translation" required>
                                         </div>
                                         <br>
@@ -210,35 +218,35 @@
                                                 
                                                 
                                                 <div class="btn-group">
-                                                  <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Info</button>
+                                                  <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 101</button>
                                                   <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                    {% for lesson_num in range(1, asl101len + 1) %}
+                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                    {% endfor %}
                                                   </ul>
                                                 </div><!-- /btn-group -->
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Info</button>
+                                                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 102</button>
                                                     <ul class="dropdown-menu">
-                                                      <li><a class="dropdown-item" href="#">Action</a></li>
-                                                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                        {% for lesson_num in range(1, asl102len + 1) %}
+                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                    {% endfor %}
                                                     </ul>
                                                   </div><!-- /btn-group -->
                                                   <div class="btn-group">
-                                                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Info</button>
+                                                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 105</button>
                                                     <ul class="dropdown-menu">
-                                                      <li><a class="dropdown-item" href="#">Action</a></li>
-                                                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                        {% for lesson_num in range(1, asl105len + 1) %}
+                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                    {% endfor %}
                                                     </ul>
                                                   </div><!-- /btn-group -->
                                                   <div class="btn-group">
-                                                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Info</button>
+                                                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 107</button>
                                                     <ul class="dropdown-menu">
-                                                      <li><a class="dropdown-item" href="#">Action</a></li>
-                                                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                        {% for lesson_num in range(1, asl107len + 1) %}
+                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                    {% endfor %}
                                                     </ul>
                                                   </div><!-- /btn-group -->
                                               </div>
