@@ -153,8 +153,7 @@
                                                 <label for="aslcourse">ASL Course</label>
                                                 <small id="inputhelp" class="form-text text-muted"><span style="color: red;">*</span></small>
                                                 <select class="form-control" name="aslcourse" required>
-                                                    <option value="">Select Course</option>
-                                                    <option value="101">101</option>
+                                                    <option value="" disabled selected>Select Course</option>                                                    <option value="101">101</option>
                                                     <option value="102">102</option>
                                                     <option value="105">105</option>
                                                     <option value="107">107</option>
@@ -213,7 +212,6 @@
                                 <div class="col"> 
                                     <form action="/remove_card" method="POST">
                                         <div class="form-group">
-                                            <!-- Example single danger button -->
                                             <div class="bd-example">
                                                 
                                                 
@@ -224,7 +222,7 @@
                                                         <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                   </ul>
-                                                </div><!-- /btn-group -->
+                                                </div>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 102</button>
                                                     <ul class="dropdown-menu">
@@ -232,7 +230,7 @@
                                                         <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                     </ul>
-                                                  </div><!-- /btn-group -->
+                                                  </div>
                                                   <div class="btn-group">
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 105</button>
                                                     <ul class="dropdown-menu">
@@ -240,7 +238,7 @@
                                                         <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                     </ul>
-                                                  </div><!-- /btn-group -->
+                                                  </div>
                                                   <div class="btn-group">
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 107</button>
                                                     <ul class="dropdown-menu">
@@ -248,7 +246,7 @@
                                                         <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                     </ul>
-                                                  </div><!-- /btn-group -->
+                                                  </div>
                                               </div>
                                     </form>
                                 </div> 
