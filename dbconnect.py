@@ -10,7 +10,6 @@ _DATABASE_URL = os.environ['DATABASE_URL']
 
 _connection_pool = queue.Queue()
 
-
 def _get_connection():
     try:
         conn = _connection_pool.get(block=False) 
@@ -109,7 +108,7 @@ def get_lessonterms(searchterm, lesson, course):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "SELECT videolink, translation, memorytip, speech, sentence "
+            query_str = "SELECT videolink, translation, memorytip, speech, sentence, cardid "
             query_str += "FROM flashcards WHERE translation ILIKE %s "
             query_str += "AND lessonid = %s AND courseid = %s"
             cursor.execute(query_str, (f"%{searchterm}%", lesson, course))
@@ -121,7 +120,7 @@ def get_lessonterms(searchterm, lesson, course):
             flashcard_list = []
             for row in table:
                 flashcard = {"videolink": row[0], "translation": row[1],
-                             "memorytip": row[2], "speech": row[3], "sentence": row[4] }
+                             "memorytip": row[2], "speech": row[3], "sentence": row[4], "cardid": row[5] }
                 flashcard_list.append(flashcard)
             return_list.append(flashcard_list)
 
@@ -357,6 +356,46 @@ def get_lessonlength(course):
             _put_connection(connection)
     
     return return_list
+
+def update_flashcard(card_id, translation, memorytip, speech, sentence):
+    connection = _get_connection()
+
+    try: 
+        with connection.cursor() as cursor:
+            query_str = "UPDATE flashcards SET translation = %s, memorytip = %s, speech = %s, sentence = %s WHERE cardid = %s"
+            cursor.execute(query_str, (translation, memorytip, speech, sentence, card_id))
+            connection.commit()
+
+            return True, "Flashcard updated successfully."
+
+    except Exception as ex:
+        error_message = "A server error occurred. Please contact the system administrator."
+        print(sys.argv[0] + ":", ex, file=sys.stderr)
+        return False, error_message
+
+    finally:
+        _put_connection(connection)
+
+        
+def delete_flashcard(card_id):
+    connection = _get_connection()
+
+    try:
+        with connection.cursor() as cursor:
+            query_str = "DELETE FROM flashcards WHERE cardid = %s"
+            cursor.execute(query_str, (card_id,))
+            connection.commit()
+
+            return True, "Flashcard deleted successfully."
+
+    except Exception as ex:
+        error_message = "A server error occurred. Please contact the system administrator."
+        print(sys.argv[0] + ":", ex, file=sys.stderr)
+        return False, error_message
+
+    finally:
+        _put_connection(connection)
+
 
 
 

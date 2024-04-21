@@ -116,15 +116,15 @@ def admin():
     asl102len = dbconnect.get_lessonlength(102)
     asl105len = dbconnect.get_lessonlength(105)
     asl107len = dbconnect.get_lessonlength(107)
+    terms = dbconnect.get_lessonterms('', 2, 101)
     
     if asl101len[0] is True and asl102len[0] is True and asl105len[0] is True and asl107len[0] is True:
         lesson_length101 = len(asl101len[1])
         lesson_length102 = len(asl102len[1])
         lesson_length105 = len(asl105len[1])
         lesson_length107 = len(asl107len[1])
-        
         html_code = flask.render_template('admin.html', admin = admin, asl101len = lesson_length101, 
-            asl102len = lesson_length102, asl105len = lesson_length105, asl107len = lesson_length107)
+            asl102len = lesson_length102, asl105len = lesson_length105, asl107len = lesson_length107, terms = terms[1])
     else: 
         html_code = flask.render_template('home.html', admin = admin)
         
@@ -215,8 +215,11 @@ def lessons():
     query_result = dbconnect.get_flashcards(username, courseid, lessonid)
     if query_result[0] is True:
         flashcards = query_result[1]
+        empty = False
+        if (len(flashcards) == 0):
+            empty = True
         html_code = flask.render_template('lessons.html', course=course, 
-        lesson_num = lessonid, flashcards = flashcards, admin = admin)
+        lesson_num = lessonid, flashcards = flashcards, admin = admin, empty = empty)
     else: 
         html_code = flask.render_template('home.html', admin = admin)
     
@@ -510,6 +513,48 @@ def testhome():
     html_code = flask.render_template('sidebar.html', admin = admin)
     response = flask.make_response(html_code)
     return response
+
+@app.route('/savechanges', methods=['POST'])
+def save_changes():
+    data = request.get_json()
+    success_messages = []
+    error_messages = []
+
+    # Loop through data and update database accordingly
+    for item in data:
+        card_id = item['cardid']
+        translation = item['translation']
+        memorytip = item['memorytip']
+        speech = item['speech']
+        sentence = item['sentence']
+        
+        # Call the update_flashcard function to update the flashcard
+        success, message = dbconnect.update_flashcard(card_id, translation, memorytip, speech, sentence)
+        
+        if success:
+            success_messages.append(message)
+        else:
+            error_messages.append(message)
+
+    if error_messages:
+        return flask.jsonify({'success': False, 'errors': error_messages}), 500
+    else:
+        return flask.jsonify({'success': True, 'messages': success_messages})
+
+@app.route('/deleteflashcard', methods=['POST'])
+def deleteflashcard():
+    data = request.get_json()
+    card_id = data.get('cardid')
+
+    if card_id is None:
+        return flask.jsonify({'success': False, 'error': 'Card ID not provided'}), 400
+
+    # Call the delete_flashcard function to delete the flashcard
+    success, message = dbconnect.delete_flashcard(card_id)
+    if success:
+        return flask.jsonify({'success': True, 'message': message}), 200
+    else:
+        return flask.jsonify({'success': False, 'error': message}), 500
 
 
 

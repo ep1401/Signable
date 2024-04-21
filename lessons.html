@@ -423,6 +423,7 @@
                     </ol> 
                     <hr>
                 </nav>
+                {% if empty == false %}
                 <div class="container-xl">
                     <div class="row">
                         <div class="col-md-10  mx-auto container-fluid">
@@ -539,14 +540,14 @@
                         
                                 </div>
                                 </div>
-                            
-                         
-                          
                         
                             <br>
                         </div> 
                     </div>
                 </div>
+                {% else %}
+                <h2><span>{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
+                {% endif %}
             </div> 
   
         </div> 
