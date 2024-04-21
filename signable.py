@@ -560,7 +560,8 @@ def fetch_lesson_terms(course_id, lesson_number):
     # Call dbconnect.get_lessonterms() to fetch the data
     terms = dbconnect.get_lessonterms('', lesson_number, course_id)
     # Convert the data to a JSON format and return it
-    return flask.jsonify(terms[1])
+    sorted_terms = sorted(terms[1], key=lambda x: x['translation'])
+    return flask.jsonify(sorted_terms)
 
 
 

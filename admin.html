@@ -29,6 +29,18 @@
             display: none;
         }
 
+        .btn {
+            background-color: #ccf2f4;
+            color: black;
+            border-color: black;
+        }
+
+        .btn:hover {
+            background-color: #e9e9e9; 
+            border-color: black;
+            color: black;
+        }
+
     </style>
  
 </head> 
@@ -162,7 +174,7 @@
                             <a class="nav-link active" data-bs-toggle="tab" href="#add">Add</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#remove">Remove</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#remove">Edit/Delete</a>
                           </li>
                         </ul>
 
@@ -171,12 +183,12 @@
                             <br>
                             <div class="row"> 
                                 <div class="col"> 
-                                    
+                                    <form action="/add_card" method="POST">
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label for="aslcourse">ASL Course</label>
                                                 <small id="inputhelp" class="form-text text-muted"><span style="color: red;">*</span></small>
-                                                <select class="form-control" id="aslcourse" name="aslcourse" required>
+                                                <select class="form-control" name="aslcourse" required>
                                                     <option value="" disabled selected>Select Course</option>                                                    <option value="101">101</option>
                                                     <option value="102">102</option>
                                                     <option value="105">105</option>
@@ -188,7 +200,7 @@
                                         <div class="form-group">
                                             <label for="asllesson">ASL Lesson</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: 3 or 12)<span style="color: red;">*</span></small>
-                                            <input type="number" class="form-control" id="asllesson" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required>
+                                            <input type="number" class="form-control" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required>
                                         </div>
                                         <br>
                                         <div class="form-group">
@@ -226,7 +238,7 @@
                                                 <button type="submit" class="btn btn-primary">Add</button>
                                             </div>
                                         </div>
-                                    
+                                    </form>
                                 </div> 
                             </div> 
                           </div>
@@ -234,11 +246,8 @@
                             <br>
                             <div class="row"> 
                                 <div class="col"> 
-                                    <form action="/remove_card" method="POST">
                                         <div class="form-group">
-                                            <div class="bd-example">
-                                                
-                                                
+                                            <div class="text-center">
                                                 <div class="btn-group">
                                                   <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 101</button>
                                                   <ul class="dropdown-menu">
@@ -274,6 +283,7 @@
                                               </div>
                                               <div class="container">
                                                 <table class="table">
+                                                    <h2 id="table-title" class="text-center pt-5 pb-3"></h2>
                                                     <thead class="hidden">
                                                         <tr>
                                                             <th>Term</th>
@@ -291,8 +301,7 @@
                                          
                                          
                                             <div id="notification">Changes saved successfully.</div>
-                                         
-                                    </form>
+
                                 </div> 
                             </div> 
                           </div>
@@ -308,20 +317,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Event listener for course selection change
-            $('#aslcourse').change(function() {
-                var courseId = $(this).val();
-                var lessonNumber = $('#asllesson').val();
-                fetchData(courseId, lessonNumber);
-            });
-        
-            // Event listener for lesson selection change
-            $('#asllesson').change(function() {
-                var courseId = $('#aslcourse').val();
-                var lessonNumber = $(this).val();
-                fetchData(courseId, lessonNumber);
-            });
-        
             // Function to fetch data based on course and lesson number
             function fetchData(courseId, lessonNumber) {
                 // Make an AJAX request to fetch lesson terms from the Flask route
@@ -330,6 +325,8 @@
                     method: 'GET',
                     success: function(terms) {
                         // Handle the fetched data
+                        var courseName = $('#aslcourse option:selected').text(); // Get the selected course name
+                        $('#table-title').text(`ASL${courseId} Lesson ${lessonNumber}`); // Set the table title
                         var tableBodyHTML = '';
                         terms.forEach(function(term) {
                             tableBodyHTML += `
@@ -350,7 +347,7 @@
                     }
                 });
             }
-            
+        
             // Event listener for lesson links
             $('.lesson-link').click(function(e) {
                 e.preventDefault();
@@ -359,6 +356,7 @@
                 fetchData(courseId, lessonNumber);
             });
         });
+        
 
     $(document).ready(function() {
         var typingTimer;
@@ -406,21 +404,30 @@
 
         // Event listener for the remove button
         $('#table-body').on('click', '.remove-btn', function() {
+            // Get the card ID
             var cardId = $(this).data('cardid');
-            var row = $(this).closest('tr'); // Store the reference to the row
-            $.ajax({
-                type: 'POST',
-                url: '/deleteflashcard',
-                data: JSON.stringify({ cardid: cardId }), // Send card ID as JSON data
-                contentType: 'application/json', // Set content type to JSON
-                success: function(response) {
-                    // Remove the row from the table upon successful deletion
-                    row.remove();
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error deleting flashcard: ' + error);
-                }
-            });
+    
+            // Show confirmation dialog
+            if (confirm('Are you sure you want to remove this card?')) {
+                // If user confirms, proceed with the removal process
+                var row = $(this).closest('tr'); // Store the reference to the row
+                $.ajax({
+                    type: 'POST',
+                    url: '/deleteflashcard',
+                    data: JSON.stringify({ cardid: cardId }), // Send card ID as JSON data
+                    contentType: 'application/json', // Set content type to JSON
+                    success: function(response) {
+                        // Remove the row from the table upon successful deletion
+                        row.remove();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error deleting flashcard: ' + error);
+                    }
+                });
+            } else {
+                // If user cancels, do nothing
+                return;
+            }
         });
     });
 </script>
