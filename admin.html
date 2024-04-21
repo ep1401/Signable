@@ -23,6 +23,9 @@
        
         .edited-cell {
             background-color: #fefeab !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow-x: auto;
         }
 
         .hidden {
@@ -39,6 +42,17 @@
             background-color: #e9e9e9; 
             border-color: black;
             color: black;
+        }
+
+        .table td {
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+        }
+
+        .table td[contenteditable="true"] {
+            white-space: nowrap;
+            overflow-x: auto;
+            word-break: break-all;
         }
 
     </style>
@@ -316,6 +330,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+
         $(document).ready(function() {
             // Function to fetch data based on course and lesson number
             function fetchData(courseId, lessonNumber) {
@@ -430,6 +445,21 @@
             }
         });
     });
+
+    $(document).ready(function() {
+        // Function to handle cell editing
+        function handleCellEditing() {
+            $('#table-body td[contenteditable="true"]').on('input', function() {
+                // Set white-space property to pre-wrap when editing
+                $(this).css('white-space', 'pre-wrap');
+            });
+        }
+    
+        // Call the function initially to enable cell editing
+        handleCellEditing();
+    });
+
+    
 </script>
     <script src="{{ url_for('static', filename='sidebar/sidebar.js') }}"></script>
 </body> 
