@@ -133,7 +133,6 @@ def admin():
 
 @app.route('/add_card', methods=['POST'])
 def add_card():
-    print("enter")
     aslcourse = request.form.get('aslcourse')
     asllesson = request.form.get('asllesson')
     videolink = request.form.get('videolink')
@@ -555,6 +554,13 @@ def deleteflashcard():
         return flask.jsonify({'success': True, 'message': message}), 200
     else:
         return flask.jsonify({'success': False, 'error': message}), 500
+    
+@app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>')
+def fetch_lesson_terms(course_id, lesson_number):
+    # Call dbconnect.get_lessonterms() to fetch the data
+    terms = dbconnect.get_lessonterms('', lesson_number, course_id)
+    # Convert the data to a JSON format and return it
+    return flask.jsonify(terms[1])
 
 
 

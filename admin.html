@@ -24,6 +24,11 @@
         .edited-cell {
             background-color: #fefeab !important;
         }
+
+        .hidden {
+            display: none;
+        }
+
     </style>
  
 </head> 
@@ -166,12 +171,12 @@
                             <br>
                             <div class="row"> 
                                 <div class="col"> 
-                                    <form action="/add_card" method="POST">
+                                    
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label for="aslcourse">ASL Course</label>
                                                 <small id="inputhelp" class="form-text text-muted"><span style="color: red;">*</span></small>
-                                                <select class="form-control" name="aslcourse" required>
+                                                <select class="form-control" id="aslcourse" name="aslcourse" required>
                                                     <option value="" disabled selected>Select Course</option>                                                    <option value="101">101</option>
                                                     <option value="102">102</option>
                                                     <option value="105">105</option>
@@ -183,7 +188,7 @@
                                         <div class="form-group">
                                             <label for="asllesson">ASL Lesson</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: 3 or 12)<span style="color: red;">*</span></small>
-                                            <input type="number" class="form-control" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required>
+                                            <input type="number" class="form-control" id="asllesson" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required>
                                         </div>
                                         <br>
                                         <div class="form-group">
@@ -221,7 +226,7 @@
                                                 <button type="submit" class="btn btn-primary">Add</button>
                                             </div>
                                         </div>
-                                    </form>
+                                    
                                 </div> 
                             </div> 
                           </div>
@@ -238,7 +243,7 @@
                                                   <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 101</button>
                                                   <ul class="dropdown-menu">
                                                     {% for lesson_num in range(1, asl101len + 1) %}
-                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="101" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                   </ul>
                                                 </div>
@@ -246,7 +251,7 @@
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 102</button>
                                                     <ul class="dropdown-menu">
                                                         {% for lesson_num in range(1, asl102len + 1) %}
-                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="102" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                   </div>
@@ -254,7 +259,7 @@
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 105</button>
                                                     <ul class="dropdown-menu">
                                                         {% for lesson_num in range(1, asl105len + 1) %}
-                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="105" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                   </div>
@@ -262,14 +267,14 @@
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 107</button>
                                                     <ul class="dropdown-menu">
                                                         {% for lesson_num in range(1, asl107len + 1) %}
-                                                        <li><a class="dropdown-item" href="#" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="107" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                   </div>
                                               </div>
                                               <div class="container">
                                                 <table class="table">
-                                                    <thead>
+                                                    <thead class="hidden">
                                                         <tr>
                                                             <th>Term</th>
                                                             <th hidden>Card ID</th>
@@ -280,16 +285,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table-body">
-                                                        {% for term in terms %}
-                                                        <tr>
-                                                            <td contenteditable="true">{{ term['translation'] }}</td>
-                                                            <td hidden>{{ term['cardid'] }}</td>
-                                                            <td contenteditable="true">{{ term['memorytip'] }}</td>
-                                                            <td contenteditable="true">{{ term['speech'] }}</td>
-                                                            <td contenteditable="true">{{ term['sentence'] }}</td>
-                                                            <td><button class="btn btn-danger remove-btn" data-cardid="{{ term['cardid'] }}">Remove</button></td>
-                                                        </tr>
-                                                        {% endfor %}
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -312,6 +307,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        $(document).ready(function() {
+            // Event listener for course selection change
+            $('#aslcourse').change(function() {
+                var courseId = $(this).val();
+                var lessonNumber = $('#asllesson').val();
+                fetchData(courseId, lessonNumber);
+            });
+        
+            // Event listener for lesson selection change
+            $('#asllesson').change(function() {
+                var courseId = $('#aslcourse').val();
+                var lessonNumber = $(this).val();
+                fetchData(courseId, lessonNumber);
+            });
+        
+            // Function to fetch data based on course and lesson number
+            function fetchData(courseId, lessonNumber) {
+                // Make an AJAX request to fetch lesson terms from the Flask route
+                $.ajax({
+                    url: `/fetch-lesson-terms/${courseId}/${lessonNumber}`,
+                    method: 'GET',
+                    success: function(terms) {
+                        // Handle the fetched data
+                        var tableBodyHTML = '';
+                        terms.forEach(function(term) {
+                            tableBodyHTML += `
+                                <tr>
+                                    <td contenteditable="true">${term.translation}</td>
+                                    <td hidden>${term.cardid}</td>
+                                    <td contenteditable="true">${term.memorytip}</td>
+                                    <td contenteditable="true">${term.speech}</td>
+                                    <td contenteditable="true">${term.sentence}</td>
+                                    <td><button class="btn btn-danger remove-btn" data-cardid="${term.cardid}">Remove</button></td>
+                                </tr>`;
+                        });
+                        $('#table-body').html(tableBodyHTML);
+                        $('thead').removeClass('hidden');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching data: ' + error);
+                    }
+                });
+            }
+            
+            // Event listener for lesson links
+            $('.lesson-link').click(function(e) {
+                e.preventDefault();
+                var courseId = $(this).data('course');
+                var lessonNumber = $(this).data('lesson');
+                fetchData(courseId, lessonNumber);
+            });
+        });
+
     $(document).ready(function() {
         var typingTimer;
         var doneTypingInterval = 0;
