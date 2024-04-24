@@ -22,6 +22,11 @@
         crossorigin="anonymous" 
         referrerpolicy="no-referrer" /> 
 </head> 
+<style>
+    h2 {
+        text-align: center;
+    }
+</style>
 
 <body> 
   
@@ -52,7 +57,7 @@
             </a><hr> 
             <ul class="mynav nav nav-pills flex-column mb-auto "> 
                 <li class="nav-item mb-1"> 
-                    <a> 
+                    <a href="/home">
                         <i class="fa-solid fa-home text-black"></i> 
                         <span class="text text-black">  Home </span>
                     </a> 
@@ -140,7 +145,7 @@
                 <br>
                 <div class="row"> 
                     <div class="col"> 
-                        <h1 >Welcome to Signable!</h1> 
+                        <h2 >{{error}}</h2> 
                     </div> 
                 </div> 
             </div> 

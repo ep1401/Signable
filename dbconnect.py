@@ -211,6 +211,7 @@ def get_admin(netid):
          
             if table == []: 
                  return_list.append(False)
+                 return_list.append("You do not have access to administrative features.")
             else:
                 return_list.append(True)
                 row = table[0]
@@ -310,8 +311,6 @@ def del_starred_card(netid, cardid):
 
 def add_card(courseid, lessonid, videolink, translation, memorytip, speech, sentence):
     connection = _get_connection()
-    
-    print("hi")
 
     try: 
         with connection.cursor() as cursor:
