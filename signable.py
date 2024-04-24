@@ -337,7 +337,8 @@ def mirrorsign():
         empty = []
         if len(flashcards) != 0:
             empty=[1]
-        html_code = flask.render_template('mirrorsign.html', flashcards = flashcards, admin = admin, empty=empty)
+        html_code = flask.render_template('mirrorsign.html', course = course, lesson_num = lessonid,
+            flashcards = flashcards, admin = admin, empty=empty)
     else: 
         html_code = flask.render_template('home.html', admin = admin)
     
@@ -358,16 +359,17 @@ def quiz():
     if useradmin[1] == True:
         admin = "true"
 
-    input = request.args.get('value', default=None)
+    input = request.args.get('course', default=None)
     values = input.split()
     course = values[0]
     courseid = int(course[3:6])
     lessonid = values[1]
 
     query_result = dbconnect.get_flashcards(username, courseid, lessonid)
+    print("entered")
     if True is True:
         flashcards = query_result[1]
-        html_code = flask.render_template('quiz.html', 
+        html_code = flask.render_template('quiz.html', course = course, lesson_num = lessonid, 
             flashcards = flashcards, admin = admin)
     else: 
         html_code = flask.render_template('home.html', admin = admin)
@@ -419,65 +421,6 @@ def review():
         return flask.redirect('/home')
     
     return response
-
-@app.route('/mirrorquiz', methods=['GET'])
-def mirrorquiz():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
- 
-    if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
-        
-    useradmin = dbconnect.get_admin(username)
-    
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
-       
-
-    input = request.args.get('course', default=None)
-    type = flask.request.cookies.get('type')
-    
-    if type == "Mirror Sign":
-        values = input.split()
-        course = values[0]
-        courseid = int(course[3:6])
-        lessonid = values[1]
-
-        query_result = dbconnect.get_flashcards(username, courseid, lessonid)
-        if True is True:
-            flashcards = query_result[1]
-            empty = []
-            if len(flashcards) != 0:
-                empty=[1]
-            html_code = flask.render_template('mirrorsign.html', 
-                flashcards = flashcards, type = type, admin = admin, empty = empty)
-        else: 
-            html_code = flask.render_template('home.html', admin = admin)
-               
-        response = flask.make_response(html_code)
-        response.set_cookie('type', type)
-    
-    else: # type == "Quiz"
-        values = input.split()
-        course = values[0]
-        courseid = int(course[3:6])
-        lessonid = values[1]
-        
-        query_result = dbconnect.get_flashcards(username, courseid, lessonid)
-        if True is True:
-            flashcards = query_result[1]
-            html_code = flask.render_template('quiz.html', 
-                flashcards = flashcards, type = type, admin = admin)
-        else:
-            html_code = flask.render_template('home.html', admin = admin)
-            
-        response = flask.make_response(html_code)
-        response.set_cookie('type', type)
-    return response
-
-    
-    
 
 @app.route('/deletestarredflashcard', methods=['PUT'])
 def delstarflashcard():
@@ -561,6 +504,33 @@ def fetch_lesson_terms(course_id, lesson_number):
     terms = dbconnect.get_lessonterms('', lesson_number, course_id)
     # Convert the data to a JSON format and return it
     return flask.jsonify(terms[1])
+
+@app.route('/learningcenter', methods=['GET'])
+def learningcenter():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        dbconnect.add_user(username, "", "")
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+
+    input = request.args.get('course', default=None)
+        
+    values = input.split()
+    course = values[0]
+    courseid = int(course[3:6])
+    lessonid = values[1]
+
+    html_code = flask.render_template('learningcenter.html', course=course, 
+        lesson_num = lessonid,  admin = admin)
+    
+    
+    response = flask.make_response(html_code)
+    return response
 
 
 

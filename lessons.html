@@ -319,33 +319,11 @@
   
                 <li class="nav-item mb-1"> 
                     <a href="/courses">  
-                        <i class="fa-regular fa-address-card text-black"></i> 
-                        <span class="text text-black">   Flashcards </span>
+                        <i class="fas fa-regular fa-school text-black"></i> 
+                        <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
-                <li class="nav-item mb-1"> 
-                    <a href="/courses" id="mirrorLink">  
-                        <i class="fa-solid fa-video text-black"></i> 
-                        <span class="text text-black"> Mirror </span>
-                    </a> 
-                </li>
-                <form id="mirrorForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Mirror Sign">
-                    <button type="submit"></button>
-                </form>
-                
-                <li class="nav-item mb-1"> 
-                    <a href="#" id="quizLink">
-                        <i class="fa-solid fa-graduation-cap text-black"></i> 
-                       <span class="text text-black"> Quiz </span>
-                    </a> 
-                </li> 
-
-                <form id="quizForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Quiz">
-                    <button type="submit"></button>
-                </form>
 
                 <li class="nav-item mb-1"> 
                     <a href="/review"> 
@@ -414,12 +392,15 @@
             <div class="p-3"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
                     <ol class="breadcrumb m-0"> 
-                        <li class="breadcrumb-item">Flashcard</li>  
+                        <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
                         </li>   
                         <li class="breadcrumb-item">
                             <a href="/selectlessons?course={{course}}" style="color: black; text-decoration: none;">Lesson</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="/learningcenter?course={{course}} {{lesson_num}}" style="color: black; text-decoration: none;">Modes</a>
                         </li>
                     </ol> 
                     <hr>
@@ -475,14 +456,7 @@
                                 </a>
                             </div>
                             <div class="text-center mt">
-                                <form method="GET" action="/mirrorsign" style="display: inline;">
-                                    <div class="option-wrapper">
-                                        <button class="option mirror btn btn-lg btn-light rounded-circle mr-3" name="course" value="{{ course }} {{ lesson_num }}">
-                                            <i class="fa-solid fa-video text-black"></i>
-                                            <span class="tooltip-text">Mirror</span>
-                                        </button>
-                                    </div>
-                                </form>
+                                
                                 
                                 <div class="option-wrapper">
                                     <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
@@ -498,14 +472,7 @@
                                     </button>
                                 </div>
 
-                                <form method="GET" action="/quiz" style="display: inline;">
-                                    <div class="option-wrapper">
-                                        <button class="option quiz btn btn-lg btn-light rounded-circle mr-3" name="value" value="{{ course }} {{ lesson_num }}">
-                                            <i class="fa-solid fa-graduation-cap text-black"></i>
-                                            <span class="tooltip-text">Quiz</span>
-                                        </button>
-                                    </div>
-                                </form>
+                                
 
                             </div>
                             <br>

@@ -1,24 +1,6 @@
 'use strict'
 
-document.getElementById("mirrorLink").addEventListener("click", function(event) {
-    event.preventDefault();
-    
-    document.getElementById("mirrorForm").submit();
-});
-
-document.getElementById("quizLink").addEventListener("click", function(event) {
-    event.preventDefault();
-    
-    document.getElementById("quizForm").submit();
-});
-
-
-
 function handleclick() {
-
-   
-
-    
 
         $("#bdSidebar").toggleClass("width1", "width2")
         $(".text").toggle()

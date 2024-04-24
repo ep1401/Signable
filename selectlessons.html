@@ -61,33 +61,11 @@
   
                 <li class="nav-item mb-1"> 
                     <a href="/courses">  
-                        <i class="fa-regular fa-address-card text-black"></i> 
-                        <span class="text text-black">   Flashcards </span>
+                        <i class="fas fa-regular fa-school text-black"></i> 
+                        <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
-                <li class="nav-item mb-1"> 
-                    <a href="#" id="mirrorLink">  
-                        <i class="fa-solid fa-video text-black"></i> 
-                        <span class="text text-black"> Mirror </span>
-                    </a> 
-                </li>
-                <form id="mirrorForm" method="POST" action="/learncourses" style="display: none;">
-                    <input type="hidden" name="course_name" value="Mirror Sign">
-                    <button type="submit"></button>
-                </form>
-                
-                <li class="nav-item mb-1"> 
-                    <a href="#" id="quizLink">
-                        <i class="fa-solid fa-graduation-cap text-black"></i> 
-                       <span class="text text-black"> Quiz </span>
-                    </a> 
-                </li> 
-
-                <form id="quizForm" method="POST" action="/learncourses" style="display: none;">
-                    <input type="hidden" name="course_name" value="Quiz">
-                    <button type="submit"></button>
-                </form>
 
                 <li class="nav-item mb-1"> 
                     <a href="/review"> 
@@ -157,7 +135,7 @@
             <div class="p-4">  
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
                     <ol class="breadcrumb"> 
-                        <li class="breadcrumb-item">Flashcard</li>  
+                        <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
                         </li>   
@@ -167,7 +145,7 @@
                 <h2>Select a Lesson to Start Learning!</h2>
                 <br>
                 <div class="container">
-                    <form method="GET" action="/lessons" class="custom-btn-wrapper">
+                    <form method="GET" action="/learningcenter" class="custom-btn-wrapper">
                         {% for lesson_num in range(1, lesson_num + 1) %}
                             <button type="submit" class="btn btn-primary custom-btn" name="course" value="{{ course }} {{ lesson_num }}">Lesson {{ lesson_num }}</button>
                         {% endfor %}

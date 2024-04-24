@@ -14,7 +14,7 @@
 "sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
           crossorigin="anonymous"> 
     <link rel="stylesheet" 
-          href="{{ url_for('static', filename='sidebar/sidebar.css') }}"> 
+        href="{{ url_for('static', filename='sidebar/sidebar.css') }}"> 
     <link rel="stylesheet" href= 
 "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity= 
@@ -23,6 +23,52 @@
         referrerpolicy="no-referrer" /> 
 </head> 
 
+<style>
+    h2 {
+        font-size: 300%;
+        text-align: center;
+    }
+    
+    .custom-btn-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .custom-btn-wrapper button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .btn-text {
+        margin-bottom: 5px;
+    }
+    
+    .custom-btn {
+        border: .1vw solid #ccc;
+        border-radius: 5%;
+        padding: 10% 20%;
+        font-size: 24px;
+        width: 400px; /* Adjust the width as needed */
+        height: 225px;
+        margin: 20px; 
+        color: #222;
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        background-color: #ffffff;
+        text-align: center;
+    }
+    
+    .custom-btn:hover {
+        background-color: #ccc;
+        border-color: #ccc;
+        color: #222;
+    }
+</style>
+  
 <body> 
   
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
@@ -52,7 +98,7 @@
             </a><hr> 
             <ul class="mynav nav nav-pills flex-column mb-auto "> 
                 <li class="nav-item mb-1"> 
-                    <a> 
+                    <a href="/home"> 
                         <i class="fa-solid fa-home text-black"></i> 
                         <span class="text text-black">  Home </span>
                     </a> 
@@ -60,13 +106,23 @@
                 
   
                 <li class="nav-item mb-1"> 
-                    <a href="/courses">  
+                    <a href="/courses"> 
                         <i class="fas fa-regular fa-school text-black"></i> 
                         <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
-              
+               
+                <form id="mirrorForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Mirror Sign">
+                    <button type="submit"></button>
+                </form>
+
+
+                <form id="quizForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Quiz">
+                    <button type="submit"></button>
+                </form>
 
                 <li class="nav-item mb-1"> 
                     <a href="/review"> 
@@ -116,12 +172,9 @@
                         </li>
                     </ul> 
                 </li> 
-
             </ul> 
             <hr> 
             <div class="d-flex"> 
-
-            
   
                
             </div> 
@@ -136,13 +189,45 @@
                 </a> 
                 <span class="ms-3 text-black">Signable</span> 
             </div> 
-            <div class="p-4"> 
+            <div class="p-4">  
+                <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
+                    <ol class="breadcrumb"> 
+                        <li class="breadcrumb-item">Learning Hub</li>  
+                        <li class="breadcrumb-item">
+                            <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
+                        </li>   
+                        <li class="breadcrumb-item">
+                            <a href="/selectlessons?course={{course}}" style="color: black; text-decoration: none;">Lesson</a>
+                        </li>  
+                    </ol> 
+                </nav> 
+                <hr>
+                <h2>Select your learning method:</h2>
                 <br>
-                <div class="row"> 
-                    <div class="col"> 
-                        <h1 >Welcome to Signable!</h1> 
-                    </div> 
-                </div> 
+                <div class="container text-center">
+                    <form method="GET" action="/lessons" class="custom-btn-wrapper d-inline-block">
+                        <button type="submit" class="btn btn-primary custom-btn" name="course" value="{{course}} {{lesson_num}}">
+                            <div class="btn-text">Flashcards</div>
+                            <div class="btn-icon"><i class="fa-regular fa-address-card"></i></div>
+                        </button>
+                    </form>
+                    <form method="GET" action="/mirrorsign" class="custom-btn-wrapper d-inline-block">
+                        <button type="submit" class="btn btn-primary custom-btn" name="course" value="{{course}} {{lesson_num}}">
+                            <div class="btn-text">Mirror</div>
+                            <div class="btn-icon"><i class="fa-solid fa-video"></i></div>
+                        </button>
+                    </form>
+                    <form method="GET" action="/quiz" class="custom-btn-wrapper d-inline-block">
+                        <button type="submit" class="btn btn-primary custom-btn" name="course" value="{{course}} {{lesson_num}}">
+                            <div class="btn-text">Quiz</div>
+                            <div class="btn-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        </button>
+                    </form>
+                </div>
+                
+                
+                
+                
             </div> 
   
         </div> 
@@ -163,8 +248,6 @@
     <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>
     <script 
           src="{{ url_for('static', filename='sidebar/sidebar.js') }}">  </script>
-
 </body> 
-
   
 </html>
