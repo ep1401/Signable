@@ -219,7 +219,7 @@ def lessons():
             empty = True
         html_code = flask.render_template('lessons.html', course=course, 
         lesson_num = lessonid, flashcards = flashcards, admin = admin, empty = empty)
-    else: 
+    else:
         html_code = flask.render_template('home.html', admin = admin)
     
     

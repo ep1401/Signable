@@ -60,9 +60,11 @@ def get_flashcards(username, courseid, lessonid):
             return_list.append(flashcard_list)
     
     except Exception as ex:
+        
         return_list = []
         return_list.append(False)
         return_list.append("A server error occurred. Please contact the system administrator.")
+        connection.rollback()
         print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:
@@ -95,6 +97,7 @@ def get_terms(searchterm):
             return_list = []
             return_list.append(False)
             return_list.append("A server error occurred. Please contact the system administrator.")
+            connection.rollback()
             print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:
@@ -128,6 +131,7 @@ def get_lessonterms(searchterm, lesson, course):
             return_list = []
             return_list.append(False)
             return_list.append("A server error occurred. Please contact the system administrator.")
+            connection.rollback()
             print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:
@@ -163,6 +167,7 @@ def get_user(netid):
             return_list = []
             return_list.append(False)
             return_list.append("A server error occurred. Please contact the system administrator.")
+            connection.rollback()
             print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:
@@ -184,6 +189,7 @@ def add_user(username, firstname, lastname):
     except Exception as ex:
         error_message = "A server error occurred. Please contact the system administrator."
         print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
         return False, error_message
 
     finally:
@@ -217,6 +223,7 @@ def get_admin(netid):
             return_list = []
             return_list.append(False)
             return_list.append("A server error occurred. Please contact the system administrator.")
+            connection.rollback()
             print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:
@@ -250,6 +257,7 @@ def get_starred_cards(netid):
         return_list = []
         return_list.append(False)
         return_list.append("A server error occurred. Please contact the system administrator.")
+        connection.rollback()
         print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:
@@ -271,6 +279,7 @@ def add_starred_card(netid, cardid):
     except Exception as ex:
         error_message = "A server error occurred. Please contact the system administrator."
         print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
         return False, error_message
 
     finally:
@@ -293,6 +302,7 @@ def del_starred_card(netid, cardid):
     except Exception as ex:
         error_message = "A server error occurred. Please contact the system administrator."
         print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
         return False, error_message
 
     finally:
@@ -325,6 +335,7 @@ def add_card(courseid, lessonid, videolink, translation, memorytip, speech, sent
     except Exception as ex:
         error_message = "A server error occurred. Please contact the system administrator."
         print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
         return False, error_message
 
     finally:
@@ -350,6 +361,7 @@ def get_lessonlength(course):
             return_list = []
             return_list.append(False)
             return_list.append("A server error occurred. Please contact the system administrator.")
+            connection.rollback()
             print(sys.argv[0] + ":", ex, file=sys.stderr)
 
     finally:
@@ -371,6 +383,7 @@ def update_flashcard(card_id, translation, memorytip, speech, sentence):
     except Exception as ex:
         error_message = "A server error occurred. Please contact the system administrator."
         print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
         return False, error_message
 
     finally:
@@ -391,6 +404,7 @@ def delete_flashcard(card_id):
     except Exception as ex:
         error_message = "A server error occurred. Please contact the system administrator."
         print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
         return False, error_message
 
     finally:
