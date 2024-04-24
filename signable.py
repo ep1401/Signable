@@ -44,7 +44,11 @@ def home():
         admin = "true"
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     if userinfo[0] is False or useradmin[0] is False:
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
@@ -67,7 +71,11 @@ def error():
         admin = "true"
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     if userinfo[0] is False or useradmin[0] is False:
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
@@ -93,7 +101,11 @@ def courses():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -115,7 +127,11 @@ def admin():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
  
@@ -166,7 +182,11 @@ def searchterm():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -187,7 +207,11 @@ def searchtermresults():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -219,7 +243,11 @@ def lessons():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -257,7 +285,11 @@ def searchlessonresults():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -289,7 +321,11 @@ def selectlessons():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -319,7 +355,11 @@ def mirrorsign():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -356,7 +396,11 @@ def quiz():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -389,7 +433,11 @@ def gloss():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -410,7 +458,11 @@ def review():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
@@ -503,7 +555,11 @@ def learningcenter():
     userinfo = dbconnect.get_user(username)
  
     if userinfo[1] == False:
-        dbconnect.add_user(username, "", "")
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
         
     useradmin = dbconnect.get_admin(username)
     admin = "false"
