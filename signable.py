@@ -8,6 +8,8 @@ import dbconnect
 import auth
 import dotenv
 
+asl_dict = {101: "first", 102: "second", 105: "third", 107: "fourth"}
+
 app = flask.Flask(__name__, template_folder='.')
 _DATABASE_URL = os.environ['DATABASE_URL']
 dotenv.load_dotenv()
@@ -277,6 +279,9 @@ def lessons():
     
     if not lessonid.isdigit():
         return flask.redirect(flask.url_for('error', error="Invalid lesson"))
+    
+    if int(course) not in asl_dict:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
 
     query_result = dbconnect.get_flashcards(username, course, lessonid)
     if query_result[0] is True:
@@ -385,9 +390,22 @@ def mirrorsign():
             + "administrator to resolve to issue"))
 
     input = request.args.get('course_lesson', default=None)
-    values = input.split()
-    course = values[0]
-    lessonid = values[1]
+    
+    try:    
+        values = input.split()
+        course = values[0]
+        lessonid = values[1]
+    except:
+        return flask.redirect(flask.url_for('error', error="Invalid course or lesson"))
+    
+    if not course.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    if not lessonid.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
+    
+    if int(course) not in asl_dict:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
 
     query_result = dbconnect.get_flashcards(username, course, lessonid)
     if query_result[0] is True:
@@ -426,9 +444,22 @@ def quiz():
             + "administrator to resolve to issue"))
 
     input = request.args.get('course_lesson', default=None)
-    values = input.split()
-    course = values[0]
-    lessonid = values[1]
+    
+    try:    
+        values = input.split()
+        course = values[0]
+        lessonid = values[1]
+    except:
+        return flask.redirect(flask.url_for('error', error="Invalid course or lesson"))
+    
+    if not course.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    if not lessonid.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
+    
+    if int(course) not in asl_dict:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
 
     query_result = dbconnect.get_flashcards(username, course, lessonid)
     if query_result[0] is True:
@@ -592,10 +623,22 @@ def learningcenter():
             + "administrator to resolve to issue"))
 
     input = request.args.get('course_lesson', default=None)
-        
-    values = input.split()
-    course = values[0]
-    lessonid = values[1]
+    
+    try:    
+        values = input.split()
+        course = values[0]
+        lessonid = values[1]
+    except:
+        return flask.redirect(flask.url_for('error', error="Invalid course or lesson"))
+    
+    if not course.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    if not lessonid.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
+    
+    if int(course) not in asl_dict:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
 
     html_code = flask.render_template('learningcenter.html', course=course, 
         lesson_num = lessonid,  admin = admin)
