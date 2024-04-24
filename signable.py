@@ -156,7 +156,8 @@ def admin():
         html_code = flask.render_template('admin.html', admin = admin, asl101len = lesson_length101, 
             asl102len = lesson_length102, asl105len = lesson_length105, asl107len = lesson_length107, terms = terms[1])
     else: 
-        return flask.redirect('/home')
+        return flask.redirect(flask.url_for('error', error="A server error occurred." + 
+            " Please contact the system administrator."))
         
     response = flask.make_response(html_code)
     return response
@@ -171,7 +172,11 @@ def add_card():
     speech = request.form.get('speech')
     sentence = request.form.get('sentence')
     print(aslcourse)
-    dbconnect.add_card( int(aslcourse), int(asllesson), videolink, translation, memory, speech, sentence)
+    result = dbconnect.add_card( int(aslcourse), int(asllesson), 
+        videolink, translation, memory, speech, sentence)
+    
+    if result[0] is False:
+        return flask.redirect(flask.url_for('error', error=result[1]))
 
     return flask.redirect('/admin')
 
@@ -229,7 +234,7 @@ def searchtermresults():
         terms_sorted = sorted(terms, key=lambda x: x['translation'])
         html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
     else: 
-        html_code =    flask.render_template('home.html', admin = admin) 
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
 
         
 
@@ -259,10 +264,19 @@ def lessons():
             + "administrator to resolve to issue"))
 
     input = request.args.get('course_lesson', default=None)
-        
-    values = input.split()
-    course = values[0]
-    lessonid = values[1]
+    
+    try:    
+        values = input.split()
+        course = values[0]
+        lessonid = values[1]
+    except:
+        return flask.redirect(flask.url_for('error', error="Invalid course or lesson"))
+    
+    if not course.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    if not lessonid.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
 
     query_result = dbconnect.get_flashcards(username, course, lessonid)
     if query_result[0] is True:
@@ -310,7 +324,7 @@ def searchlessonresults():
         terms_sorted = sorted(terms, key=lambda x: x['translation'])
         html_code = flask.render_template('tabledisplay.html', terms=terms_sorted, lessonid=lesson_id, courseid=course_id)
     else: 
-        html_code = flask.render_template('home.html', admin=admin)
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
 
     return html_code
 
@@ -344,7 +358,7 @@ def selectlessons():
         html_code = flask.render_template('selectlessons.html', course=course,
         lesson_num = len(lesson_length), admin = admin)
     else: 
-        html_code = flask.render_template('home.html', admin = admin)
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
 
     response = flask.make_response(html_code)
     return response
@@ -384,7 +398,7 @@ def mirrorsign():
         html_code = flask.render_template('mirrorsign.html', course = course, lesson_num = lessonid,
             flashcards = flashcards, admin = admin, empty=empty)
     else: 
-        html_code = flask.render_template('home.html', admin = admin)
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
     
     
     response = flask.make_response(html_code)
@@ -422,7 +436,7 @@ def quiz():
         html_code = flask.render_template('quiz.html', course = course, lesson_num = lessonid, 
             flashcards = flashcards, admin = admin)
     else: 
-        html_code = flask.render_template('home.html', admin = admin)
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
     
     response = flask.make_response(html_code)
     return response
@@ -484,7 +498,7 @@ def review():
         html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin, empty=empty)
         response = flask.make_response(html_code)
     else:
-        return flask.redirect('/home')
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
     
     return response
 
@@ -493,6 +507,8 @@ def delstarflashcard():
         username = auth.authenticate()
         cardid =  request.get_json()["cardid"]
         result = dbconnect.del_starred_card(username, cardid)
+        if result[0] is False:
+            return flask.redirect(flask.url_for('error', error=result[1]))
         return result[1]
         
         
@@ -502,6 +518,8 @@ def starflashcard():
      username = auth.authenticate()
      cardid =  request.get_json()["cardid"]
      result = dbconnect.add_starred_card(username, cardid)
+     if result[0] is False:
+         return flask.redirect(flask.url_for('error', error=result[1]))
      return result[1]
         
 
@@ -547,6 +565,9 @@ def deleteflashcard():
 @app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>')
 def fetch_lesson_terms(course_id, lesson_number):
     terms = dbconnect.get_lessonterms('', lesson_number, course_id)
+    if terms[0] is False:
+        return flask.redirect(flask.url_for('error', error=terms[1]))
+
     return flask.jsonify(terms[1])
 
 @app.route('/learningcenter', methods=['GET'])
