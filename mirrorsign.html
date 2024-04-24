@@ -252,6 +252,15 @@
     .modal-body{
         word-break: break-all;
     }
+
+    #countdown {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+    }
+   
     </style>
   
 <body> 
@@ -456,6 +465,8 @@
                                                 <div class="flashcardvideo">
                                                     <div class="front">
                                                         <div id="container" class="d-flex flex-column justify-content-center align-items-center">
+                                                           <div id="countdown"></div>
+
                                                             <video id="gum" class="w-75" autoplay muted></video>
                                                             <video id="recorded" class="w-75" playsinline loop></video> 
                                                             <div>
@@ -509,6 +520,7 @@
             let mediaRecorder;
             let recordedBlobs;
             let isRecording = false;
+            let countdownInterval;
 
             const errorMsgElement = document.querySelector('span#errorMsg');
             const videoElement = document.querySelector('video#recorded');
@@ -550,7 +562,21 @@
                     mediaRecorder.start();
                     isRecording = true;
                     recordButton.textContent = 'Stop Recording';
+                    videoElement.controls = false;
                     playStream(stream);
+                    
+                    
+                    let duration = 20; 
+                    countdownInterval = setInterval(() => {
+                        if (duration <= 9)
+                            document.getElementById('countdown').textContent = "0:0" + duration;
+                        else
+                        document.getElementById('countdown').textContent = "0:" + duration;
+                        duration--;
+                        if (duration < 0) {
+                            stopRecording();
+                        }
+                    }, 1000); 
                 } catch (e) {
                     console.error('Exception while creating MediaRecorder:', e);
                     alert('Recording is not supported on this browser. Please try on a different device.');
@@ -559,11 +585,13 @@
                     return;
                 }
             }
-
+            
             function stopRecording() {
                 mediaRecorder.stop();
                 isRecording = false;
                 recordButton.textContent = 'Record';
+                clearInterval(countdownInterval); // Stop the countdown timer
+                document.getElementById('countdown').textContent = ''; // Clear the countdown display
             }
 
             function handleSuccess(stream) {
