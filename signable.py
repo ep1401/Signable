@@ -204,14 +204,13 @@ def lessons():
     if useradmin[1] == True:
         admin = "true"
 
-    input = request.args.get('course', default=None)
+    input = request.args.get('course_lesson', default=None)
         
     values = input.split()
     course = values[0]
-    courseid = int(course[3:6])
     lessonid = values[1]
 
-    query_result = dbconnect.get_flashcards(username, courseid, lessonid)
+    query_result = dbconnect.get_flashcards(username, course, lessonid)
     if query_result[0] is True:
         flashcards = query_result[1]
         empty = False
@@ -268,7 +267,7 @@ def selectlessons():
         admin = "true"
     course = request.args.get('course', default=None)
     
-    query_result = dbconnect.get_lessonlength(int(course[3:6]))
+    query_result = dbconnect.get_lessonlength(course)
     if query_result[0] is True:
         lesson_length = query_result[1]
         html_code = flask.render_template('selectlessons.html', course=course,
@@ -325,14 +324,13 @@ def mirrorsign():
     if useradmin[1] == True:
         admin = "true"
 
-    input = request.args.get('course', default=None)
+    input = request.args.get('course_lesson', default=None)
     values = input.split()
     course = values[0]
-    courseid = int(course[3:6])
     lessonid = values[1]
 
-    query_result = dbconnect.get_flashcards(username, courseid, lessonid)
-    if True is True:
+    query_result = dbconnect.get_flashcards(username, course, lessonid)
+    if query_result[0] is True:
         flashcards = query_result[1]
         empty = []
         if len(flashcards) != 0:
@@ -359,15 +357,13 @@ def quiz():
     if useradmin[1] == True:
         admin = "true"
 
-    input = request.args.get('course', default=None)
+    input = request.args.get('course_lesson', default=None)
     values = input.split()
     course = values[0]
-    courseid = int(course[3:6])
     lessonid = values[1]
 
-    query_result = dbconnect.get_flashcards(username, courseid, lessonid)
-    print("entered")
-    if True is True:
+    query_result = dbconnect.get_flashcards(username, course, lessonid)
+    if query_result[0] is True:
         flashcards = query_result[1]
         html_code = flask.render_template('quiz.html', course = course, lesson_num = lessonid, 
             flashcards = flashcards, admin = admin)
@@ -518,11 +514,10 @@ def learningcenter():
     if useradmin[1] == True:
         admin = "true"
 
-    input = request.args.get('course', default=None)
+    input = request.args.get('course_lesson', default=None)
         
     values = input.split()
     course = values[0]
-    courseid = int(course[3:6])
     lessonid = values[1]
 
     html_code = flask.render_template('learningcenter.html', course=course, 
