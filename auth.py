@@ -175,8 +175,8 @@ def authenticate():
     if 'email' not in flask.session:
         flask.abort(flask.redirect(flask.url_for('login')))
 
-    if flask.session.get('email')[-14:] != "@princeton.edu":
-        flask.abort(flask.redirect(flask.url_for("invalidemail")))
+    # if flask.session.get('email')[-14:] != "@princeton.edu":
+        # flask.abort(flask.redirect(flask.url_for("invalidemail")))
 
     return flask.session.get('email')
 
