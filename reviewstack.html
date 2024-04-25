@@ -251,6 +251,10 @@
         white-space: nowrap; 
     }
 
+    .modal-body{
+        word-break: break-all;
+    }
+
     </style>
   
 <body> 
@@ -305,33 +309,11 @@
   
                 <li class="nav-item mb-1"> 
                     <a href="/courses">  
-                        <i class="fa-regular fa-address-card text-black"></i> 
-                        <span class="text text-black">Flashcards </span>
+                        <i class="fas fa-regular fa-school text-black"></i> 
+                        <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
-                <li class="nav-item mb-1"> 
-                    <a href="/courses" id="mirrorLink">  
-                        <i class="fa-solid fa-video text-black"></i> 
-                        <span class="text text-black"> Mirror </span>
-                    </a> 
-                </li>
-                <form id="mirrorForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Mirror Sign">
-                    <button type="submit"></button>
-                </form>
-                
-                <li class="nav-item mb-1"> 
-                    <a href="#" id="quizLink">
-                        <i class="fa-solid fa-graduation-cap text-black"></i> 
-                       <span class="text text-black"> Quiz </span>
-                    </a> 
-                </li> 
-
-                <form id="quizForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Quiz">
-                    <button type="submit"></button>
-                </form>
 
                 <li class="nav-item mb-1"> 
                     <a href=""> 
@@ -416,31 +398,31 @@
                                         {% for flashcard in flashcards %}
                                         <div class="carousel-item {% if loop.first %} active{% endif %}">
                                             <div class="row">
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                                 <div class="col-sm-10">
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                                                         <div class="front">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                                 <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
+                                                            </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
                                                         <div class="back">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                                 <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
+                                                            </button>
                                                             {{ flashcard['translation'] | safe}}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                             </div>
                                         </div>
                                         {% endfor %}
@@ -588,6 +570,10 @@
             function updateCardCounter() {
                 document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
             }
+
+            $(document).ready(function(){
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            });
             
             $(document).ready(function(){
                 updateCardCounter();

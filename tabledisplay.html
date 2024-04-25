@@ -1,17 +1,16 @@
-
-
-<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="infoModalLabel">Term</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" id="cardInfo">
-          </div>
-      </div>
-  </div>
+<div class="modal fade" id="termModal" tabindex="-1" aria-labelledby="termModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termModalLabel">Term Video</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="termVideoInfo">
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <div class="table-responsive table-wrapper foot">
   <table id="displaytable" class="table table-styles">
@@ -38,12 +37,12 @@
 
 <script>
   function openModal(videoLink, translation) {
-      var modalBody = $('#cardInfo');
+      var modalBody = $('#termVideoInfo');
       modalBody.html('');
       modalBody.append('<iframe width="100%" height="100%" src="' + videoLink + '" frameborder="0" allowfullscreen></iframe>');
       
-      $('#infoModalLabel').text(translation);
-      $('#infoModal').modal('show');
+      $('#termModalLabel').text(translation);
+      $('#termModal').modal('show');
       
       return false;
   }

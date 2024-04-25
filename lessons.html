@@ -258,6 +258,11 @@
         font-size: 12px; 
         white-space: nowrap; 
     }
+
+    .custom-modal-body {
+        padding: 20px;
+        word-break: break-all;
+    }
     
     </style>
   
@@ -269,7 +274,7 @@
                     <h5 class="modal-title" id="infoModalLabel">Extra Info</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="cardInfo">
+                <div class="custom-modal-body" id="cardInfo">
                 </div>
             </div>
         </div>
@@ -314,33 +319,11 @@
   
                 <li class="nav-item mb-1"> 
                     <a href="/courses">  
-                        <i class="fa-regular fa-address-card text-black"></i> 
-                        <span class="text text-black">   Flashcards </span>
+                        <i class="fas fa-regular fa-school text-black"></i> 
+                        <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
-                <li class="nav-item mb-1"> 
-                    <a href="/courses" id="mirrorLink">  
-                        <i class="fa-solid fa-video text-black"></i> 
-                        <span class="text text-black"> Mirror </span>
-                    </a> 
-                </li>
-                <form id="mirrorForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Mirror Sign">
-                    <button type="submit"></button>
-                </form>
-                
-                <li class="nav-item mb-1"> 
-                    <a href="#" id="quizLink">
-                        <i class="fa-solid fa-graduation-cap text-black"></i> 
-                       <span class="text text-black"> Quiz </span>
-                    </a> 
-                </li> 
-
-                <form id="quizForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Quiz">
-                    <button type="submit"></button>
-                </form>
 
                 <li class="nav-item mb-1"> 
                     <a href="/review"> 
@@ -409,20 +392,24 @@
             <div class="p-3"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
                     <ol class="breadcrumb m-0"> 
-                        <li class="breadcrumb-item">Flashcard</li>  
+                        <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
                         </li>   
                         <li class="breadcrumb-item">
                             <a href="/selectlessons?course={{course}}" style="color: black; text-decoration: none;">Lesson</a>
                         </li>
+                        <li class="breadcrumb-item">
+                            <a href="/learningcenter?course_lesson={{course}} {{lesson_num}}" style="color: black; text-decoration: none;">Modes</a>
+                        </li>
                     </ol> 
                     <hr>
                 </nav>
+                {% if empty == false %}
                 <div class="container-xl">
                     <div class="row">
                         <div class="col-md-10  mx-auto container-fluid">
-                            <h2><span>{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
+                            <h2><span>ASL{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
                             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
                 
                                 <div class="carousel-inner">
@@ -431,31 +418,32 @@
                                         {% for flashcard in flashcards %}
                                         <div class="carousel-item {% if loop.first %} active{% endif %}">
                                             <div class="row">
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                                 <div class="col-sm-10">
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
-                                                        <div class="front">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
-                                                                <i class="fa-solid fa-star"></i>
-                                                            </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
-                                                                <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
-                                                            <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
-                                                        </div>
+                                                    <div class="front">
+                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
+                                                            <i class="fa-solid fa-star"></i>
+                                                        </button>
+                                                        <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <i class="fa-solid fa-circle-info"></i>
+                                                        </button>
+                                                        <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
+                                                    </div>
+                                                    
                                                         <div class="back">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                                 <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
+                                                            </button>
                                                             {{ flashcard['translation'] | safe}}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                             </div>
                                         </div>
                                         {% endfor %}
@@ -469,14 +457,7 @@
                                 </a>
                             </div>
                             <div class="text-center mt">
-                                <form method="GET" action="/mirrorsign" style="display: inline;">
-                                    <div class="option-wrapper">
-                                        <button class="option mirror btn btn-lg btn-light rounded-circle mr-3" name="course" value="{{ course }} {{ lesson_num }}">
-                                            <i class="fa-solid fa-video text-black"></i>
-                                            <span class="tooltip-text">Mirror</span>
-                                        </button>
-                                    </div>
-                                </form>
+                                
                                 
                                 <div class="option-wrapper">
                                     <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
@@ -492,14 +473,7 @@
                                     </button>
                                 </div>
 
-                                <form method="GET" action="/quiz" style="display: inline;">
-                                    <div class="option-wrapper">
-                                        <button class="option quiz btn btn-lg btn-light rounded-circle mr-3" name="value" value="{{ course }} {{ lesson_num }}">
-                                            <i class="fa-solid fa-graduation-cap text-black"></i>
-                                            <span class="tooltip-text">Quiz</span>
-                                        </button>
-                                    </div>
-                                </form>
+                                
 
                             </div>
                             <br>
@@ -535,14 +509,14 @@
                         
                                 </div>
                                 </div>
-                            
-                         
-                          
                         
                             <br>
                         </div> 
                     </div>
                 </div>
+                {% else %}
+                <h2><span>{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
+                {% endif %}
             </div> 
   
         </div> 
@@ -575,7 +549,6 @@
             let request = null
             let lessonid = "{{ lesson_num }}";
             let courseid = "{{ course }}";
-            courseid = courseid.substring(3);
 
             function getResults() {
                 let query = $('#searchinput').val();
@@ -688,6 +661,10 @@ function shuffleArray(array) {
 function updateCardCounter() {
     document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
 }
+
+$(document).ready(function(){
+    $('[data-bs-toggle="tooltip"]').tooltip();
+});
 
 $(document).ready(function(){
     updateCardCounter();

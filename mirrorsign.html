@@ -127,6 +127,7 @@
         transform-style: preserve-3d;
         transition: transform 0.2s;
         margin: 30px auto;
+        margin-top: 0px;
         padding: auto;
     }
 
@@ -136,7 +137,8 @@
         width: 100%; 
         transform-style: preserve-3d;
         transition: transform 0.2s;
-        margin: 30px auto;        
+        margin: 30px auto; 
+        margin-top: 0px;       
         padding: auto;
     }
     
@@ -248,6 +250,19 @@
     hr {
         border-top: 1px solid #555;
     }
+
+    .modal-body{
+        word-break: break-all;
+    }
+
+    #countdown {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+    }
+   
     </style>
   
 <body> 
@@ -290,33 +305,11 @@
   
                 <li class="nav-item mb-1"> 
                     <a href="/courses">  
-                        <i class="fa-regular fa-address-card text-black"></i> 
-                        <span class="text text-black">   Flashcards </span>
+                        <i class="fas fa-regular fa-school text-black"></i> 
+                        <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
-                <li class="nav-item mb-1"> 
-                    <a href="/courses" id="mirrorLink">  
-                        <i class="fa-solid fa-video text-black"></i> 
-                        <span class="text text-black"> Mirror </span>
-                    </a> 
-                </li>
-                <form id="mirrorForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Mirror Sign">
-                    <button type="submit"></button>
-                </form>
-                
-                <li class="nav-item mb-1"> 
-                    <a href="#" id="quizLink">
-                        <i class="fa-solid fa-graduation-cap text-black"></i> 
-                       <span class="text text-black"> Quiz </span>
-                    </a> 
-                </li> 
-
-                <form id="quizForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Quiz">
-                    <button type="submit"></button>
-                </form>
 
                 <li class="nav-item mb-1"> 
                     <a href="/review"> 
@@ -387,17 +380,21 @@
             <div class="p-3"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
                     <ol class="breadcrumb m-0"> 
-                        <li class="breadcrumb-item helper">Mirror</li> 
+                        <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
-                            <a href="/learncourses" style="color: black; text-decoration: none;">Courses</a>
+                            <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
+                        </li>   
+                        <li class="breadcrumb-item">
+                            <a href="/selectlessons?course={{course}}" style="color: black; text-decoration: none;">Lesson</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/learnselectlessons" style="color: black; text-decoration: none;">Lessons</a>
-                        </li> 
+                            <a href="/learningcenter?course_lesson={{course}} {{lesson_num}}" style="color: black; text-decoration: none;">Modes</a>
+                        </li>
                     </ol> 
                     <hr>
                 </nav>
                 <div class="container-xl">
+                    <h2><span>ASL{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
                     <div class="row">
                         <div class="col-md-6  mx-auto container-fluid">
                             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
@@ -408,31 +405,31 @@
                                         {% for flashcard in flashcards %}
                                         <div class="carousel-item {% if loop.first %} active{% endif %}">
                                             <div class="row">
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                                 <div class="col-sm-10">
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                                                     <div class="front">
-                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                             <i class="fa-solid fa-star"></i>
                                                         </button>
-                                                        <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                        <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                             <i class="fa-solid fa-circle-info"></i>
-                                                          </button>
+                                                        </button>
                                                         {{ flashcard['translation'] | safe}}
                                                     </div>
                                                         <div class="back">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                                 <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
+                                                            </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/{{ loop.index }}.jpg" class="img-fluid" alt=""></div></div>
+                                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                             </div>
                                         </div>
                                         {% endfor %}
@@ -466,11 +463,13 @@
                                     
                                     <div class="carousel-item active">
                                         <div class="row">
-                                            <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/1.jpg" class="img-fluid" alt=""></div></div>
+                                            <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                             <div class="col-sm-10">
                                                 <div class="flashcardvideo">
                                                     <div class="front">
                                                         <div id="container" class="d-flex flex-column justify-content-center align-items-center">
+                                                           <div id="countdown"></div>
+
                                                             <video id="gum" class="w-75" autoplay muted></video>
                                                             <video id="recorded" class="w-75" playsinline loop></video> 
                                                             <div>
@@ -483,7 +482,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1"><div class="img-space"><img src="/examples/images/thumbs/1.jpg" class="img-fluid" alt=""></div></div>
+                                            <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                         </div>
                                     </div>
                                 </div>
@@ -493,7 +492,7 @@
                         {% for num in empty %}
                             <div class="text-center mt">   
                             </div>
-                            <div id="card-counter" class="text-center mt-3"></div>
+                            <div id="card-counter" class="text-center mt-0"></div>
                         {% endfor %}
                     </div>
                 </div>
@@ -524,6 +523,7 @@
             let mediaRecorder;
             let recordedBlobs;
             let isRecording = false;
+            let countdownInterval;
 
             const errorMsgElement = document.querySelector('span#errorMsg');
             const videoElement = document.querySelector('video#recorded');
@@ -565,7 +565,21 @@
                     mediaRecorder.start();
                     isRecording = true;
                     recordButton.textContent = 'Stop Recording';
+                    videoElement.controls = false;
                     playStream(stream);
+                    
+                    
+                    let duration = 20; 
+                    countdownInterval = setInterval(() => {
+                        if (duration <= 9)
+                            document.getElementById('countdown').textContent = "0:0" + duration;
+                        else
+                        document.getElementById('countdown').textContent = "0:" + duration;
+                        duration--;
+                        if (duration < 0) {
+                            stopRecording();
+                        }
+                    }, 1000); 
                 } catch (e) {
                     console.error('Exception while creating MediaRecorder:', e);
                     alert('Recording is not supported on this browser. Please try on a different device.');
@@ -574,11 +588,13 @@
                     return;
                 }
             }
-
+            
             function stopRecording() {
                 mediaRecorder.stop();
                 isRecording = false;
                 recordButton.textContent = 'Record';
+                clearInterval(countdownInterval); // Stop the countdown timer
+                document.getElementById('countdown').textContent = ''; // Clear the countdown display
             }
 
             function handleSuccess(stream) {
@@ -645,9 +661,10 @@ function playStream(stream) {
         else {
             currentCard = totalCards;
         }
+        resetCardSide(); 
         updateCardCounter();
     });
-
+    
     $('.carousel-control-next').on('click', function() {
         if (currentCard < totalCards) {
             currentCard++;
@@ -655,6 +672,7 @@ function playStream(stream) {
         else {
             currentCard = 1;
         }
+        resetCardSide();
         updateCardCounter();
     });
 
@@ -671,6 +689,10 @@ function playStream(stream) {
         modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
         modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
       });
+
+      $(document).ready(function(){
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
 
     
     $(document).ready(function(){

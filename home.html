@@ -23,6 +23,68 @@
         referrerpolicy="no-referrer" /> 
 </head> 
 
+<style>
+
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    h2 {
+        color: #007bff;
+    }
+
+    p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .key-features {
+        margin-top: 20px;
+    }
+
+    .key-feature-item {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    .key-feature-item:last-child {
+        border-bottom: none;
+    }
+
+    .key-feature-item h3 {
+        color: #007bff;
+        margin-bottom: 5px;
+    }
+
+    .key-feature-item p {
+        color: #666;
+    }
+
+    .btn {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
 <body> 
   
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
@@ -61,33 +123,12 @@
   
                 <li class="nav-item mb-1"> 
                     <a href="/courses">  
-                        <i class="fa-regular fa-address-card text-black"></i> 
-                        <span class="text text-black">   Flashcards </span>
+                        <i class="fas fa-regular fa-school text-black"></i> 
+                        <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
-                <li class="nav-item mb-1"> 
-                    <a href="/courses" id="mirrorLink">  
-                        <i class="fa-solid fa-video text-black"></i> 
-                        <span class="text text-black"> Mirror </span>
-                    </a> 
-                </li>
-                <form id="mirrorForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Mirror Sign">
-                    <button type="submit"></button>
-                </form>
-                
-                <li class="nav-item mb-1"> 
-                    <a href="#" id="quizLink">
-                        <i class="fa-solid fa-graduation-cap text-black"></i> 
-                       <span class="text text-black"> Quiz </span>
-                    </a> 
-                </li> 
-
-                <form id="quizForm" method="POST" action="/learncourses" style="display:none">
-                    <input type="hidden" name="course_name" value="Quiz">
-                    <button type="submit"></button>
-                </form>
+              
 
                 <li class="nav-item mb-1"> 
                     <a href="/review"> 
@@ -161,7 +202,36 @@
                 <br>
                 <div class="row"> 
                     <div class="col"> 
-                        <h1 >Welcome to Signable!</h1> 
+                        <h1 >Signable</h1> 
+                        <br>
+                        <div class="container">
+                    
+                            <h2>Mission Statement</h2>
+                            <p>At Signable, we are committed to transforming the way American Sign Language (ASL) is taught and learned. Our platform offers specialized tools and resources tailored to the unique needs of ASL students, providing a comprehensive study experience that enhances accessibility and effectiveness in ASL education.</p>
+                    
+                            <h2>About Us</h2>
+                            <p>Signable is a dedicated study tool designed specifically for Princeton ASL students. We understand the challenges faced by ASL learners and have developed a platform that addresses these challenges head-on, offering interactive features and robust study resources to support your journey in mastering ASL.</p>
+                    
+                            <div class="key-features">
+                                <h2>Key Features</h2>
+                                <div class="key-feature-item">
+                                    <h3>Interactive Flashcards</h3>
+                                    <p>Practice ASL expressions with video comparisons for accurate learning.</p>
+                                </div>
+                                <div class="key-feature-item">
+                                    <h3>Administrator Controls</h3>
+                                    <p>Professors can manage flashcard sets and user access for a tailored learning experience.</p>
+                                </div>
+                                <div class="key-feature-item">
+                                    <h3>Comprehensive Study Environment</h3>
+                                    <p>Access example sentences, memory tools, and more to enhance your ASL learning.</p>
+                                </div>
+                            </div>
+                    
+                            <h2>Why Signable?</h2>
+                            <p>Unlike generic study tools, Signable focuses exclusively on ASL education, providing specialized features that cater to the unique needs of ASL learners. Our platform is designed to empower students and educators alike, revolutionizing the way ASL is taught and learned at Princeton.</p>
+                    
+                        </div>
                     </div> 
                 </div> 
             </div> 
@@ -171,14 +241,15 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var adminValue = "{{ admin }}"; 
-            var adminButton = document.getElementById("adminButton"); 
-    
+            var adminButton = document.getElementById("adminButton");
+        
             if (adminValue === "true") {
                 adminButton.style.visibility = "visible";
             } else {
                 adminButton.style.visibility = "hidden"; 
             }
         });
+        
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>

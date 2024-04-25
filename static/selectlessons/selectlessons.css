@@ -82,6 +82,10 @@ h2 {
     text-align: center;
 }
 
+h3 {
+    text-align: center;
+}
+
 .custom-btn-wrapper {
     display: flex;
     justify-content: center;

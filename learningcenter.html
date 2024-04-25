@@ -14,7 +14,7 @@
 "sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
           crossorigin="anonymous"> 
     <link rel="stylesheet" 
-          href="{{ url_for('static', filename='selectlessons/selectlessons.css') }}"> 
+        href="{{ url_for('static', filename='sidebar/sidebar.css') }}"> 
     <link rel="stylesheet" href= 
 "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity= 
@@ -22,10 +22,60 @@
         crossorigin="anonymous" 
         referrerpolicy="no-referrer" /> 
 </head> 
+
+<style>
+    h2 {
+        font-size: 300%;
+        text-align: center;
+    }
+    
+    .custom-btn-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .custom-btn-wrapper button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .btn-text {
+        margin-bottom: 5px;
+    }
+    
+    .custom-btn {
+        border: .1vw solid #ccc;
+        border-radius: 5%;
+        padding: 10% 20%;
+        font-size: 24px;
+        width: 400px; /* Adjust the width as needed */
+        height: 225px;
+        margin: 20px; 
+        color: #222;
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        background-color: #ffffff;
+        text-align: center;
+    }
+    
+    .custom-btn:hover {
+        background-color: #ccc;
+        border-color: #ccc;
+        color: #222;
+    }
+
+    h3 {
+        text-align: center;
+    }
+</style>
   
 <body> 
   
-    <div id="total" class="container-fluid p-0 d-flex "> 
+    <div id="total" class="container-fluid p-0 d-flex h-100 "> 
         <div id="bdSidebar" 
              class="d-flex flex-column  
                     flex-shrink-0  
@@ -60,12 +110,23 @@
                 
   
                 <li class="nav-item mb-1"> 
-                    <a href="/courses">  
+                    <a href="/courses"> 
                         <i class="fas fa-regular fa-school text-black"></i> 
                         <span class="text text-black"> Learning Hub </span>
                     
                     </a> 
                 </li> 
+               
+                <form id="mirrorForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Mirror Sign">
+                    <button type="submit"></button>
+                </form>
+
+
+                <form id="quizForm" method="POST" action="/learncourses" style="display: none;">
+                    <input type="hidden" name="course_name" value="Quiz">
+                    <button type="submit"></button>
+                </form>
 
                 <li class="nav-item mb-1"> 
                     <a href="/review"> 
@@ -139,20 +200,40 @@
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
                         </li>   
+                        <li class="breadcrumb-item">
+                            <a href="/selectlessons?course={{course}}" style="color: black; text-decoration: none;">Lesson</a>
+                        </li>  
                     </ol> 
-                </nav>
+                </nav> 
                 <hr>
-                <h2>Select a Lesson to Start Learning!</h2>
+                <h2>Select your learning method:</h2>
                 <br>
-                <h3>ASL{{course}}</h3>
+                <h3>ASL{{course}} Lesson {{lesson_num}}</h3>
                 <br>
-                <div class="container">
-                    <form method="GET" action="/learningcenter" class="custom-btn-wrapper">
-                        {% for lesson in lesson_num %}
-                            <button type="submit" class="btn btn-primary custom-btn" name="course_lesson" value="{{ course }} {{ lesson['lessonid'] }}">Lesson {{ lesson['lessonid'] }}</button>
-                        {% endfor %}
+                <div class="container text-center">
+                    <form method="GET" action="/lessons" class="custom-btn-wrapper d-inline-block">
+                        <button type="submit" class="btn btn-primary custom-btn" name="course_lesson" value="{{course}} {{lesson_num}}">
+                            <div class="btn-text">Flashcards</div>
+                            <div class="btn-icon"><i class="fa-regular fa-address-card"></i></div>
+                        </button>
+                    </form>
+                    <form method="GET" action="/mirrorsign" class="custom-btn-wrapper d-inline-block">
+                        <button type="submit" class="btn btn-primary custom-btn" name="course_lesson" value="{{course}} {{lesson_num}}">
+                            <div class="btn-text">Mirror</div>
+                            <div class="btn-icon"><i class="fa-solid fa-video"></i></div>
+                        </button>
+                    </form>
+                    <form method="GET" action="/quiz" class="custom-btn-wrapper d-inline-block">
+                        <button type="submit" class="btn btn-primary custom-btn" name="course_lesson" value="{{course}} {{lesson_num}}">
+                            <div class="btn-text">Quiz</div>
+                            <div class="btn-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        </button>
                     </form>
                 </div>
+                
+                
+                
+                
             </div> 
   
         </div> 
