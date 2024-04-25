@@ -23,6 +23,8 @@ def _get_connection():
 def _put_connection(conn):
     _connection_pool.put(conn)
 
+def escape_special_characters(string):
+    return string.replace('_', '\\_').replace('%', '\\%')
 
     
 # gets the set of flashcards corresponding to a given courseid
@@ -105,7 +107,7 @@ def get_terms(searchterm):
                         "FROM flashcards WHERE translation ILIKE $1")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_flashcards_by_translation (%s)", [f"%{searchterm}%"])
+            cursor.execute("EXECUTE select_flashcards_by_translation (%s)", [f"%{escape_special_characters(searchterm)}%"])
             table = cursor.fetchall()
 
             return_list = []
@@ -149,7 +151,7 @@ def get_lessonterms(searchterm, lesson, course):
                         "FROM flashcards WHERE translation ILIKE $1 AND lessonid = $2 AND courseid = $3")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_flashcards_by_translation_and_lesson_course (%s, %s, %s)", (f"%{searchterm}%", lesson, course))
+            cursor.execute("EXECUTE select_flashcards_by_translation_and_lesson_course (%s, %s, %s)", (f"%{escape_special_characters(searchterm)}%", escape_special_characters(lesson), escape_special_characters(course)))
             table = cursor.fetchall()
 
             return_list = []
@@ -193,7 +195,7 @@ def get_user(netid):
                         "FROM studentusers WHERE netid = $1")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_student_user_by_netid (%s)", [netid])
+            cursor.execute("EXECUTE select_student_user_by_netid (%s)", [escape_special_characters(netid)])
             table = cursor.fetchall()
             
             return_list = []
@@ -238,7 +240,7 @@ def add_user(username, firstname, lastname):
                         "INSERT INTO studentusers (netid, firstname, lastname) VALUES ($1, $2, $3)")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE insert_student_user (%s, %s, %s)", (username, firstname, lastname))
+            cursor.execute("EXECUTE insert_student_user (%s, %s, %s)", (escape_special_characters(username), escape_special_characters(firstname), escape_special_characters(lastname)))
             connection.commit()
             
             return True, "User added successfully."
@@ -271,7 +273,7 @@ def get_admin(netid):
                         "FROM admin WHERE adminid = $1")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_admin_by_adminid (%s)", [netid])
+            cursor.execute("EXECUTE select_admin_by_adminid (%s)", [escape_special_characters(netid)])
             table = cursor.fetchall()
             
             return_list = []
@@ -320,7 +322,7 @@ def get_starred_cards(netid):
                         "WHERE netid = $1 AND starredflashcards.cardid = flashcards.cardid")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_starred_flashcards_by_netid (%s)", [netid])
+            cursor.execute("EXECUTE select_starred_flashcards_by_netid (%s)", [escape_special_characters(netid)])
             table = cursor.fetchall()
 
             return_list = []
@@ -363,7 +365,7 @@ def add_starred_card(netid, cardid):
                         "INSERT INTO starredflashcards (netid, cardid) VALUES ($1, $2)")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE insert_starred_flashcard (%s, %s)", [netid, cardid])
+            cursor.execute("EXECUTE insert_starred_flashcard (%s, %s)", [escape_special_characters(netid), escape_special_characters(cardid)])
             connection.commit()
             
             return True, "Flashcard starred"
@@ -397,7 +399,7 @@ def del_starred_card(netid, cardid):
                         "DELETE FROM starredflashcards WHERE netid = $1 AND cardid = $2")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE delete_starred_flashcard_by_netid_and_cardid (%s, %s)", [netid, cardid])
+            cursor.execute("EXECUTE delete_starred_flashcard_by_netid_and_cardid (%s, %s)", [escape_special_characters(netid), escape_special_characters(cardid)])
             connection.commit()
             
             return True, "Flashcard unstarred"
@@ -645,7 +647,7 @@ def get_quiz_questions(courseid, lessonid):
                         "FROM flashcards WHERE courseid = $1 AND lessonid = $2")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_flashcards_by_courseid_and_lessonid (%s, %s)", [courseid, lessonid])
+            cursor.execute("EXECUTE select_flashcards_by_courseid_and_lessonid (%s, %s)", [escape_special_characters(courseid), escape_special_characters(lessonid)])
             table = cursor.fetchall()
 
 
