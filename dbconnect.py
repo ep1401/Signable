@@ -591,6 +591,40 @@ def delete_flashcard(card_id):
 
     finally:
         _put_connection(connection)
+        
+def delete_lesson(lesson_id):
+    connection = _get_connection()
+
+    try:
+        with connection.cursor() as cursor:
+            # Prepare the statement to delete flashcards associated with the lesson
+            cursor.execute("PREPARE delete_flashcards_by_lessonid (INT) AS "
+                           "DELETE FROM flashcards WHERE lessonid = $1")
+            # Execute the prepared statement to delete flashcards
+            cursor.execute("EXECUTE delete_flashcards_by_lessonid (%s)", (lesson_id,))
+            # Deallocate the prepared statement
+            cursor.execute("DEALLOCATE delete_flashcards_by_lessonid")
+
+            # Prepare the statement to delete class data associated with the lesson
+            cursor.execute("PREPARE delete_classes_by_lessonid (INT) AS "
+                           "DELETE FROM classes WHERE lessonid = $1")
+            # Execute the prepared statement to delete class data
+            cursor.execute("EXECUTE delete_classes_by_lessonid (%s)", (lesson_id,))
+            # Deallocate the prepared statement
+            cursor.execute("DEALLOCATE delete_classes_by_lessonid")
+
+            connection.commit()
+            return True, "Lesson deleted successfully."
+
+    except Exception as ex:
+        error_message = "A server error occurred. Please contact the system administrator."
+        print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
+        return False, error_message
+
+    finally:
+        _put_connection(connection)
+
 
 
 def get_quiz_questions(courseid, lessonid):
@@ -614,7 +648,14 @@ def get_quiz_questions(courseid, lessonid):
             cursor.execute("EXECUTE select_flashcards_by_courseid_and_lessonid (%s, %s)", [courseid, lessonid])
             table = cursor.fetchall()
 
+
             return_list = []
+
+            if (len(table) < 4):
+                return_list.append(False)
+                return_list.append("This lesson does not have enough vocab words to support the quiz feature. Please contact the course administrator")
+                return return_list        
+
             return_list.append(True)
             
             flashcard_list = []

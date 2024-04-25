@@ -181,7 +181,7 @@ def add_card():
     sentence = escape(request.form.get('sentence'))
     
     result = dbconnect.add_card(int(aslcourse), int(asllesson), videolink, 
-        translation, memory, speech, sentence)
+                                translation, memory, speech, sentence)
     if not result[0]:
         return flask.redirect(flask.url_for('error', error=result[1]))
 
@@ -189,7 +189,15 @@ def add_card():
     if not lesson[0]:
         return flask.redirect(flask.url_for('error', error=result[1]))
 
-    if any(d['lessonid'] == asllesson for d in lesson[1]):
+    lesson_found = False
+
+    for lesson_dict in lesson[1]:
+        lesson_id = lesson_dict.get('lessonid')
+        if lesson_id == int(asllesson):
+            lesson_found = True
+            break
+
+    if not lesson_found:
         added = dbconnect.add_lesson(int(aslcourse), int(asllesson)) 
         if not added[0]:
             return flask.redirect(flask.url_for('error', error=result[1]))
@@ -634,6 +642,19 @@ def fetch_lesson_terms(course_id, lesson_number):
         return flask.redirect(flask.url_for('error', error=terms[1]))
 
     return flask.jsonify(terms[1])
+
+@app.route('/delete-lesson', methods=['POST'])
+def delete_lesson_route():
+    lesson_id = escape(request.json.get('lessonNumber'))
+    
+    print(lesson_id)
+
+    success, message = dbconnect.delete_lesson(int(lesson_id))
+
+    if success:
+        return flask.jsonify({'success': True, 'message': message}), 200
+    else:
+        return flask.jsonify({'success': False, 'message': message}), 500
 
 @app.route("/getquestions", methods=["GET"])
 def getquestions():

@@ -290,6 +290,9 @@
                                                     <tbody id="table-body">
                                                     </tbody>
                                                 </table>
+                                                <div class="text-center">
+                                                    <button id="delete-lesson" class="btn btn-danger" style="display: none;">Delete Entire Lesson</button>
+                                                </div>
                                             </div>
                                          
                                          
@@ -311,16 +314,13 @@
     <script>
 
         $(document).ready(function() {
-            // Function to fetch data based on course and lesson number
             function fetchData(courseId, lessonNumber) {
-                // Make an AJAX request to fetch lesson terms from the Flask route
                 $.ajax({
                     url: `/fetch-lesson-terms/${courseId}/${lessonNumber}`,
                     method: 'GET',
                     success: function(terms) {
-                        // Handle the fetched data
-                        var courseName = $('#aslcourse option:selected').text(); // Get the selected course name
-                        $('#table-title').text(`ASL${courseId} Lesson ${lessonNumber}`); // Set the table title
+                        var courseName = $('#aslcourse option:selected').text(); 
+                        $('#table-title').text(`ASL${courseId} Lesson ${lessonNumber}`); 
                         var tableBodyHTML = '';
                         terms.forEach(function(term) {
                             tableBodyHTML += `
@@ -342,12 +342,12 @@
                 });
             }
         
-            // Event listener for lesson links
             $('.lesson-link').click(function(e) {
                 e.preventDefault();
                 var courseId = $(this).data('course');
                 var lessonNumber = $(this).data('lesson');
                 fetchData(courseId, lessonNumber);
+                $('#delete-lesson').show();
             });
         });
         
@@ -363,11 +363,11 @@
         function saveChanges() {
             var data = [];
             $('#table-body tr').each(function() {
-                var cardid = $(this).find('td:eq(1)').text(); // Get the card ID
-                var translation = $(this).find('td:eq(0)').text(); // Get the edited translation
-                var memorytip = $(this).find('td:eq(2)').text(); // Get the edited memory tip
-                var speech = $(this).find('td:eq(3)').text(); // Get the edited part of speech
-                var sentence = $(this).find('td:eq(4)').text(); // Get the edited example sentence
+                var cardid = $(this).find('td:eq(1)').text(); 
+                var translation = $(this).find('td:eq(0)').text(); 
+                var memorytip = $(this).find('td:eq(2)').text(); 
+                var speech = $(this).find('td:eq(3)').text(); 
+                var sentence = $(this).find('td:eq(4)').text(); 
                 data.push({ cardid: cardid, translation: translation, memorytip: memorytip, speech: speech, sentence: sentence });
             });
 
@@ -386,32 +386,25 @@
             });
         }
 
-        // Event listener for input events on editable cells
         $('#table-body').on('input', 'td[contenteditable="true"]', function() {
             clearTimeout(typingTimer);
             typingTimer = setTimeout(saveChanges, doneTypingInterval);
 
-            // Add a class to the edited cell
             $(this).addClass('edited-cell');
         });
 
 
-        // Event listener for the remove button
         $('#table-body').on('click', '.remove-btn', function() {
-            // Get the card ID
             var cardId = $(this).data('cardid');
     
-            // Show confirmation dialog
             if (confirm('Are you sure you want to remove this card?')) {
-                // If user confirms, proceed with the removal process
-                var row = $(this).closest('tr'); // Store the reference to the row
+                var row = $(this).closest('tr'); 
                 $.ajax({
                     type: 'POST',
                     url: '/deleteflashcard',
-                    data: JSON.stringify({ cardid: cardId }), // Send card ID as JSON data
-                    contentType: 'application/json', // Set content type to JSON
+                    data: JSON.stringify({ cardid: cardId }), 
+                    contentType: 'application/json', 
                     success: function(response) {
-                        // Remove the row from the table upon successful deletion
                         row.remove();
                     },
                     error: function(xhr, status, error) {
@@ -436,6 +429,41 @@
     
         // Call the function initially to enable cell editing
         handleCellEditing();
+
+        $('#delete-lesson').click(function() {
+            // Get the course ID and lesson number
+            var titleText = $('#table-title').text();
+            var match = titleText.match(/\d+/g); // Use global flag 'g' to match all occurrences
+        
+            // Ensure that both courseId and lessonNumber are extracted properly
+            if (match && match.length >= 2) {
+                var courseId = match[0];
+                var lessonNumber = match[1];
+                
+                // Show confirmation dialog
+                if (confirm('Are you sure you want to delete the entire lesson?')) {
+                    // If user confirms, proceed with the deletion process
+                    $.ajax({
+                        type: 'POST',
+                        url: '/delete-lesson',
+                        data: JSON.stringify({lessonNumber: lessonNumber }),
+                        contentType: 'application/json',
+                        success: function(response) {
+                            // Reload the page or update the UI as needed
+                            location.reload(); // Reload the page for simplicity
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error deleting lesson: ' + error);
+                        }
+                    });
+                } else {
+                    // If user cancels, do nothing
+                    return;
+                }
+            } else {
+                console.error('Error extracting courseId and lessonNumber from title.');
+            }
+        });
     });
 
     
