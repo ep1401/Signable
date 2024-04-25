@@ -152,6 +152,13 @@ def logoutapp():
 
 #-----------------------------------------------------------------------
 
+def bademail():
+ 
+    flask.session.clear()
+    html_code = flask.render_template("invalidemail.html")
+    response = flask.make_response(html_code)
+    return response
+
 def logoutgoogle():
 
     # Log out of the application.
@@ -168,4 +175,9 @@ def authenticate():
     if 'email' not in flask.session:
         flask.abort(flask.redirect(flask.url_for('login')))
 
+    if flask.session.get('email')[-14:] != "@princeton.edu":
+        flask.abort(flask.redirect(flask.url_for("invalidemail")))
+
     return flask.session.get('email')
+
+    

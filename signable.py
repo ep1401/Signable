@@ -20,6 +20,8 @@ app.secret_key = os.environ['APP_SECRET_KEY']
 def start_page():
     return render_template('startpage.html')
 
+
+
 @app.route('/login', methods=['GET'])
 def login():
     return auth.login()
@@ -31,6 +33,10 @@ def callback():
 @app.route('/logoutapp', methods=['GET'])
 def logoutapp():
     return auth.logoutapp()
+
+@app.route('/invalidemail', methods=['GET'])
+def invalidemail():
+    return auth.bademail()
 
 @app.route('/logoutgoogle', methods=['GET'])
 def logoutgoogle():
