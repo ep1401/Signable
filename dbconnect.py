@@ -151,7 +151,7 @@ def get_lessonterms(searchterm, lesson, course):
                         "FROM flashcards WHERE translation ILIKE $1 AND lessonid = $2 AND courseid = $3")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_flashcards_by_translation_and_lesson_course (%s, %s, %s)", (f"%{escape_special_characters(searchterm)}%", escape_special_characters(lesson), escape_special_characters(course)))
+            cursor.execute("EXECUTE select_flashcards_by_translation_and_lesson_course (%s, %s, %s)", (f"%{searchterm}%", lesson, course))
             table = cursor.fetchall()
 
             return_list = []
@@ -240,7 +240,7 @@ def add_user(username, firstname, lastname):
                         "INSERT INTO studentusers (netid, firstname, lastname) VALUES ($1, $2, $3)")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE insert_student_user (%s, %s, %s)", (escape_special_characters(username), escape_special_characters(firstname), escape_special_characters(lastname)))
+            cursor.execute("EXECUTE insert_student_user (%s, %s, %s)", (username, firstname, lastname))
             connection.commit()
             
             return True, "User added successfully."
@@ -365,7 +365,7 @@ def add_starred_card(netid, cardid):
                         "INSERT INTO starredflashcards (netid, cardid) VALUES ($1, $2)")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE insert_starred_flashcard (%s, %s)", [escape_special_characters(netid), escape_special_characters(cardid)])
+            cursor.execute("EXECUTE insert_starred_flashcard (%s, %s)", [netid, cardid])
             connection.commit()
             
             return True, "Flashcard starred"
