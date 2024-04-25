@@ -24,8 +24,6 @@
 </head> 
 
 <style>
-
-
     h1 {
         text-align: center;
         color: #333;
@@ -51,11 +49,20 @@
 
     .key-features {
         margin-top: 20px;
+        padding: 20px;
+        background-color: #f0f0f0; /* Light grey background */
+        border-radius: 5px; /* Rounded corners */
     }
 
     .key-feature-item {
         border-bottom: 1px solid #ccc;
         padding-bottom: 10px;
+        padding-top: 10px;
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+    .key-feature-item:hover {
+        background-color: #e0e0e0; /* Slightly darker grey on hover */
     }
 
     .key-feature-item:last-child {
@@ -63,7 +70,7 @@
     }
 
     .key-feature-item h3 {
-        color: #007bff;
+        color: #333; /* Darker text for better contrast */
         margin-bottom: 5px;
     }
 
