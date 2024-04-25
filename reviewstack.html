@@ -403,21 +403,21 @@
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                                                         <div class="front">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                                 <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
+                                                            </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
                                                         <div class="back">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                                 <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
+                                                            </button>
                                                             {{ flashcard['translation'] | safe}}
                                                         </div>
                                                     </div>
@@ -570,6 +570,10 @@
             function updateCardCounter() {
                 document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
             }
+
+            $(document).ready(function(){
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            });
             
             $(document).ready(function(){
                 updateCardCounter();

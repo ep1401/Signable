@@ -243,32 +243,33 @@
                                                 <div class="btn-group">
                                                   <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 101</button>
                                                   <ul class="dropdown-menu">
-                                                    {% for lesson_num in range(1, asl101len + 1) %}
-                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="101" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                    
+                                                    {% for lesson in asl101len %}
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="101" data-lesson="{{ lesson['lessonid'] }}">Lesson {{ lesson['lessonid'] }}</a></li>
                                                     {% endfor %}
                                                   </ul>
                                                 </div>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 102</button>
                                                     <ul class="dropdown-menu">
-                                                        {% for lesson_num in range(1, asl102len + 1) %}
-                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="102" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                        {% for lesson in asl102len %}
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="102" data-lesson="{{ lesson['lessonid'] }}">Lesson {{ lesson['lessonid'] }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                   </div>
                                                   <div class="btn-group">
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 105</button>
                                                     <ul class="dropdown-menu">
-                                                        {% for lesson_num in range(1, asl105len + 1) %}
-                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="105" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                        {% for lesson in asl105len %}
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="105" data-lesson="{{ lesson['lessonid'] }}">Lesson {{ lesson['lessonid'] }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                   </div>
                                                   <div class="btn-group">
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">ASL 107</button>
                                                     <ul class="dropdown-menu">
-                                                        {% for lesson_num in range(1, asl107len + 1) %}
-                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="107" data-lesson="{{ lesson_num }}">Lesson {{ lesson_num }}</a></li>
+                                                        {% for lesson in asl107len %}
+                                                        <li><a class="dropdown-item lesson-link" href="#" data-course="107" data-lesson="{{ lesson['lessonid'] }}">Lesson {{ lesson['lessonid'] }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                   </div>

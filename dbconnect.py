@@ -2,6 +2,9 @@ import os
 import sys
 import queue
 import psycopg2
+import random
+import copy
+import html
 
 
 #-----------------------------------------------------------------------
@@ -31,9 +34,20 @@ def get_flashcards(username, courseid, lessonid):
     
     try:
         with connection.cursor() as cursor:
-            query_str = "SELECT cardid, videolink, translation, memorytip, speech, sentence "
-            query_str += "FROM flashcards WHERE courseid = %s AND lessonid = %s "
-            cursor.execute(query_str, [courseid, lessonid])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_flashcards'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_flashcards")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_flashcards (INT, INT) AS "
+                        "SELECT cardid, videolink, translation, memorytip, speech, sentence "
+                        "FROM flashcards WHERE courseid = $1 AND lessonid = $2")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_flashcards (%s, %s)", [courseid, lessonid])
             table = cursor.fetchall()
 
             starred_flashcards = get_starred_cards(username)
@@ -78,9 +92,20 @@ def get_terms(searchterm):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "SELECT videolink, translation, memorytip, speech, sentence "
-            query_str += "FROM flashcards WHERE translation ILIKE %s "
-            cursor.execute(query_str, [f"%{searchterm}%"])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_flashcards_by_translation'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_flashcards_by_translation")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_flashcards_by_translation (TEXT) AS "
+                        "SELECT videolink, translation, memorytip, speech, sentence "
+                        "FROM flashcards WHERE translation ILIKE $1")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_flashcards_by_translation (%s)", [f"%{searchterm}%"])
             table = cursor.fetchall()
 
             return_list = []
@@ -111,10 +136,20 @@ def get_lessonterms(searchterm, lesson, course):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "SELECT videolink, translation, memorytip, speech, sentence, cardid "
-            query_str += "FROM flashcards WHERE translation ILIKE %s "
-            query_str += "AND lessonid = %s AND courseid = %s"
-            cursor.execute(query_str, (f"%{searchterm}%", lesson, course))
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_flashcards_by_translation_and_lesson_course'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_flashcards_by_translation_and_lesson_course")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_flashcards_by_translation_and_lesson_course (TEXT, INT, INT) AS "
+                        "SELECT videolink, translation, memorytip, speech, sentence, cardid "
+                        "FROM flashcards WHERE translation ILIKE $1 AND lessonid = $2 AND courseid = $3")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_flashcards_by_translation_and_lesson_course (%s, %s, %s)", (f"%{searchterm}%", lesson, course))
             table = cursor.fetchall()
 
             return_list = []
@@ -145,9 +180,20 @@ def get_user(netid):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "SELECT netid, firstname, lastname "
-            query_str += "FROM studentusers WHERE netid = %s"
-            cursor.execute(query_str, [netid])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_student_user_by_netid'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_student_user_by_netid")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_student_user_by_netid (TEXT) AS "
+                        "SELECT netid, firstname, lastname "
+                        "FROM studentusers WHERE netid = $1")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_student_user_by_netid (%s)", [netid])
             table = cursor.fetchall()
             
             return_list = []
@@ -180,8 +226,19 @@ def add_user(username, firstname, lastname):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "INSERT INTO studentusers (netid, firstname, lastname) VALUES (%s, %s, %s)"
-            cursor.execute(query_str, (username, firstname, lastname))
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'insert_student_user'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE insert_student_user")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE insert_student_user (TEXT, TEXT, TEXT) AS "
+                        "INSERT INTO studentusers (netid, firstname, lastname) VALUES ($1, $2, $3)")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE insert_student_user (%s, %s, %s)", (username, firstname, lastname))
             connection.commit()
             
             return True, "User added successfully."
@@ -201,9 +258,20 @@ def get_admin(netid):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "SELECT adminid, firstname, lastname "
-            query_str += "FROM admin WHERE adminid = %s"
-            cursor.execute(query_str, [netid])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_admin_by_adminid'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_admin_by_adminid")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_admin_by_adminid (TEXT) AS "
+                        "SELECT adminid, firstname, lastname "
+                        "FROM admin WHERE adminid = $1")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_admin_by_adminid (%s)", [netid])
             table = cursor.fetchall()
             
             return_list = []
@@ -238,9 +306,21 @@ def get_starred_cards(netid):
 
     try:
         with connection.cursor() as cursor:
-            query_str = "SELECT flashcards.cardid, videolink, translation, memorytip, speech, sentence "
-            query_str += "FROM flashcards, starredflashcards WHERE netid = %s AND starredflashcards.cardid = flashcards.cardid"
-            cursor.execute(query_str, [netid])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_starred_flashcards_by_netid'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_starred_flashcards_by_netid")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_starred_flashcards_by_netid (TEXT) AS "
+                        "SELECT flashcards.cardid, videolink, translation, memorytip, speech, sentence "
+                        "FROM flashcards, starredflashcards "
+                        "WHERE netid = $1 AND starredflashcards.cardid = flashcards.cardid")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_starred_flashcards_by_netid (%s)", [netid])
             table = cursor.fetchall()
 
             return_list = []
@@ -271,8 +351,19 @@ def add_starred_card(netid, cardid):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "INSERT INTO starredflashcards (netid, cardid) VALUES (%s, %s)"
-            cursor.execute(query_str, [netid, cardid])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'insert_starred_flashcard'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE insert_starred_flashcard")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE insert_starred_flashcard (TEXT, INT) AS "
+                        "INSERT INTO starredflashcards (netid, cardid) VALUES ($1, $2)")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE insert_starred_flashcard (%s, %s)", [netid, cardid])
             connection.commit()
             
             return True, "Flashcard starred"
@@ -294,8 +385,19 @@ def del_starred_card(netid, cardid):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "DELETE FROM starredflashcards WHERE netid = %s AND cardid = %s"
-            cursor.execute(query_str, [netid, cardid])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'delete_starred_flashcard_by_netid_and_cardid'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE delete_starred_flashcard_by_netid_and_cardid")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE delete_starred_flashcard_by_netid_and_cardid (TEXT, INT) AS "
+                        "DELETE FROM starredflashcards WHERE netid = $1 AND cardid = $2")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE delete_starred_flashcard_by_netid_and_cardid (%s, %s)", [netid, cardid])
             connection.commit()
             
             return True, "Flashcard unstarred"
@@ -314,20 +416,25 @@ def add_card(courseid, lessonid, videolink, translation, memorytip, speech, sent
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "INSERT INTO flashcards (courseid, lessonid, videolink, translation, memorytip, speech, sentence) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            videolink_url = 'https://www.youtube.com/embed/' + videolink + '?controls=0&showinfo=0&rel=0&loop=1&mute=1'
-            cursor.execute(query_str, (courseid, lessonid, videolink_url, translation, memorytip, speech, sentence))
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'insert_flashcard'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE insert_flashcard")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE insert_flashcard (INT, INT, TEXT, TEXT, TEXT, TEXT, TEXT) AS "
+                        "INSERT INTO flashcards (courseid, lessonid, videolink, translation, memorytip, speech, sentence) "
+                        "VALUES ($1, $2, $3, $4, $5, $6, $7)")
+
+            # Sanitize and format the videolink properly
+            videolink_url = 'https://www.youtube.com/embed/' + html.escape(videolink) + '?controls=0&showinfo=0&rel=0&loop=1&mute=1'
+
+            # Execute the prepared statement
+            cursor.execute("EXECUTE insert_flashcard (%s, %s, %s, %s, %s, %s, %s)",
+                        (courseid, lessonid, videolink_url, translation, memorytip, speech, sentence))
             connection.commit()
-            
-            query_str = "SELECT lessonid "
-            query_str += "FROM classes WHERE lessonid = %s"
-            cursor.execute(query_str, [lessonid])
-            table = cursor.fetchall()
-            
-            if len(table) == 0:
-                query_str = "INSERT INTO classes (courseid, lessonid) VALUES (%s, %s)"
-                cursor.execute(query_str, [courseid, lessonid])
-                connection.commit()
             
             return True, "Flashcard added successfully."
 
@@ -347,14 +454,68 @@ def get_lessonlength(course):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "SELECT lessonid "
-            query_str += "FROM classes WHERE courseid = %s"
-            cursor.execute(query_str, [course])
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_lessonid_by_courseid'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_lessonid_by_courseid")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_lessonid_by_courseid (INT) AS "
+                        "SELECT lessonid FROM classes WHERE courseid = $1")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_lessonid_by_courseid (%s)", [course])
             table = cursor.fetchall()
 
             return_list = []
             return_list.append(True)
-            return_list.append(table)
+            
+            lesson_list = []
+            for row in table:
+                
+                flashcard = {"lessonid": row[0]}
+
+                lesson_list.append(flashcard)
+
+           
+            return_list.append(lesson_list)
+
+    except Exception as ex:
+            return_list = []
+            return_list.append(False)
+            return_list.append("A server error occurred. Please contact the system administrator.")
+            connection.rollback()
+            print(sys.argv[0] + ":", ex, file=sys.stderr)
+
+    finally:
+            _put_connection(connection)
+    
+    return return_list
+
+def add_lesson(course, lesson):
+    connection = _get_connection()
+
+
+    try: 
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'insert_class'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE insert_class")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE insert_class (INT, INT) AS "
+                        "INSERT INTO classes (courseid, lessonid) VALUES ($1, $2)")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE insert_class (%s, %s)", [course, lesson])
+            connection.commit()
+            
+            return True, "Lesson added successfully."
 
     except Exception as ex:
             return_list = []
@@ -373,8 +534,19 @@ def update_flashcard(card_id, translation, memorytip, speech, sentence):
 
     try: 
         with connection.cursor() as cursor:
-            query_str = "UPDATE flashcards SET translation = %s, memorytip = %s, speech = %s, sentence = %s WHERE cardid = %s"
-            cursor.execute(query_str, (translation, memorytip, speech, sentence, card_id))
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'update_flashcards'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE update_flashcards")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE update_flashcards (TEXT, TEXT, TEXT, TEXT, INT) AS "
+                        "UPDATE flashcards SET translation = $1, memorytip = $2, speech = $3, sentence = $4 WHERE cardid = $5")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE update_flashcards (%s, %s, %s, %s, %s)", (translation, memorytip, speech, sentence, card_id))
             connection.commit()
 
             return True, "Flashcard updated successfully."
@@ -394,8 +566,19 @@ def delete_flashcard(card_id):
 
     try:
         with connection.cursor() as cursor:
-            query_str = "DELETE FROM flashcards WHERE cardid = %s"
-            cursor.execute(query_str, (card_id,))
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'delete_flashcard_by_cardid'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE delete_flashcard_by_cardid")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE delete_flashcard_by_cardid (INT) AS "
+                        "DELETE FROM flashcards WHERE cardid = $1")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE delete_flashcard_by_cardid (%s)", (card_id,))
             connection.commit()
 
             return True, "Flashcard deleted successfully."
@@ -410,7 +593,101 @@ def delete_flashcard(card_id):
         _put_connection(connection)
 
 
+def get_quiz_questions(courseid, lessonid):
+    connection = _get_connection()
+    
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_flashcards_by_courseid_and_lessonid'")
+            exists = cursor.fetchone()
 
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_flashcards_by_courseid_and_lessonid")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_flashcards_by_courseid_and_lessonid (INT, INT) AS "
+                        "SELECT cardid, videolink, translation, memorytip, speech, sentence "
+                        "FROM flashcards WHERE courseid = $1 AND lessonid = $2")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_flashcards_by_courseid_and_lessonid (%s, %s)", [courseid, lessonid])
+            table = cursor.fetchall()
+
+            return_list = []
+            return_list.append(True)
+            
+            flashcard_list = []
+
+            check_unique_translations = {}
+            translations_list = []
+          
+            for row in table:
+                
+                if row[2] not in check_unique_translations:
+                    check_unique_translations[row[2]] = None
+                    translations_list.append(row[2])
+            
+            
+           
+                flashcard = {"cardid": row[0], "videolink": row[1], "translation": row[2],
+                             "memorytip": row[3], "speech": row[4], "sentence": row[5]}
+    
+                
+                flashcard_list.append(flashcard)
+
+            
+
+            for flashcard in flashcard_list:
+                 options = []
+
+                 # start random process, set correct option
+     
+                 allowed_values = copy.deepcopy(translations_list)
+                 allowed_values.remove(flashcard["translation"])
+                 options.append([flashcard["translation"], "correct"])
+                
+
+                 # set second option
+            
+                 temp = random.choice(allowed_values)
+                 allowed_values.remove(temp)
+                 options.append([temp, "incorrect"])
+                 print(temp)
+
+
+                  # set third option
+                 temp = random.choice(allowed_values)
+                 allowed_values.remove(temp)
+                 options.append([temp, "incorrect"])
+                 print(temp)   
+                 # set fourth option
+                 temp = random.choice(allowed_values)
+                 allowed_values.remove(temp)
+                 options.append([temp, "incorrect"])
+                 print(temp)
+
+                 random.shuffle(options)
+
+                 flashcard["options"] = options
+
+            random.shuffle(flashcard_list)
+
+            return_list.append(flashcard_list)
+    
+    except Exception as ex:
+        
+        return_list = []
+        return_list.append(False)
+        return_list.append("A server error occurred. Please contact the system administrator.")
+        connection.rollback()
+        print(sys.argv[0] + ":", ex, file=sys.stderr)
+
+    finally:
+        _put_connection(connection)
+    
+    return return_list
+     
 
 
 

@@ -127,6 +127,7 @@
         transform-style: preserve-3d;
         transition: transform 0.2s;
         margin: 30px auto;
+        margin-top: 0px;
         padding: auto;
     }
 
@@ -136,7 +137,8 @@
         width: 100%; 
         transform-style: preserve-3d;
         transition: transform 0.2s;
-        margin: 30px auto;        
+        margin: 30px auto; 
+        margin-top: 0px;       
         padding: auto;
     }
     
@@ -392,6 +394,7 @@
                     <hr>
                 </nav>
                 <div class="container-xl">
+                    <h2><span>ASL{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
                     <div class="row">
                         <div class="col-md-6  mx-auto container-fluid">
                             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
@@ -407,21 +410,21 @@
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                                                     <div class="front">
-                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                             <i class="fa-solid fa-star"></i>
                                                         </button>
-                                                        <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                        <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                             <i class="fa-solid fa-circle-info"></i>
-                                                          </button>
+                                                        </button>
                                                         {{ flashcard['translation'] | safe}}
                                                     </div>
                                                         <div class="back">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
-                                                            <button class="info-button btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                            <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                                 <i class="fa-solid fa-circle-info"></i>
-                                                              </button>
+                                                            </button>
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
                                                     </div>
@@ -489,7 +492,7 @@
                         {% for num in empty %}
                             <div class="text-center mt">   
                             </div>
-                            <div id="card-counter" class="text-center mt-3"></div>
+                            <div id="card-counter" class="text-center mt-0"></div>
                         {% endfor %}
                     </div>
                 </div>
@@ -684,6 +687,10 @@ function playStream(stream) {
         modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
         modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
       });
+
+      $(document).ready(function(){
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
 
     
     $(document).ready(function(){

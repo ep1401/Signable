@@ -284,34 +284,49 @@
                             <button id="startQuizBtn" class="btn btn-primary">Start Quiz</button>
                         </div>
                     </div>
-
-                    <div class="carousel-inner" hidden>
-                        {% for flashcard in flashcards %}
-                        <div class="carousel-item {% if loop.first %} active{% endif %}">
-                            <div class="row">
-                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
-                                <div class="col-sm-10">
-                                    <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
-                                    speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
-                                        <div class="front">
-                                            <iframe id="video{{ loop.index }}" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
-                                        </div>
-                            
-                                    </div>
-                                </div>
-                                <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>                           
+                       
                 </div>
                 <div class="quiz-wrapper d-flex justify-content-center align-items-center">
-                    <div class="quiz-container" hidden></div>
+                    <div class="quiz-container" hidden>
+                        {% for flashcard in flashcards %}
+                            <div class="questionquiz" id="questionquiz{{loop.index}}">
+                            <div class="question-number">Question {{loop.index}}</div>
+                            <div class="video-question">
+                                <iframe width="80%" height="80%" src="{{flashcard['videolink']}}" frameborder="0" allowfullscreen> </iframe>
+                            </div>
+                            <div class = "options-container">
+                                <label class="option"> 
+                                    <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][0][1]}}">
+                                    <span> {{flashcard['options'][0][0]}} </span>
+                                </label>
+                            </div>  
+                            <div class = "options-container">
+                                <label class="option"> 
+                                    <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][1][1]}}">
+                                    <span> {{flashcard['options'][1][0]}}</span>
+                                </label>
+                            </div>  
+                            <div class = "options-container">
+                                <label class="option"> 
+                                    <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][2][1]}}">
+                                    <span> {{flashcard['options'][2][0]}}</span>
+                                </label>
+                            </div>  
+                            <div class = "options-container">
+                                <label class="option"> 
+                                    <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][3][1]}}">
+                                    <span> {{flashcard['options'][3][0]}} </span>
+                                </label>
+                            </div>  
+                            </div>  
+                        {% endfor %}
+
+                    </div>
                 </div>
                 <div class="row mt-0">
                     <div class="col text-center">
                         <button id="submitQuizBtn" class="btn btn-primary" hidden>Submit Quiz</button>
-                        <button id="startNewQuizBtn" class="btn btn-primary" hidden>Start New Quiz</button>
+                        <a  id="startNewQuizBtn" href="/quiz?course_lesson={{course}} {{lesson_num}}" hidden><button id="startNewQuizBtn" class="btn btn-primary" >Start New Quiz</button></a>
                     </div>
                 </div>
                 <div class="modal fade" id="scoreModal" tabindex="-1" aria-labelledby="scoreModalLabel" aria-hidden="true">
@@ -348,17 +363,22 @@
             });
 
             $(document).ready(function() {
-            var maxFlashcards = $('.carousel-item').length;
+            var maxFlashcards = $('.questionquiz').length;
+            console.log(maxFlashcards)
 
             $('#questionCount').attr('max', maxFlashcards);
             $('#questionCount').on('input', function() {
                 $('#questionCountOutput').text($(this).val());
             });
 
+
+
             function startNewQuiz() {
                 $('.quiz-container').hide();
                 $('#submitQuizBtn').hide();
                 $('#startNewQuizBtn').hide();
+
+               
             
                 $('.slider-container').show();
                 $('#startQuizBtn').show();
@@ -366,6 +386,7 @@
                 $('#questionCount').show();
                 $('#questionCountOutput').show();
             }
+        
         
 
             $('#startQuizBtn').click(function() {
@@ -380,51 +401,23 @@
                 $('#submitQuizBtn').removeAttr('hidden');
                 $('#submitQuizBtn').show();
 
-                $('.quiz-container').html('');
+                var flashcards = document.querySelectorAll('.questionquiz');
 
-                var flashcards = document.querySelectorAll('.carousel-item');
+                flashcards =  Array.from(flashcards)
+                var hideFlashcards = flashcards.slice(sliderValue, maxFlashcards)
+                let selectFlashcards = flashcards.slice(0, sliderValue)
+                
 
-                var shuffledFlashcards = Array.from(flashcards).sort(() => Math.random() - 0.5);
+                hideFlashcards.forEach(function(flashcard, index) { 
+                $(flashcard).hide()
+            
+                })
 
-                var selectedFlashcards = shuffledFlashcards.slice(0, sliderValue);
+                selectFlashcards.forEach(function(flashcard, index) { 
+                $(flashcard).addClass("activequestion")
+            
+                })
 
-                selectedFlashcards.forEach(function(flashcard, index) {
-                    var videoSrc = $(flashcard).find('iframe').attr('src');
-                    var questionContainer = $('<div>').addClass('question-container');
-
-                    var questionNumber = $('<div>').addClass('question-number').text('Question ' + (index + 1));
-                    questionContainer.append(questionNumber);
-
-                    var videoQuestion = $('<div>').addClass('video-question').html('<iframe width="80%" height="80%" src="' + videoSrc + '" frameborder="0" allowfullscreen></iframe>');
-                    questionContainer.append(videoQuestion);
-
-                    var optionsContainer = $('<div>').addClass('options-container');
-
-                        var correctOption = $('<label>').addClass('option');
-                        var correctInput = $('<input>').attr('type', 'radio').attr('name', 'q' + (index + 1)).val('correct');
-                        var correctSpan = $('<span>').text('Correct');
-                        correctOption.append(correctInput, correctSpan);
-                        
-                        var incorrectOptions = ['Option 1', 'Option 2', 'Option 3'];
-                        incorrectOptions.forEach(function(optionText, i) {
-                            var incorrectOption = $('<label>').addClass('option');
-                            var incorrectInput = $('<input>').attr('type', 'radio').attr('name', 'q' + (index + 1)).val('incorrect' + (i + 1));
-                            var incorrectSpan = $('<span>').text(optionText);
-                            incorrectOption.append(incorrectInput, incorrectSpan);
-                            optionsContainer.append(incorrectOption);
-                        });
-                        
-                        optionsContainer.append(correctOption);
-                        
-                        optionsContainer.children().sort(() => Math.random() - 0.5).appendTo(optionsContainer);
-                        
-                        questionContainer.append(optionsContainer);
-                    optionsContainer.children().sort(() => Math.random() - 0.5).appendTo(optionsContainer);
-                    questionContainer.append(optionsContainer);
-                    $('.quiz-container').append(questionContainer);
-
-                    $('.quiz-container').append('<hr>');
-                });
 
                 $('.quiz-container').removeAttr('hidden');
                 $('#submitContainer').removeAttr('hidden');
@@ -432,11 +425,11 @@
 
             $('#submitQuizBtn').click(function() {
                 var score = 0;
-                var totalQuestions = $('.question-container').length;
+                var totalQuestions = parseInt($('#questionCount').val());
                 var answeredQuestions = 0;
                 var unansweredQuestionNumbers = []; 
             
-                $('.question-container').each(function(index) {
+                $('.activequestion').each(function(index) {
                     var selectedOption = $(this).find('input[type="radio"]:checked');
             
                     if (selectedOption.length > 0) {
@@ -457,7 +450,7 @@
             
                 answeredQuestions = 0;
             
-                $('.question-container').each(function() {
+                $('.activequestion').each(function() {
                     var selectedOption = $(this).find('input[type="radio"]:checked');
                 
                     $(this).find('input[type="radio"]').prop('disabled', true);
@@ -484,9 +477,7 @@
 
             });
 
-            $('#startNewQuizBtn').click(function() {
-                startNewQuiz();
-            });            
+    
         });
             
         

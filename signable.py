@@ -7,6 +7,7 @@ from flask import render_template
 import dbconnect
 import auth
 import dotenv
+from markupsafe import escape
 
 asl_dict = {101: "first", 102: "second", 105: "third", 107: "fourth"}
 
@@ -151,12 +152,17 @@ def admin():
     terms = dbconnect.get_lessonterms('', 2, 101)
     
     if asl101len[0] is True and asl102len[0] is True and asl105len[0] is True and asl107len[0] is True:
-        lesson_length101 = len(asl101len[1])
-        lesson_length102 = len(asl102len[1])
-        lesson_length105 = len(asl105len[1])
-        lesson_length107 = len(asl107len[1])
-        html_code = flask.render_template('admin.html', admin = admin, asl101len = lesson_length101, 
-            asl102len = lesson_length102, asl105len = lesson_length105, asl107len = lesson_length107, terms = terms[1])
+        lesson_length101 = asl101len[1]
+        lesson_length102 = asl102len[1]
+        lesson_length105 = asl105len[1]
+        lesson_length107 = asl107len[1]
+        lesson_length101_sorted = sorted(lesson_length101, key=lambda x: x['lessonid'])
+        lesson_length102_sorted = sorted(lesson_length102, key=lambda x: x['lessonid'])
+        lesson_length105_sorted = sorted(lesson_length105, key=lambda x: x['lessonid'])
+        lesson_length107_sorted = sorted(lesson_length107, key=lambda x: x['lessonid'])
+        html_code = flask.render_template('admin.html', admin = admin, asl101len = lesson_length101_sorted, 
+            asl102len = lesson_length102_sorted, asl105len = lesson_length105_sorted, 
+            asl107len = lesson_length107_sorted, terms = terms[1])
     else: 
         return flask.redirect(flask.url_for('error', error="A server error occurred." + 
             " Please contact the system administrator."))
@@ -166,19 +172,27 @@ def admin():
 
 @app.route('/add_card', methods=['POST'])
 def add_card():
-    aslcourse = request.form.get('aslcourse')
-    asllesson = request.form.get('asllesson')
-    videolink = request.form.get('videolink')
-    translation = request.form.get('translation')
-    memory = request.form.get('memory')
-    speech = request.form.get('speech')
-    sentence = request.form.get('sentence')
-    print(aslcourse)
-    result = dbconnect.add_card( int(aslcourse), int(asllesson), 
-        videolink, translation, memory, speech, sentence)
+    aslcourse = escape(request.form.get('aslcourse'))
+    asllesson = escape(request.form.get('asllesson'))
+    videolink = escape(request.form.get('videolink'))
+    translation = escape(request.form.get('translation'))
+    memory = escape(request.form.get('memory'))
+    speech = escape(request.form.get('speech'))
+    sentence = escape(request.form.get('sentence'))
     
-    if result[0] is False:
+    result = dbconnect.add_card(int(aslcourse), int(asllesson), videolink, 
+        translation, memory, speech, sentence)
+    if not result[0]:
         return flask.redirect(flask.url_for('error', error=result[1]))
+
+    lesson = dbconnect.get_lessonlength(int(aslcourse))
+    if not lesson[0]:
+        return flask.redirect(flask.url_for('error', error=result[1]))
+
+    if any(d['lessonid'] == asllesson for d in lesson[1]):
+        added = dbconnect.add_lesson(int(aslcourse), int(asllesson)) 
+        if not added[0]:
+            return flask.redirect(flask.url_for('error', error=result[1]))
 
     return flask.redirect('/admin')
 
@@ -266,6 +280,9 @@ def lessons():
             + "administrator to resolve to issue"))
 
     input = request.args.get('course_lesson', default=None)
+    
+    if input is None:
+        return flask.redirect(flask.url_for('error', error="Invalid course and lesson"))
     
     try:    
         values = input.split()
@@ -357,11 +374,21 @@ def selectlessons():
 
     course = request.args.get('course', default=None)
     
+    if course is None:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    if not course.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    if int(course) not in asl_dict:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
     query_result = dbconnect.get_lessonlength(course)
     if query_result[0] is True:
         lesson_length = query_result[1]
+        lesson_length_sorted = sorted(lesson_length, key=lambda x: x['lessonid'])
         html_code = flask.render_template('selectlessons.html', course=course,
-        lesson_num = len(lesson_length), admin = admin)
+        lesson_num = lesson_length_sorted, admin = admin)
     else: 
         return flask.redirect(flask.url_for('error', error=query_result[1]))
 
@@ -390,6 +417,9 @@ def mirrorsign():
             + "administrator to resolve to issue"))
 
     input = request.args.get('course_lesson', default=None)
+    
+    if input is None:
+        return flask.redirect(flask.url_for('error', error="Invalid course and lesson"))
     
     try:    
         values = input.split()
@@ -445,6 +475,9 @@ def quiz():
 
     input = request.args.get('course_lesson', default=None)
     
+    if input is None:
+        return flask.redirect(flask.url_for('error', error="Invalid course and lesson"))
+    
     try:    
         values = input.split()
         course = values[0]
@@ -461,7 +494,8 @@ def quiz():
     if int(course) not in asl_dict:
         return flask.redirect(flask.url_for('error', error="Invalid course"))
 
-    query_result = dbconnect.get_flashcards(username, course, lessonid)
+    query_result = dbconnect.get_quiz_questions(course, lessonid)
+
     if query_result[0] is True:
         flashcards = query_result[1]
         html_code = flask.render_template('quiz.html', course = course, lesson_num = lessonid, 
@@ -561,11 +595,11 @@ def save_changes():
     error_messages = []
 
     for item in data:
-        card_id = item['cardid']
-        translation = item['translation']
-        memorytip = item['memorytip']
-        speech = item['speech']
-        sentence = item['sentence']
+        card_id = escape(item['cardid'])  
+        translation = escape(item['translation'])  
+        memorytip = escape(item['memorytip']) 
+        speech = escape(item['speech'])  
+        sentence = escape(item['sentence'])
         
         success, message = dbconnect.update_flashcard(card_id, translation, memorytip, speech, sentence)
         
@@ -582,7 +616,7 @@ def save_changes():
 @app.route('/deleteflashcard', methods=['POST'])
 def deleteflashcard():
     data = request.get_json()
-    card_id = data.get('cardid')
+    card_id = escape(data.get('cardid'))
 
     if card_id is None:
         return flask.jsonify({'success': False, 'error': 'Card ID not provided'}), 400
@@ -600,6 +634,20 @@ def fetch_lesson_terms(course_id, lesson_number):
         return flask.redirect(flask.url_for('error', error=terms[1]))
 
     return flask.jsonify(terms[1])
+
+@app.route("/getquestions", methods=["GET"])
+def getquestions():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+
 
 @app.route('/learningcenter', methods=['GET'])
 def learningcenter():
@@ -623,6 +671,9 @@ def learningcenter():
             + "administrator to resolve to issue"))
 
     input = request.args.get('course_lesson', default=None)
+    
+    if input is None:
+        return flask.redirect(flask.url_for('error', error="Invalid course and lesson"))
     
     try:    
         values = input.split()
