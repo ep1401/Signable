@@ -661,9 +661,10 @@ function playStream(stream) {
         else {
             currentCard = totalCards;
         }
+        resetCardSide(); 
         updateCardCounter();
     });
-
+    
     $('.carousel-control-next').on('click', function() {
         if (currentCard < totalCards) {
             currentCard++;
@@ -671,6 +672,7 @@ function playStream(stream) {
         else {
             currentCard = 1;
         }
+        resetCardSide();
         updateCardCounter();
     });
 
