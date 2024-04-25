@@ -192,7 +192,7 @@
                                         <div class="form-group">
                                             <label for="asllesson">ASL Lesson</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: 3 or 12)<span style="color: red;">*</span></small>
-                                            <input type="number" class="form-control" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required>
+                                            <input type="number" class="form-control" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required min="0">
                                         </div>
                                         <br>
                                         <div class="form-group">
@@ -313,6 +313,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
+       
+
         $(document).ready(function() {
             function fetchData(courseId, lessonNumber) {
                 $.ajax({
@@ -412,52 +414,42 @@
                     }
                 });
             } else {
-                // If user cancels, do nothing
                 return;
             }
         });
     });
 
     $(document).ready(function() {
-        // Function to handle cell editing
         function handleCellEditing() {
             $('#table-body td[contenteditable="true"]').on('input', function() {
-                // Set white-space property to pre-wrap when editing
                 $(this).css('white-space', 'pre-wrap');
             });
         }
     
-        // Call the function initially to enable cell editing
         handleCellEditing();
 
         $('#delete-lesson').click(function() {
-            // Get the course ID and lesson number
             var titleText = $('#table-title').text();
-            var match = titleText.match(/\d+/g); // Use global flag 'g' to match all occurrences
+            var match = titleText.match(/\d+/g); 
         
-            // Ensure that both courseId and lessonNumber are extracted properly
             if (match && match.length >= 2) {
                 var courseId = match[0];
                 var lessonNumber = match[1];
                 
-                // Show confirmation dialog
                 if (confirm('Are you sure you want to delete the entire lesson?')) {
-                    // If user confirms, proceed with the deletion process
                     $.ajax({
                         type: 'POST',
                         url: '/delete-lesson',
                         data: JSON.stringify({lessonNumber: lessonNumber }),
                         contentType: 'application/json',
                         success: function(response) {
-                            // Reload the page or update the UI as needed
-                            location.reload(); // Reload the page for simplicity
+                            location.reload(); 
                         },
                         error: function(xhr, status, error) {
                             console.error('Error deleting lesson: ' + error);
                         }
                     });
                 } else {
-                    // If user cancels, do nothing
                     return;
                 }
             } else {
