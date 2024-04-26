@@ -495,9 +495,19 @@
     $(document).ready(function() {
         var typingTimer;
         var doneTypingInterval = 0;
+        var spinnerTimer;
+        var spinnerInterval = 1000;
 
         function showAutosaveNotification() {
             $('#notification').text('Autosaving changes...').fadeIn().delay(1000).fadeOut();
+        }
+
+        function isSpinnerVisible() {
+            return $('#loading-spinner').is(':visible');
+        }
+        
+        function isSavingTextVisible() {
+            return $('#saving-text').is(':visible');
         }
 
         function showSpinner() {
@@ -536,6 +546,13 @@
                         }
              }})
 
+             if (!isSpinnerVisible() && !isSavingTextVisible()) {
+                spinnerTimer = setTimeout(function() {
+                    showSpinner();
+                    showSavingText();
+                }, spinnerInterval);
+            }
+
             $.ajax({
                 type: 'POST',
                 url: '/savechanges',
@@ -544,8 +561,6 @@
                 success: function(response) {
                     // Show autosave notification
                     // showAutosaveNotification();
-                    showSpinner();
-                    showSavingText();
 
                 // Simulate saving data (replace with actual AJAX call)
                     setTimeout(function() {
