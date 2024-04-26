@@ -67,6 +67,12 @@
             right: 15px;
         }
 
+        h3 {
+            font-size: medium;
+            text-align: center;
+            margin-bottom: 5%;
+        }
+
     </style>
  
 </head> 
@@ -293,6 +299,9 @@
                                               <div class="container">
                                                 <table class="table">
                                                     <h2 id="table-title" class="text-center pt-5 pb-3"></h2>
+                                                    <div id="edit-message" style="display: none;">
+                                                        <h3>Select cells to edit, changes are automatically saved</h3>
+                                                    </div>
                                                     <thead class="hidden">
                                                         <tr>
                                                             <th>Term</th>
@@ -343,7 +352,7 @@
                         terms.forEach(function(term) {
                             tableBodyHTML += `
                                 <tr>
-                                    <td contenteditable="true">${term.translation}</td>
+                                    <td contenteditable="false">${term.translation}</td>
                                     <td hidden>${term.cardid}</td>
                                     <td contenteditable="true">${term.memorytip}</td>
                                     <td contenteditable="true">${term.speech}</td>
@@ -353,6 +362,7 @@
                         });
                         $('#table-body').html(tableBodyHTML);
                         $('thead').removeClass('hidden');
+                        $('#edit-message').show();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching data: ' + error);
