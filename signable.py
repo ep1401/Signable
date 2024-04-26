@@ -316,6 +316,24 @@ def lessons():
     
     if int(course) not in asl_dict:
         return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    lesson = dbconnect.get_lessonlength(int(course))
+    if not lesson[0]:
+        return flask.redirect(flask.url_for('error', error=lesson[1]))
+
+
+    lesson_found = False
+
+
+    for lesson_dict in lesson[1]:
+        lesson_id = lesson_dict.get('lessonid')
+        if lesson_id == int(lessonid):
+            lesson_found = True
+            break
+
+
+    if not lesson_found:
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
 
     query_result = dbconnect.get_flashcards(username, course, lessonid)
     if query_result[0] is True:
@@ -453,6 +471,24 @@ def mirrorsign():
     
     if int(course) not in asl_dict:
         return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    lesson = dbconnect.get_lessonlength(int(course))
+    if not lesson[0]:
+        return flask.redirect(flask.url_for('error', error=lesson[1]))
+
+
+    lesson_found = False
+
+
+    for lesson_dict in lesson[1]:
+        lesson_id = lesson_dict.get('lessonid')
+        if lesson_id == int(lessonid):
+            lesson_found = True
+            break
+
+
+    if not lesson_found:
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
 
     query_result = dbconnect.get_flashcards(username, course, lessonid)
     if query_result[0] is True:
@@ -510,6 +546,24 @@ def quiz():
     
     if int(course) not in asl_dict:
         return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    lesson = dbconnect.get_lessonlength(int(course))
+    if not lesson[0]:
+        return flask.redirect(flask.url_for('error', error=lesson[1]))
+
+
+    lesson_found = False
+
+
+    for lesson_dict in lesson[1]:
+        lesson_id = lesson_dict.get('lessonid')
+        if lesson_id == int(lessonid):
+            lesson_found = True
+            break
+
+
+    if not lesson_found:
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
 
     query_result = dbconnect.get_quiz_questions(course, lessonid)
 
@@ -721,6 +775,25 @@ def learningcenter():
     
     if int(course) not in asl_dict:
         return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    lesson = dbconnect.get_lessonlength(int(course))
+    if not lesson[0]:
+        return flask.redirect(flask.url_for('error', error=lesson[1]))
+
+
+    lesson_found = False
+
+
+    for lesson_dict in lesson[1]:
+        lesson_id = lesson_dict.get('lessonid')
+        if lesson_id == int(lessonid):
+            lesson_found = True
+            break
+
+
+    if not lesson_found:
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
+
 
     html_code = flask.render_template('learningcenter.html', course=course, 
         lesson_num = lessonid,  admin = admin)
@@ -733,4 +806,3 @@ def learningcenter():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
