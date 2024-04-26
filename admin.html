@@ -55,6 +55,18 @@
             word-break: break-all;
         }
 
+        #loading-spinner {
+            position: fixed;
+            top: 10px;
+            right: 80px;
+        }
+
+        #saving-text {
+            position: fixed;
+            top: 12px;
+            right: 15px;
+        }
+
     </style>
  
 </head> 
@@ -273,6 +285,10 @@
                                                     {% endfor %}
                                                     </ul>
                                                   </div>
+
+                                                  <div id="loading-spinner" class="spinner-border text-primary" role="status" style="display: none; margin-left: 100px;"> 
+                                                  </div>
+                                                  <span id="saving-text" style="display: none;">Saving...</span> 
                                               </div>
                                               <div class="container">
                                                 <table class="table">
@@ -362,6 +378,22 @@
             $('#notification').text('Autosaving changes...').fadeIn().delay(1000).fadeOut();
         }
 
+        function showSpinner() {
+            $('#loading-spinner').show();
+        }
+
+        function hideSpinner() {
+            $('#loading-spinner').hide();
+        }
+
+        function showSavingText() {
+            $('#saving-text').show();
+        }
+    
+        function hideSavingText() {
+            $('#saving-text').hide();
+        }
+
         function saveChanges() {
             var data = [];
             $('#table-body tr').each(function() {
@@ -381,6 +413,16 @@
                 success: function(response) {
                     // Show autosave notification
                     // showAutosaveNotification();
+                    showSpinner();
+                    showSavingText();
+
+                // Simulate saving data (replace with actual AJAX call)
+                    setTimeout(function() {
+                        // Hide spinner after data is saved
+                        hideSavingText();
+                        hideSpinner();
+                        console.log('Data saved successfully.');
+                    }, 2000);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error saving changes: ' + error);
