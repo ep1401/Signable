@@ -222,6 +222,11 @@
         border-top: 1px solid #555;
     }
 
+    ol li {
+        display: inline-block !important;
+    
+    }
+
     .tooltip-text {
         display: none;
         position: absolute;
@@ -243,6 +248,7 @@
         position: relative;
         display: inline-block; 
     }
+
     
     .tooltip-text {
         display: none;
@@ -271,6 +277,8 @@
         padding: 10px;
    
     }
+
+ 
     
     </style>
   
@@ -398,8 +406,9 @@
                 <span class="ms-3 text-black">Signable</span> 
             </div> 
             <div class="p-3"> 
+        
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
-                    <ol class="breadcrumb m-0"> 
+                    <ol class="breadcrumb m-0 d-inline"> 
                         <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
@@ -411,25 +420,25 @@
                             <a href="/learningcenter?course_lesson={{course}} {{lesson_num}}" style="color: black; text-decoration: none;">Modes</a>
                         </li>
 
-                        
+                       
                     </ol> 
-
-                <div class="dropdown" align="right">
+                    
+                    <span class="dropdown d-inline-block float-right  d-none d-md-block font-size:8px" >
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Dropdown button
+                          <i class="fa fa-user"></i>
+                            Profile
                         </button> 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Log out</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
-                  
-                </div>
+                    </span>
                    
-                    <hr>
+               
                 </nav>
                 {% if empty == false %}
-                <div class="container-xl">
+                <div class="container-xl mt-4">
                     <div class="row">
                         <div class="col-md-10  mx-auto container-fluid">
                             <h2><span>ASL{{course}} <b>Lesson {{lesson_num}}</b></span></h2>

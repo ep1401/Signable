@@ -34,34 +34,12 @@
         background: #fff;
     }
     h2 {
-        color: #696969;
-        font-size: 26px;
         font-weight: 300;
         text-align: center;
         position: relative;
         margin: 40px 70px;
-        text-transform: uppercase;
-        font-family: 'Open Sans', sans-serif;
     }
-    h2::after {
-        content: "";
-        width: 100%;
-        position: absolute;
-        margin: 0 auto;
-        height: 1px;
-        border-radius: 1px;
-        background: #d4d4d4;
-        left: 0;
-        right: 0;
-        bottom: 14px;
-    }
-    h2 span {
-        display: inline-block;
-        padding: 0 25px;
-        background:#ebebeb;
-        position:relative;
-        z-index:2;
-    }
+
     .carousel {    
         margin: 0 auto;
         padding: 0 5%; 
@@ -475,6 +453,10 @@
                             <br>
                             <div id="card-counter" class="text-center mt-3"></div>
                             {% endfor %}
+                            
+                            {% if empty | length == 0 %}
+                                <h2>Please star a card to be added to the Review Stack</h2>
+                            {% endif %}
                     </div>
                 </div>
             </div> 

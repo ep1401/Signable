@@ -63,18 +63,6 @@
       text-align: center;
     }
 
-    @keyframes gradientAnimation {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-
     .gradient-text {
         /* Create a linear gradient */
         background: linear-gradient(to bottom right, #26bac2, #b24dc2);
@@ -83,10 +71,20 @@
         background-clip: text;
         /* Hide the original text */
         color: transparent;
-        /* Animate the gradient */
-        animation: gradientAnimation 3s linear infinite;
         font-size: 100px;
-      }
+        animation: animateGradient 5s infinite alternate; 
+        -webkit-animation: animateGradient 5s infinite alternate; /* Safari and Chrome */
+        transition: background-position 2s ease-in-out;
+
+    }
+    @keyframes animateGradient {
+        0% {
+            background-position: 0% 0%;
+        }
+        100% {
+            background-position: 100% 100%;
+        }
+    }
   </style>
 </head>
 <body>
