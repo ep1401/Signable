@@ -7,7 +7,6 @@
 #-----------------------------------------------------------------------
 
 import os
-import sys
 import json
 import requests
 import dotenv
@@ -146,7 +145,7 @@ def logoutapp():
 
     # Log out of the application.
     flask.session.clear()
-    html_code = flask.render_template('loggedout.html')
+    html_code = flask.render_template('startpage.html')
     response = flask.make_response(html_code)
     return response
 

@@ -8,16 +8,19 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f8f9fa; /* Background color for the body */
-      color: #333; /* Text color */
-      overflow-x: hidden; /* Hide horizontal scrollbar */
+      background-color: #f8f9fa;
+      color: #333; 
+      overflow-x: hidden; 
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensure the body covers the entire viewport height */
     }
     .jumbotron {
       background-color: #ccf2f4; /* Jumbotron background color */
       color: #333; /* Text color in the jumbotron */
       padding: 3rem 1rem; /* Jumbotron padding */
       margin-top: 0;
-      margin-bottom: 0; /* Remove margin to stick to the edge */
+      margin-bottom: auto; /* Push the footer to the bottom */
       border-radius: 0; /* Remove border radius */
       box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); /* Add shadow */
       position: relative; /* Position relatively */
@@ -32,6 +35,8 @@
       background-color: #343a40; /* Footer background color */
       color: #fff; /* Footer text color */
       text-align: center; /* Center align text */
+      margin-top: auto; /* Push the footer to the bottom */
+      padding: 1rem 0; /* Add some padding to the footer */
     }
     .container {
       padding-top: 2rem; /* Add space between jumbotron and content */
@@ -58,14 +63,29 @@
       text-align: center;
     }
 
+    @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
     .gradient-text {
         /* Create a linear gradient */
-        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        background: linear-gradient(to bottom right, #26bac2, #b24dc2);
         /* Apply the gradient as text color */
         -webkit-background-clip: text;
         background-clip: text;
         /* Hide the original text */
         color: transparent;
+        /* Animate the gradient */
+        animation: gradientAnimation 3s linear infinite;
+        font-size: 100px;
       }
   </style>
 </head>
@@ -78,8 +98,9 @@
     <div class="container-fluid">
       <img class="logo" src="static/images/logo.png" alt="Logo">
       <div class="content">
-        <h1 class="display-3">Welcome to <span class="gradient-text">Signable</span>!</h1>
-        <a href="{{ url_for('login') }}" class="btn btn-lg btn-primary">Login or Register</a>
+        <h1 class="display-3">Welcome to <br><span class="gradient-text">Signable</span></h1>
+        <br>
+        <a href="{{ url_for('login') }}" class="btn btn-md btn-primary">Login or Register</a>
       </div>
     </div>
   </div>
@@ -88,19 +109,16 @@
     <!-- Example row of columns -->
     <div class="row">
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <h2>Our Mission</h2>
+        <p>At Signable, we are committed to transforming the way American Sign Language (ASL) is taught and learned. Our platform offers specialized tools and resources tailored to the unique needs of ASL students, providing a comprehensive study experience that enhances accessibility and effectiveness in ASL education.</p>
       </div>
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <h2>About Us</h2>
+        <p>Signable is a dedicated study tool designed specifically for Princeton ASL students. We understand the challenges faced by ASL learners and have developed a platform that addresses these challenges head-on, offering interactive features and robust study resources to support your journey in mastering ASL.</p>
       </div>
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <h2>Key Features</h2>
+        <p>Unlike generic study tools, Signable focuses exclusively on ASL education, providing specialized features that cater to the unique needs of ASL learners. Our platform is designed to empower students and educators alike, revolutionizing the way ASL is taught and learned at Princeton.</p>
       </div>
     </div>
     <hr>
