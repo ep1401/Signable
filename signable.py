@@ -3,7 +3,7 @@
 import flask
 import os
 from flask import request
-import flask_wtf.csrf
+from flask_wtf.csrf import CSRFProtect
 from flask import render_template
 import dbconnect
 import auth
@@ -17,7 +17,7 @@ _DATABASE_URL = os.environ['DATABASE_URL']
 dotenv.load_dotenv()
 app.secret_key = os.environ['APP_SECRET_KEY']
 
-flask_wtf.csrf.CSRFProtect(app)
+CSRFProtect(app)
 
 @app.route('/', methods=['GET'])
 def start_page():
