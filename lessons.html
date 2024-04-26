@@ -160,6 +160,19 @@
         transition: transform 0.2s; 
     }
 
+    .dropdownstyles {
+        border-radius: 20px !important;
+        background-color: #ccf2f4 !important;
+        border-color: #ccf2f4 !important;
+        color: #000;
+    }
+
+    .dropdownstyles:hover {
+        background-color: #aeb1b1 !important;
+        border-color: #aeb1b1 !important;
+        color: #000;
+    }
+
     .option {
         background-color: #ccf2f4; 
         color: #000; 
@@ -276,6 +289,10 @@
         width: 100%;
         padding: 10px;
    
+    }
+
+    .font-size-dropdown {
+        font-size: 2px !important;
     }
 
  
@@ -422,18 +439,19 @@
 
                        
                     </ol> 
+
+                      
+                    <div class="btn-group d-inline-block float-right font-size-dropdown  .text-dark.d-sm-none .d-md-block">
+                        <button type="button" class="btn  dropdown-toggle dropdownstyles	.d-sm-none .d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user"></i>
+                            {{username}}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end 	.d-sm-none .d-md-block">
+                            <a class="dropdown-item" href="/logoutapp">Log out</a>
+                        </ul>
+                      </div>
                     
-                    <span class="dropdown d-inline-block float-right  d-none d-md-block font-size:8px" >
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-user"></i>
-                            Profile
-                        </button> 
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Log out</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                    </span>
+                 
                    
                
                 </nav>

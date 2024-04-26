@@ -342,7 +342,7 @@ def lessons():
         if (len(flashcards) == 0):
             empty = True
         html_code = flask.render_template('lessons.html', course=course, 
-        lesson_num = lessonid, flashcards = flashcards, admin = admin, empty = empty)
+        lesson_num = lessonid, flashcards = flashcards, admin = admin, empty = empty, username = username)
     else:
         return flask.redirect(flask.url_for('error', error=query_result[1]))
     

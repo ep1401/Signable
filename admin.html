@@ -44,7 +44,10 @@
             color: black;
         }
 
-      
+        ol li {
+        display: inline-block !important;
+    
+    }
 
       
         .table td {
@@ -80,6 +83,22 @@
             margin-bottom: 5%;
         }
 
+        .dropdownstyles {
+        border-radius: 20px !important;
+        background-color: #ccf2f4 !important;
+        border-color: #ccf2f4 !important;
+        color: #000;
+    }
+
+    .font-size-dropdown {
+        font-size: 2px !important;
+    }
+
+    .dropdownstyles:hover {
+        background-color: #aeb1b1 !important;
+        border-color: #aeb1b1 !important;
+        color: #000;
+    }
     </style>
  
 </head> 
@@ -177,13 +196,25 @@
             </div> 
             <div class="p-4"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
-                    <ol class="breadcrumb m-0"> 
+                    <ol class="breadcrumb m-0 d-inline"> 
                         <li class="breadcrumb-item">Admin</li>  
                     </ol> 
-                    <hr>
+                  
+
+                    <div class="btn-group d-inline-block float-right font-size-dropdown  .text-dark.d-sm-none .d-md-block" >
+                        <button type="button" class="btn  dropdown-toggle dropdownstyles	.d-sm-none .d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user"></i>
+                           
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end 	.d-sm-none .d-md-block">
+                            <a class="dropdown-item" href="/logoutapp">Log out</a>
+                        </ul>
+                      </div>
+                    
                 </nav>
 
-                <div class="row"> 
+
+                <div class="row mt-1"> 
                     <div class="col"> 
                         <h1>Edit your courses here:</h1>
                         <ul class="nav nav-tabs">
