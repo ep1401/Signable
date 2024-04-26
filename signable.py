@@ -3,6 +3,7 @@
 import flask
 import os
 from flask import request
+import flask_wtf.csrf
 from flask import render_template
 import dbconnect
 import auth
@@ -15,6 +16,8 @@ app = flask.Flask(__name__, template_folder='.')
 _DATABASE_URL = os.environ['DATABASE_URL']
 dotenv.load_dotenv()
 app.secret_key = os.environ['APP_SECRET_KEY']
+
+flask_wtf.csrf.CSRFProtect(app)
 
 @app.route('/', methods=['GET'])
 def start_page():
@@ -643,6 +646,7 @@ def deleteflashcard():
     
 @app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>')
 def fetch_lesson_terms(course_id, lesson_number):
+
     terms = dbconnect.get_lessonterms('', lesson_number, course_id)
     if terms[0] is False:
         return flask.redirect(flask.url_for('error', error=terms[1]))

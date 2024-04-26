@@ -151,7 +151,7 @@ def get_lessonterms(searchterm, lesson, course):
                         "FROM flashcards WHERE translation ILIKE $1 AND lessonid = $2 AND courseid = $3")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE select_flashcards_by_translation_and_lesson_course (%s, %s, %s)", (f"%{searchterm}%", lesson, course))
+            cursor.execute("EXECUTE select_flashcards_by_translation_and_lesson_course (%s, %s, %s)", (f"%{escape_special_characters(searchterm)}%", lesson, course))
             table = cursor.fetchall()
 
             return_list = []

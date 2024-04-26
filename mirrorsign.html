@@ -262,6 +262,14 @@
         transform: translate(-50%, -50%);
         font-size: 24px;
     }
+
+    .translationwrap {
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        width: 100%;
+        padding: 10px;
+   
+    }
    
     </style>
   
@@ -416,7 +424,7 @@
                                                         <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
                                                             <i class="fa-solid fa-circle-info"></i>
                                                         </button>
-                                                        {{ flashcard['translation'] | safe}}
+                                                        <div class="translationwrap"> {{ flashcard['translation'] | safe}} </div>
                                                     </div>
                                                         <div class="back">
                                                             <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
@@ -719,7 +727,15 @@ function playStream(stream) {
         // Toggle active class for front and back stars
         if ($(this).hasClass('active')) {
 
-            
+            var csrf_token = "{{ csrf_token() }}";
+
+            $.ajaxSetup({
+             beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+             }})
+
             $.ajax({
             url: "/addstarredflashcard",
             type: 'PUT',    
@@ -733,6 +749,19 @@ function playStream(stream) {
             backStar.addClass('active');   
  
         } else {
+
+            var csrf_token = "{{ csrf_token() }}";
+
+            $.ajaxSetup({
+             beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+             }})
+
+
+
+
             $.ajax({
             url: "/deletestarredflashcard",
             type: 'PUT',    

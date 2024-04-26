@@ -44,15 +44,22 @@
             color: black;
         }
 
+      
+
+      
         .table td {
             white-space: pre-wrap !important;
             word-wrap: break-word !important;
+            max-width: 150px !important;
+            
         }
 
         .table td[contenteditable="true"] {
             white-space: nowrap;
             overflow-x: auto;
             word-break: break-all;
+           
+            
         }
 
         #loading-spinner {
@@ -193,54 +200,77 @@
                             <br>
                             <div class="row"> 
                                 <div class="col"> 
-                                    <form action="/add_card" method="POST">
+                                    <form class="needs-validation"action="/add_card" method="POST" onsubmit="return checkInput()">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label for="aslcourse">ASL Course</label>
                                                 <small id="inputhelp" class="form-text text-muted"><span style="color: red;">*</span></small>
-                                                <select class="form-control" name="aslcourse" required>
+                                                <select id="courseinput"class="form-select" name="aslcourse" >
                                                     <option value="" disabled selected>Select Course</option>                                                    <option value="101">101</option>
                                                     <option value="102">102</option>
                                                     <option value="105">105</option>
                                                     <option value="107">107</option>
                                                 </select>
+                                                <div class="invalid-feedback">
+                                                    Please select an ASL course
+                                                </div>
+                                             
                                             </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="asllesson">ASL Lesson</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: 3 or 12)<span style="color: red;">*</span></small>
-                                            <input type="number" class="form-control" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson" required min="0">
+                                            <input id="lessonnumberinput" type="number" class="form-control" name="asllesson" aria-describedby="emailHelp" placeholder="Enter Lesson"  min="0">
+                                            <div class="invalid-feedback">
+                                                 Please enter a lesson number
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="videolink">Video ID</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: enter NXRzRZFgSco from https://youtu.be/NXRzRZFgSco)<span style="color: red;">*</span></small>
-                                            <input class="form-control" name="videolink" aria-describedby="emailHelp" placeholder="Enter Video ID" required>
+                                            <input id="videolinkinput" class="form-control" name="videolink" aria-describedby="emailHelp" placeholder="Enter Video ID" >
+                                            <div class="invalid-feedback">
+                                                Please enter a video link
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="translation">English Translation</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: to-run or hello)<span style="color: red;">*</span></small>
-                                            <input class="form-control" name="translation" aria-describedby="emailHelp" placeholder="English Translation" required>
+                                            <input id="translationinput" class="form-control" name="translation" aria-describedby="emailHelp" placeholder="English Translation" >
+                                            <div id="translationfeedback" class="invalid-feedback">
+                                                Please limit the translation to less than 500 words
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="memory">Memory Tip</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: think of a salute)</small>
-                                            <input class="form-control" name="memory" aria-describedby="emailHelp" placeholder="Enter Memory Tip">
+                                            <input id="memoryinput"class="form-control" name="memory" aria-describedby="emailHelp" placeholder="Enter Memory Tip">
+                                            <div class="invalid-feedback">
+                                                Please limit the memory tip to less than 300 characters
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="speech">Parts of Speech</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: verb or noun)</small>
-                                            <input class="form-control" name="speech" aria-describedby="emailHelp" placeholder="Enter Parts of Speech">
+                                            <input id="speechinput"class="form-control" name="speech" aria-describedby="emailHelp" placeholder="Enter Parts of Speech">
+                                            <div class="invalid-feedback">
+                                                Please limit the parts of speech to less than 200 characters
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="sentence">Example Sentence</label>
                                             <small id="inputhelp" class="form-text text-muted">(for example: DOG TO-RUN AROUND HOUSE)</small>
-                                            <input class="form-control" name="sentence" aria-describedby="emailHelp" placeholder="Enter Example Sentence">
+                                            <input id="sentenceinput" class="form-control" name="sentence" aria-describedby="emailHelp" placeholder="Enter Example Sentence">
+                                            <div class="invalid-feedback">
+                                                Please limit the example sentence to less than 300 characters
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="row justify-content-center">
@@ -338,6 +368,88 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
+        function checkInput(){
+            translation_input = $("#translationinput").val()
+            let isvalid = true
+
+            if($("#courseinput").val() === null) {
+                $("#courseinput").addClass("is-invalid")
+                isvalid = false
+            }
+            else {
+                $("#courseinput").removeClass("is-invalid")
+            }
+
+            if (translation_input.length > 300 || translation_input.length === 0 ) {
+                if (translation_input.length === 0 ){
+                    $("#translationfeedback").empty()
+                    $("#translationfeedback").html("Please enter an ASL translation")
+                } else {
+                    $("#translationfeedback").empty()
+                    $("#translationfeedback").html("Please limit the translation to less than 300 words")
+                }
+                $("#translationinput").addClass("is-invalid")
+                isvalid = false
+            } else {
+                $("#translationinput").removeClass("is-invalid")
+            }
+
+
+            
+            
+            link_input = $("#videolinkinput").val()
+
+            if (link_input.length === 0){
+                $("#videolinkinput").addClass("is-invalid")
+                isvalid = false
+            } else {
+                $("#videolinkinput").removeClass("is-invalid")
+            }
+
+            lesson_input = $("#lessonnumberinput").val()
+          
+            if (lesson_input.length === 0){
+                $("#lessonnumberinput").addClass("is-invalid")
+                isvalid = false
+            } else {
+                $("#lessonnumberinput").removeClass("is-invalid")
+            }
+          
+            mem_tip = $("#memoryinput").val()
+            if (mem_tip.length > 300){
+                $("#memoryinput").addClass("is-invalid")
+                isvalid = false
+            } else {
+                $("#memoryinput").removeClass("is-invalid")
+            }
+   
+       
+            
+            sentence_input = $("#sentenceinput").val()
+            if (sentence_input.length > 300){
+                $("#sentenceinput").addClass("is-invalid")
+                isvalid = false
+            } else {
+                $("#sentenceinput").removeClass("is-invalid")
+            }
+     
+
+            speech_input = $("#speechinput").val()
+            if (speech_input.length > 300){
+                $("#speechinput").addClass("is-invalid")
+                isvalid = false
+            } else {
+                $("#speechinput").removeClass("is-invalid")
+            }
+
+
+            return isvalid
+        }
+
+ 
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+
        
 
         $(document).ready(function() {
@@ -415,6 +527,15 @@
                 data.push({ cardid: cardid, translation: translation, memorytip: memorytip, speech: speech, sentence: sentence });
             });
 
+            var csrf_token = "{{ csrf_token() }}";
+
+            $.ajaxSetup({
+             beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+             }})
+
             $.ajax({
                 type: 'POST',
                 url: '/savechanges',
@@ -453,6 +574,16 @@
     
             if (confirm('Are you sure you want to remove this card?')) {
                 var row = $(this).closest('tr'); 
+                var csrf_token = "{{ csrf_token() }}";
+
+                $.ajaxSetup({
+                 beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+             }})
+
+
                 $.ajax({
                     type: 'POST',
                     url: '/deleteflashcard',
