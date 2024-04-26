@@ -242,7 +242,7 @@
                                             <small id="inputhelp" class="form-text text-muted">(for example: to-run or hello)<span style="color: red;">*</span></small>
                                             <input id="translationinput" class="form-control" name="translation" aria-describedby="emailHelp" placeholder="English Translation" >
                                             <div id="translationfeedback" class="invalid-feedback">
-                                                Please limit the translation to less than 500 words
+                                                Please limit the translation to less than 50 words
                                             </div>
                                         </div>
                                         <br>
@@ -380,13 +380,13 @@
                 $("#courseinput").removeClass("is-invalid")
             }
 
-            if (translation_input.length > 300 || translation_input.length === 0 ) {
+            if (translation_input.length > 50 || translation_input.length === 0 ) {
                 if (translation_input.length === 0 ){
                     $("#translationfeedback").empty()
                     $("#translationfeedback").html("Please enter an ASL translation")
                 } else {
                     $("#translationfeedback").empty()
-                    $("#translationfeedback").html("Please limit the translation to less than 300 words")
+                    $("#translationfeedback").html("Please limit the translation to less than 50 words")
                 }
                 $("#translationinput").addClass("is-invalid")
                 isvalid = false
