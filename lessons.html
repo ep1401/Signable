@@ -160,18 +160,6 @@
         transition: transform 0.2s; 
     }
 
-    .dropdownstyles {
-        border-radius: 20px !important;
-        background-color: #ccf2f4 !important;
-        border-color: #ccf2f4 !important;
-        color: #000;
-    }
-
-    .dropdownstyles:hover {
-        background-color: #aeb1b1 !important;
-        border-color: #aeb1b1 !important;
-        color: #000;
-    }
 
     .option {
         background-color: #ccf2f4; 
@@ -235,10 +223,7 @@
         border-top: 1px solid #555;
     }
 
-    ol li {
-        display: inline-block !important;
-    
-    }
+
 
     .tooltip-text {
         display: none;
@@ -289,6 +274,24 @@
         width: 100%;
         padding: 10px;
    
+    }
+
+    .dropdownstyles {
+        border-radius: 20px !important;
+        background-color: #ccf2f4 !important;
+        border-color: #ccf2f4 !important;
+        color: #000;
+    }
+
+    .dropdownstyles:hover {
+        background-color: #aeb1b1 !important;
+        border-color: #aeb1b1 !important;
+        color: #000;
+    }
+
+    ol li {
+        display: inline-block !important;
+    
     }
 
     .font-size-dropdown {
@@ -441,12 +444,12 @@
                     </ol> 
 
                       
-                    <div class="btn-group d-inline-block float-right font-size-dropdown  .text-dark.d-sm-none .d-md-block">
-                        <button type="button" class="btn  dropdown-toggle dropdownstyles	.d-sm-none .d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                            {{username}}
+                    <div class="btn-group d-inline-block float-right font-size-dropdown   text-dark">
+                        <button type="button" class="btn  dropdown-toggle dropdownstyles  " data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user "></i>
+                            <span class="d-none d-lg-inline"> {{username}}  </span>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end 	.d-sm-none .d-md-block">
+                        <ul class="dropdown-menu dropdown-menu-end 	">
                             <a class="dropdown-item" href="/logoutapp">Log out</a>
                         </ul>
                       </div>

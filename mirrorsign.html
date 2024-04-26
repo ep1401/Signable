@@ -270,6 +270,53 @@
         padding: 10px;
    
     }
+
+    
+    .dropdownstyles {
+        border-radius: 20px !important;
+        background-color: #ccf2f4 !important;
+        border-color: #ccf2f4 !important;
+        color: #000;
+    }
+
+    .dropdownstyles:hover {
+        background-color: #aeb1b1 !important;
+        border-color: #aeb1b1 !important;
+        color: #000;
+    }
+
+    ol li {
+        display: inline-block !important;
+    
+    }
+
+    .font-size-dropdown {
+        font-size: 2px !important;
+    }
+
+    
+    .dropdownstyles {
+        border-radius: 20px !important;
+        background-color: #ccf2f4 !important;
+        border-color: #ccf2f4 !important;
+        color: #000;
+    }
+
+    .dropdownstyles:hover {
+        background-color: #aeb1b1 !important;
+        border-color: #aeb1b1 !important;
+        color: #000;
+    }
+
+    ol li {
+        display: inline-block !important;
+    
+    }
+
+    .font-size-dropdown {
+        font-size: 2px !important;
+    }
+
    
     </style>
   
@@ -387,7 +434,7 @@
             </div> 
             <div class="p-3"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
-                    <ol class="breadcrumb m-0"> 
+                    <ol class="breadcrumb m-0 d-inline"> 
                         <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
@@ -399,9 +446,19 @@
                             <a href="/learningcenter?course_lesson={{course}} {{lesson_num}}" style="color: black; text-decoration: none;">Modes</a>
                         </li>
                     </ol> 
-                    <hr>
+
+                    <div class="btn-group d-inline-block float-right font-size-dropdown   text-dark">
+                    <button type="button" class="btn  dropdown-toggle dropdownstyles  " data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user "></i>
+                        <span class="d-none d-lg-inline"> {{username}}  </span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end 	">
+                        <a class="dropdown-item" href="/logoutapp">Log out</a>
+                    </ul>
+                  </div>
+                 
                 </nav>
-                <div class="container-xl">
+                <div class="container-xl mt-5">
                     <h2><span>ASL{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
                     <div class="row">
                         <div class="col-md-6  mx-auto container-fluid">

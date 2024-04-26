@@ -134,15 +134,25 @@
             </div> 
             <div class="p-4">  
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
-                    <ol class="breadcrumb"> 
+                    <ol class="breadcrumb d-inline"> 
                         <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
                         </li>   
                     </ol> 
+
+                    <div class="btn-group d-inline-block font-size-dropdown makefloat text-dark" >
+                        <button type="button" class="btn  dropdown-toggle dropdownstyles" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user "></i>
+                            <span class="d-none d-lg-inline"> {{username}}  </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end 	">
+                            <a class="dropdown-item" href="/logoutapp">Log out</a>
+                        </ul>
+                      </div>
                 </nav>
-                <hr>
-                <h2>Select a Lesson to Start Learning!</h2>
+              
+                <h2 class="mt-5">Select a Lesson to Start Learning!</h2>
                 <br>
                 <h3>ASL{{course}}</h3>
                 <br>

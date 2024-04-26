@@ -104,6 +104,31 @@ h1 {
     text-decoration: underline;
 }
 
+.dropdownstyles {
+    border-radius: 20px !important;
+    background-color: #ccf2f4 !important;
+    border-color: #ccf2f4 !important;
+    color: #000;
+}
+
+.makefloat {
+    float: right !important;
+}
+
+.dropdownstyles:hover {
+    background-color: #aeb1b1 !important;
+    border-color: #aeb1b1 !important;
+    color: #000;
+}
+
+ol li {
+    display: inline-block !important;
+
+}
+
+.font-size-dropdown {
+    font-size: 2px !important;
+}
 
 
 

@@ -128,7 +128,7 @@ def courses():
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
             + " administrator to resolve the issue"))
 
-    html_code = flask.render_template('courses.html', admin = admin)
+    html_code = flask.render_template('courses.html', admin = admin, username=username)
     response = flask.make_response(html_code)
     return response
 
@@ -171,7 +171,7 @@ def admin():
         lesson_length107_sorted = sorted(lesson_length107, key=lambda x: x['lessonid'])
         html_code = flask.render_template('admin.html', admin = admin, asl101len = lesson_length101_sorted, 
             asl102len = lesson_length102_sorted, asl105len = lesson_length105_sorted, 
-            asl107len = lesson_length107_sorted, terms = terms[1])
+            asl107len = lesson_length107_sorted, terms = terms[1], username=username)
     else: 
         return flask.redirect(flask.url_for('error', error="A server error occurred." + 
             " Please contact the system administrator."))
@@ -235,7 +235,7 @@ def searchterm():
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
             + "administrator to resolve to issue"))
 
-    html_code = flask.render_template('searchterm.html', admin = admin)
+    html_code = flask.render_template('searchterm.html', username=username, admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -423,7 +423,7 @@ def selectlessons():
         lesson_length = query_result[1]
         lesson_length_sorted = sorted(lesson_length, key=lambda x: x['lessonid'])
         html_code = flask.render_template('selectlessons.html', course=course,
-        lesson_num = lesson_length_sorted, admin = admin)
+        lesson_num = lesson_length_sorted, admin = admin, username=username)
     else: 
         return flask.redirect(flask.url_for('error', error=query_result[1]))
 
@@ -497,7 +497,7 @@ def mirrorsign():
         if len(flashcards) != 0:
             empty=[1]
         html_code = flask.render_template('mirrorsign.html', course = course, lesson_num = lessonid,
-            flashcards = flashcards, admin = admin, empty=empty)
+            flashcards = flashcards, admin = admin, empty=empty, username=username)
     else: 
         return flask.redirect(flask.url_for('error', error=query_result[1]))
     
@@ -598,7 +598,7 @@ def gloss():
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
             + "administrator to resolve to issue"))
 
-    html_code = flask.render_template('gloss.html', admin = admin)
+    html_code = flask.render_template('gloss.html', username=username, admin = admin)
     response = flask.make_response(html_code)
     return response
 
@@ -631,7 +631,7 @@ def review():
         empty = []
         if len(flashcards) != 0:
             empty=[1]
-        html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin, empty=empty)
+        html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin, empty=empty, username=username)
         response = flask.make_response(html_code)
     else:
         return flask.redirect(flask.url_for('error', error=query_result[1]))
@@ -796,7 +796,7 @@ def learningcenter():
 
 
     html_code = flask.render_template('learningcenter.html', course=course, 
-        lesson_num = lessonid,  admin = admin)
+        lesson_num = lessonid,  admin = admin, username=username)
     
     
     response = flask.make_response(html_code)
