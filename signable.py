@@ -641,7 +641,7 @@ def review():
 @app.route('/deletestarredflashcard', methods=['PUT'])
 def delstarflashcard():
         username = auth.authenticate()
-        cardid =  request.get_json()["cardid"]
+        cardid =  escape(request.get_json()["cardid"])
         result = dbconnect.del_starred_card(username, cardid)
         if result[0] is False:
             return flask.redirect(flask.url_for('error', error=result[1]))
@@ -652,7 +652,7 @@ def delstarflashcard():
 @app.route('/addstarredflashcard', methods=['PUT'])
 def starflashcard(): 
      username = auth.authenticate()
-     cardid =  request.get_json()["cardid"]
+     cardid =  escape(request.get_json()["cardid"])
      result = dbconnect.add_starred_card(username, cardid)
      if result[0] is False:
          return flask.redirect(flask.url_for('error', error=result[1]))
