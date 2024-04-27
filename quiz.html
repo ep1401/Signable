@@ -45,6 +45,13 @@
         font-family: 'Open Sans', sans-serif;
     }
 
+    h3 {
+        margin-top: 60px;
+        text-align: center;
+        position: relative;
+      
+    }
+
     h2::after {
         content: "";
         width: 100%;
@@ -92,7 +99,6 @@
         display: flex;
         justify-content: center; 
         align-items: center; 
-        min-height: 100vh; 
     }
 
     .quiz-container {
@@ -142,6 +148,33 @@
     .incorrect-answer {
         color: red;
     }
+
+    .btn {
+        background-color: #ccf2f4;
+        color: #333;
+        border-color: transparent;
+    }
+
+    .btn:hover {
+        background-color: rgb(132, 132, 136); 
+        border-color: transparent;
+    }
+
+    /* Container styles */
+    .image-container {
+        width: 80%; /* Set the width of the container */
+        height: 500px; /* Set the height of the container */
+        display: flex;
+        justify-content: center; /* Center the image horizontally */
+        align-items: center; /* Center the image vertically */
+      }
+  
+      /* Ensure the image does not exceed the container width/height */
+      .image-container img {
+        max-width: 100%; 
+        max-height: 100%; 
+      }
+    
 </style>
   
 <body> 
@@ -180,6 +213,14 @@
                         <span class="text text-black">  Home </span>
                     </a> 
                 </li> 
+
+                <li class="nav-item mb-1"> 
+                    <a href="/admin"> 
+                        <i class="fas fa-user-cog text-black"></i>
+                        <span class="text text-black"> Admin </span>
+                    </a> 
+                </li> 
+  
                 
   
                 <li class="nav-item mb-1"> 
@@ -210,53 +251,38 @@
                         <span class="text text-black"> Gloss </span>
                     </a> 
                 </li> 
-  
-                <li class="sidebar-item  nav-item mb-1"> 
-                    <a href="#" 
-                       class="sidebar-link collapsed" 
-                       data-bs-toggle="collapse"
-                       data-bs-target="#settings"
-                       aria-expanded="false"
-                       aria-controls="settings"> 
-                        <i class="fas fa-cog pe-2 text-black"></i> 
-                        <span class="topic text text-black">Settings </span> 
-                    </a> 
-                    <ul id="settings" 
-                        class="sidebar-dropdown list-unstyled collapse" 
-                        data-bs-parent="#sidebar"> 
-                        <li class="sidebar-item"> 
-                            <a href="/logoutapp" class="sidebar-link"> 
-                                <i class="fas fa-sign-out-alt pe-2" style="color: #6c757d;"></i>
-                                <span class="topic" style="color: #6c757d;" >Log Out</span> 
-                            </a> 
-                        </li> 
-                        <li class="sidebar-item"> 
-                            <a href="/admin" class="sidebar-link" id="adminButton"> 
-                                <i class="fas fa-user-cog" style="color: #6c757d;"></i>
-                                <span class="topic" style="color: #6c757d;">Admin</span> 
-                            </a>
-                        </li>
-                        
-                    </ul> 
-                </li> 
+   
             </ul> 
             <hr> 
             <div class="d-flex"> 
+  
+               
             </div> 
         </div> 
   
         <div class="bg-light flex-fill"> 
-            <div class="p-2 d-md-none d-flex text-white color"> 
-                <a id="mobileshow" href="#" class="text-white" 
-                   data-bs-toggle="offcanvas"
-                   data-bs-target="#bdSidebar"> 
-                    <i class="fa-solid fa-bars text-black"></i> 
-                </a> 
-                <span class="ms-3 text-black">Signable</span> 
-            </div> 
+            <div class="bg-light flex-fill"> 
+                <div class="p-2 d-md-none d-flex text-white color"> 
+                    <a id="mobileshow" href="#" class="text-white" 
+                       data-bs-toggle="offcanvas"
+                       data-bs-target="#bdSidebar"> 
+                        <i class="fa-solid fa-bars text-black expansionmargin"></i> 
+                    </a> 
+                    <span class="ms-3 mt-2 text-black d-inline">Signable</span> 
+                    <div class="btn-group d-inline ml-auto font-size-dropdown   text-dark">
+                        <button type="button" class="btn  dropdown-toggle dropdownstyles" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user "></i>
+                            
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end 	">
+                            <span class="dropdown-item"> <i class="fa fa-user "> </i> {{username}}  </span>
+                            <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
+                        </ul>
+                      </div>
+                </div> 
             <div class="p-3"> 
                 <nav style="--bs-breadcrumb-divider:'>';font-size:14px"> 
-                    <ol class="breadcrumb m-0"> 
+                    <ol class="breadcrumb m-0 d-inline"> 
                         <li class="breadcrumb-item">Learning Hub</li>  
                         <li class="breadcrumb-item">
                             <a href="/courses" style="color: black; text-decoration: none;">Courses</a>
@@ -268,7 +294,21 @@
                             <a href="/learningcenter?course_lesson={{course}} {{lesson_num}}" style="color: black; text-decoration: none;">Modes</a>
                         </li>
                     </ol> 
-                    <hr>
+
+                    <div class="btn-group d-inline-block float-right font-size-dropdown   text-dark">
+                        <button type="button" class="btn  dropdown-toggle dropdownstyles d-none d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user "></i>
+                            <span class="d-none d-lg-inline"> {{username}}  </span>
+                        </button>
+                        <span class="d-none d-md-block">
+                        <ul class="dropdown-menu dropdown-menu-end ">
+                            <span class="dropdown-item d-lg-none"> <i class="fa fa-user "> </i> {{username}}  </span>
+                            <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
+                            
+                        </ul>
+                    </span>
+                      </div>
+                 
                 </nav>
                 <div class="container-xl">
                     <h2><span>ASL{{course}} <b>Lesson {{lesson_num}}</b></span></h2>
@@ -285,13 +325,28 @@
                             <button id="startQuizBtn" class="btn btn-primary">Start Quiz</button>
                         </div>
                     </div>
-                       
+
+                    
+                    <center>
+                        
+                        <h3>Instructions:</h3>
+                        <p>For each question, a video will appear provding you with an ASL sign. Your task
+                            is to choose the English translation that best matches the sign. Note that to submit 
+                            the quiz, all questions must be answered.  After you submit, correct answers will 
+                            appear in green and incorrect will appear in red.  </p>
+                        <br>
+                        <br>
+                        <h4 id="instructions">Question Example</h4>
+                        <div class="image-container">
+                            <img src="static/images/quizexample.jpg" alt="Example Quiz Question">
+                        </div>
+                    <center>
                 </div>
                 <div class="quiz-wrapper d-flex justify-content-center align-items-center">
                     <div class="quiz-container" hidden>
                         {% for flashcard in flashcards %}
                             <div class="questionquiz" id="questionquiz{{loop.index}}">
-                            <div class="question-number">Question {{loop.index}}</div>
+                            <div class="question-number" style="font-size: 24px;">Question {{loop.index}}</div>
                             <div class="video-question">
                                 <iframe width="80%" height="80%" src="{{flashcard['videolink']}}" frameborder="0" allowfullscreen> </iframe>
                             </div>
@@ -399,6 +454,8 @@
                 $('label[for="questionCount"]').hide();
                 $('#questionCount').hide();
                 $('#questionCountOutput').hide();
+                $('.image-container').hide();
+                $('#instructions').hide();
 
                 $('.quiz-container').show();
                 $('#submitQuizBtn').removeAttr('hidden');

@@ -126,11 +126,23 @@ ol li {
 
 }
 
+.topmargindude {
+    margin-bottom: 0px !important;
+}
+
 .font-size-dropdown {
     font-size: 2px !important;
 }
 
 
+.expansionmargin {
+    margin-top: 11.5px !important;
+    margin-left: 3px !important;
+}
+
+.automargin {
+    margin-left:auto !important;
+}
 
 
 

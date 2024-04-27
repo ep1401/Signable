@@ -154,6 +154,7 @@
     .card-counter {
         text-align: center;
         margin-top: 20px;
+        max-width: 20px !important;
     }
 
     .carousel .carousel-item {
@@ -351,6 +352,14 @@
                         <span class="text text-black">  Home </span>
                     </a> 
                 </li> 
+
+                <li class="nav-item mb-1"> 
+                    <a href="/admin"> 
+                        <i class="fas fa-user-cog text-black"></i>
+                        <span class="text text-black"> Admin </span>
+                    </a> 
+                </li> 
+  
                 
   
                 <li class="nav-item mb-1"> 
@@ -382,34 +391,6 @@
                     </a> 
                 </li> 
   
-                <li class="sidebar-item  nav-item mb-1"> 
-                    <a href="#" 
-                       class="sidebar-link collapsed" 
-                       data-bs-toggle="collapse"
-                       data-bs-target="#settings"
-                       aria-expanded="false"
-                       aria-controls="settings"> 
-                        <i class="fas fa-cog pe-2 text-black"></i> 
-                        <span class="topic text text-black">Settings </span> 
-                    </a> 
-                    <ul id="settings" 
-                        class="sidebar-dropdown list-unstyled collapse" 
-                        data-bs-parent="#sidebar"> 
-                        <li class="sidebar-item"> 
-                            <a href="/logoutapp" class="sidebar-link"> 
-                                <i class="fas fa-sign-out-alt pe-2" style="color: #6c757d;"></i>
-                                <span class="topic" style="color: #6c757d;" >Log Out</span> 
-                            </a> 
-                        </li> 
-                        <li class="sidebar-item"> 
-                            <a href="/admin" class="sidebar-link" id="adminButton"> 
-                                <i class="fas fa-user-cog" style="color: #6c757d;"></i>
-                                <span class="topic" style="color: #6c757d;">Admin</span> 
-                            </a>
-                        </li>
-                        
-                    </ul> 
-                </li> 
             </ul> 
             <hr> 
             <div class="d-flex"> 
@@ -421,16 +402,17 @@
                 <a id="mobileshow" href="#" class="text-white" 
                    data-bs-toggle="offcanvas"
                    data-bs-target="#bdSidebar"> 
-                    <i class="fa-solid fa-bars text-black mt-3"></i> 
+                    <i class="fa-solid fa-bars text-black expansionmargin"></i> 
                 </a> 
-                <span class="ms-3 mt-2 text-black d-inline float-left">Signable</span> 
+                <span class="ms-3 mt-2 text-black d-inline">Signable</span> 
                 <div class="btn-group d-inline ml-auto font-size-dropdown   text-dark">
                     <button type="button" class="btn  dropdown-toggle dropdownstyles" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-user "></i>
-                        <span class=""> {{username}}  </span>
+                        
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end 	">
-                        <a class="dropdown-item" href="/logoutapp">Log out</a>
+                        <span class="dropdown-item"> <i class="fa fa-user "> </i> {{username}}  </span>
+                        <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
                     </ul>
                   </div>
             </div> 
@@ -456,11 +438,15 @@
                     <div class="btn-group d-inline-block float-right font-size-dropdown   text-dark">
                         <button type="button" class="btn  dropdown-toggle dropdownstyles d-none d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-user "></i>
-                            <span class=""> {{username}}  </span>
+                            <span class="d-none d-lg-inline"> {{username}}  </span>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end 	">
-                            <a class="dropdown-item" href="/logoutapp">Log out</a>
+                        <span class="d-none d-md-block">
+                        <ul class="dropdown-menu dropdown-menu-end ">
+                            <span class="dropdown-item d-lg-none"> <i class="fa fa-user "> </i> {{username}}  </span>
+                            <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
+                            
                         </ul>
+                    </span>
                       </div>
                     
                  
@@ -520,12 +506,14 @@
                             </div>
                             <div class="text-center mt">
                                 
-                                
                                 <div class="option-wrapper">
                                     <button class="option shuffle btn btn-lg btn-light rounded-circle mr-3" onclick="shuffleCards()">
                                         <i class="fa-solid fa-random"></i>
                                         <span class="tooltip-text">Shuffle</span>
                                     </button>
+                                </div>
+
+                                <div id="card-counter" class="text-center mt-0 mr-5 ml-5" style="display: inline">
                                 </div>
                                 
                                 <div class="option-wrapper">
@@ -539,8 +527,9 @@
 
                             </div>
                             <br>
-                            <div id="card-counter" class="text-center mt-3"></div>
+                            
                             <div class = "row ">
+                                
                                 <div class="col-sm-12 set-font ">
                                         <br>
                                         
@@ -721,7 +710,9 @@ function shuffleArray(array) {
 }
 
 function updateCardCounter() {
-    document.getElementById('card-counter').textContent = currentCard + '/' + totalCards;
+    var counterContainer = document.getElementById('card-counter');
+    counterContainer.textContent = currentCard + '/' + totalCards;
+    counterContainer.style.fontSize = '25px';
 }
 
 $(document).ready(function(){

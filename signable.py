@@ -216,6 +216,10 @@ def add_card():
     return flask.redirect('/admin')
 
 
+
+
+
+
 @app.route('/searchterm', methods=['GET'])
 def searchterm():
     username = auth.authenticate()
@@ -571,7 +575,7 @@ def quiz():
 
     if query_result[0] is True:
         flashcards = query_result[1]
-        html_code = flask.render_template('quiz.html', course = course, lesson_num = lessonid, 
+        html_code = flask.render_template('quiz.html', course = course, lesson_num = lessonid, username=username,
             flashcards = flashcards, admin = admin)
     else: 
         return flask.redirect(flask.url_for('error', error=query_result[1]))

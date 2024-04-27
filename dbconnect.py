@@ -590,11 +590,11 @@ def update_flashcard(card_id, translation, memorytip, speech, sentence):
                 cursor.execute("DEALLOCATE update_flashcards")
 
             # Prepare the new statement
-            cursor.execute("PREPARE update_flashcards (TEXT, TEXT, TEXT, TEXT, INT) AS "
-                        "UPDATE flashcards SET translation = $1, memorytip = $2, speech = $3, sentence = $4 WHERE cardid = $5")
+            cursor.execute("PREPARE update_flashcards (TEXT, TEXT, TEXT, INT) AS "
+                        "UPDATE flashcards SET memorytip = $1, speech = $2, sentence = $3 WHERE cardid = $4")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE update_flashcards (%s, %s, %s, %s, %s)", (translation, memorytip, speech, sentence, card_id))
+            cursor.execute("EXECUTE update_flashcards (%s, %s, %s, %s)", ( memorytip, speech, sentence, card_id))
             connection.commit()
 
             return True, "Flashcard updated successfully."
