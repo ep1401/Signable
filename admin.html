@@ -790,7 +790,15 @@
                 contentType: 'application/json',
                 data: JSON.stringify(currentdata),
                 success: function(response) {
-                    alert("Updated successfully");
+                    if (response.messages && response.messages.length > 0) {
+                        if (response.deleted) {
+                            alert("Some cards have been deleted: " + response.messages.join(", "));
+                        } else {
+                            alert("Updated successfully");
+                        }
+                    } else {
+                        alert("Updated successfully");
+                    }
                     var cells = document.querySelectorAll('.edited-cell');
                     cells.forEach(function(cell, index) {
                         $(cell).removeClass('edited-cell');

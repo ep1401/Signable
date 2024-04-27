@@ -496,6 +496,52 @@ def get_lessonlength(course):
     
     return return_list
 
+def contains_flashcard(cardid):
+    connection = _get_connection()
+
+
+    try: 
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'select_flashcard'")
+            exists = cursor.fetchone()
+
+            if exists:
+                # Deallocate the existing prepared statement
+                cursor.execute("DEALLOCATE select_flashcard")
+
+            # Prepare the new statement
+            cursor.execute("PREPARE select_flashcard (INT) AS "
+                        "SELECT cardid FROM flashcards WHERE cardid = $1")
+            
+            # Execute the prepared statement
+            cursor.execute("EXECUTE select_flashcard (%s)", [cardid])
+            table = cursor.fetchall()
+
+            return_list = []
+            return_list.append(True)
+            
+            lesson_list = []
+            for row in table:
+                
+                flashcard = {"lessonid": row[0]}
+
+                lesson_list.append(flashcard)
+
+           
+            return_list.append(lesson_list)
+
+    except Exception as ex:
+            return_list = []
+            return_list.append(False)
+            return_list.append("A server error occurred. Please contact the system administrator.")
+            connection.rollback()
+            print(sys.argv[0] + ":", ex, file=sys.stderr)
+
+    finally:
+            _put_connection(connection)
+    
+    return return_list
+
 def add_lesson(course, lesson):
     connection = _get_connection()
 

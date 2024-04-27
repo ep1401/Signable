@@ -666,27 +666,39 @@ def save_changes():
     data = request.get_json()
     success_messages = []
     error_messages = []
+    deleted_messages = []
 
     
 
     for item in data:
         card_id = escape(item['cardid'])  
         translation = escape(item['translation'])  
-        memorytip = escape(item['memorytip']) 
-        speech = escape(item['speech'])  
-        sentence = escape(item['sentence'])
-        
-        success, message = dbconnect.update_flashcard(card_id, translation, memorytip, speech, sentence)
-        
-        if success:
-            success_messages.append(message)
+        contains_card = dbconnect.contains_flashcard(card_id)
+        if contains_card[0] is False:
+         return flask.redirect(flask.url_for('error', error=contains_card[1]))
+
+        if len(contains_card[1]) == 0:
+            deleted_messages.append("\nUnable to save " + translation)
         else:
-            error_messages.append(message)
+            
+            memorytip = escape(item['memorytip']) 
+            speech = escape(item['speech'])  
+            sentence = escape(item['sentence'])
+            
+            success, message = dbconnect.update_flashcard(card_id, translation, memorytip, speech, sentence)
+            
+            if success:
+                success_messages.append(message)
+            else:
+                error_messages.append(message)
 
     if error_messages:
         return flask.jsonify({'success': False, 'errors': error_messages}), 500
+    elif deleted_messages:
+        return flask.jsonify({'success': True, 'messages': deleted_messages, 'deleted': True})
     else:
-        return flask.jsonify({'success': True, 'messages': success_messages})
+        return flask.jsonify({'success': True, 'messages': success_messages, 'deleted': False})
+
     
 
 @app.route("/checkchanges/<int:course_id>/<int:lesson_number>", methods=["PUT"])
