@@ -133,6 +133,8 @@ def courses():
     return response
 
 
+
+
 @app.route('/admin', methods=['GET'])
 def admin():
     username = auth.authenticate()
@@ -665,6 +667,8 @@ def save_changes():
     success_messages = []
     error_messages = []
 
+    
+
     for item in data:
         card_id = escape(item['cardid'])  
         translation = escape(item['translation'])  
@@ -683,6 +687,20 @@ def save_changes():
         return flask.jsonify({'success': False, 'errors': error_messages}), 500
     else:
         return flask.jsonify({'success': True, 'messages': success_messages})
+    
+
+@app.route("/checkchanges/<int:course_id>/<int:lesson_number>", methods=["PUT"])
+def checkchanges(course_id, lesson_number):
+    data = request.get_json()    
+
+    terms = dbconnect.get_lessonterms('', lesson_number, course_id)
+
+    for item in data:
+        if (item not in terms[1]):
+            return flask.jsonify({"success": False, "message": "Another administrator has changed the lesson you are editing. Are you sure you want to override their changes?"})
+        
+    return flask.jsonify({"success": True, "message": "No changes detected"})    
+    
 
 @app.route('/deleteflashcard', methods=['POST'])
 def deleteflashcard():
@@ -706,6 +724,9 @@ def fetch_lesson_terms(course_id, lesson_number):
         return flask.redirect(flask.url_for('error', error=terms[1]))
 
     return flask.jsonify(terms[1])
+
+
+
 
 @app.route('/delete-lesson', methods=['POST'])
 def delete_lesson_route():
@@ -732,6 +753,8 @@ def getquestions():
             return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
             + " administrator to resolve the issue"))
         
+    
+
 
 
 @app.route('/learningcenter', methods=['GET'])
