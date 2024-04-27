@@ -361,7 +361,7 @@
                                                 <table class="table">
                                                     <h2 id="table-title" class="text-center pt-5 pb-3"></h2>
                                                     <div id="edit-message" style="display: none;">
-                                                        <h3>Select cells to edit, changes are automatically saved</h3>
+                                                        <h3>Select cells to edit, remember to save your changes</h3>
                                                     </div>
                                                     <thead class="hidden">
                                                         <tr>
@@ -542,7 +542,7 @@
             var cells = document.querySelectorAll('.edited-cell');
             console.log(cells.length)
             if (cells.length > 0) {
-                return "Are you sure you want to leave?";
+                return "Are you sure you want to leave? Data within Edit/Delete tables are not saved";
             }
   
   
@@ -723,58 +723,87 @@
     });
 
 
-    $(document).ready(function() 
-    {
-        
-
+    $(document).ready(function() {
+        function fetchData(courseId, lessonNumber) {
+            $.ajax({
+                url: `/fetch-lesson-terms/${courseId}/${lessonNumber}`,
+                method: 'GET',
+                success: function(terms) {
+                    initialstate = terms;
+                    var courseName = $('#aslcourse option:selected').text(); 
+                    $('#table-title').text(`ASL${courseId} Lesson ${lessonNumber}`); 
+                    generateTable(terms);
+                    $('thead').removeClass('hidden');
+                    $('#edit-message').show();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data: ' + error);
+                }
+            });
+        }
+    
+        function generateTable(terms) {
+            var tableBodyHTML = '';
+            terms.forEach(function(term) {
+                tableBodyHTML += `
+                    <tr>
+                        <td contenteditable="false">${term.translation}</td>
+                        <td hidden>${term.cardid}</td>
+                        <td contenteditable="true">${term.memorytip}</td>
+                        <td contenteditable="true">${term.speech}</td>
+                        <td contenteditable="true">${term.sentence}</td>
+                        <td><button class="btn btn-danger remove-btn" data-cardid="${term.cardid}">Remove</button></td>
+                    </tr>`;
+            });
+            $('#table-body').html(tableBodyHTML);
+        }
+    
         function noautosavechanges() {
             var csrf_token = "{{ csrf_token() }}";
             $.ajaxSetup({
-             beforeSend: function(xhr, settings) {
-                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                        }
-             }})
+                beforeSend: function(xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    }
+                }
+            });
+    
             var currentdata = [];
             $('#table-body tr').each(function() {
-                var cardid = $(this).find('td:eq(1)').text(); 
-                var translation = $(this).find('td:eq(0)').text(); 
-                var memorytip = $(this).find('td:eq(2)').text(); 
-                var speech = $(this).find('td:eq(3)').text(); 
-                var sentence = $(this).find('td:eq(4)').text(); 
-                currentdata.push({ cardid: cardid, translation: translation, memorytip: memorytip, speech: speech, sentence: sentence });
+                var cardid = $(this).find('td:eq(1)').text();
+                var translation = $(this).find('td:eq(0)').text();
+                var memorytip = $(this).find('td:eq(2)').text();
+                var speech = $(this).find('td:eq(3)').text();
+                var sentence = $(this).find('td:eq(4)').text();
+                currentdata.push({
+                    cardid: cardid,
+                    translation: translation,
+                    memorytip: memorytip,
+                    speech: speech,
+                    sentence: sentence
+                });
             });
-             $.ajax({
+    
+            $.ajax({
                 type: 'POST',
                 url: '/savechanges',
                 contentType: 'application/json',
                 data: JSON.stringify(currentdata),
                 success: function(response) {
-                    alert("updated successfully")
+                    alert("Updated successfully");
                     var cells = document.querySelectorAll('.edited-cell');
-                    cells.forEach(function(cells, index) { 
-                $(cells).removeClass('edited-cell')
-            
-                })
-                    $.ajax({
-                    url: `/fetch-lesson-terms/${courseidglobal}/${lessonidglobal}`,
-                    method: 'GET',
-                    success: function(request) {
-                        initialstate = request
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching data: ' + error);
-                    }
-                });
-                    
-            
+                    cells.forEach(function(cell, index) {
+                        $(cell).removeClass('edited-cell');
+                    });
+                    // Reload the table after saving changes
+                    fetchData(courseidglobal, lessonidglobal);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error saving changes: ' + error);
                 }
             });
-
         }
+    
 
         $("#change-lesson").click(function() {
             var csrf_token = "{{ csrf_token() }}";

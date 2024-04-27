@@ -718,12 +718,13 @@ def deleteflashcard():
     
 @app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>')
 def fetch_lesson_terms(course_id, lesson_number):
-
     terms = dbconnect.get_lessonterms('', lesson_number, course_id)
     if terms[0] is False:
         return flask.redirect(flask.url_for('error', error=terms[1]))
 
-    return flask.jsonify(terms[1])
+    sorted_terms = sorted(terms[1], key=lambda x: x['translation']) 
+
+    return flask.jsonify(sorted_terms)
 
 
 
