@@ -423,7 +423,16 @@
                    data-bs-target="#bdSidebar"> 
                     <i class="fa-solid fa-bars text-black"></i> 
                 </a> 
-                <span class="ms-3 text-black">Signable</span> 
+                <span class="ms-3 text-black d-inline float-left">Signable</span> 
+                <div class="btn-group d-inline moveright font-size-dropdown   text-dark">
+                    <button type="button" class="btn  dropdown-toggle dropdownstyles" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user "></i>
+                        <span class=""> {{username}}  </span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end 	">
+                        <a class="dropdown-item" href="/logoutapp">Log out</a>
+                    </ul>
+                  </div>
             </div> 
             <div class="p-3"> 
         
@@ -445,9 +454,9 @@
 
                       
                     <div class="btn-group d-inline-block float-right font-size-dropdown   text-dark">
-                        <button type="button" class="btn  dropdown-toggle dropdownstyles  " data-bs-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn  dropdown-toggle dropdownstyles d-none d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-user "></i>
-                            <span class="d-none d-lg-inline"> {{username}}  </span>
+                            <span class=""> {{username}}  </span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end 	">
                             <a class="dropdown-item" href="/logoutapp">Log out</a>

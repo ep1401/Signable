@@ -22,6 +22,77 @@
         crossorigin="anonymous" 
         referrerpolicy="no-referrer" /> 
 </head> 
+
+<style>
+
+    
+    .glow-on-hover {
+        width: 20%;
+        border: none;
+        outline: none;
+        color: #333;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        border: .1vw solid #ccc;
+
+        padding: 10% 20%;
+        font-size: 24px;
+        margin: 20px; 
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        text-align: center;
+    }
+    
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #26bac2, #b24dc2);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 10px;
+    }
+    
+    .glow-on-hover:active {
+        color: #333
+    }
+    
+    .glow-on-hover:active:after {
+        background: transparent;
+    }
+    
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+    
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+    
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
+</style>
   
 <body> 
   
@@ -153,10 +224,10 @@
                 <br>
                 <div class="container">
                     <form method="GET" action="/selectlessons" class="custom-btn-wrapper">
-                        <button type="submit" class="btn btn-primary custom-btn" name="course" value="101">ASL101</button>
-                        <button type="submit" class="btn btn-primary custom-btn" name="course" value="102">ASL102</button>
-                        <button type="submit" class="btn btn-primary custom-btn" name="course" value="105">ASL105</button>
-                        <button type="submit" class="btn btn-primary custom-btn" name="course" value="107">ASL107</button>
+                        <button type="submit" class="glow-on-hover" name="course" value="101">ASL101</button>
+                        <button type="submit" class="glow-on-hover" name="course" value="102">ASL102</button>
+                        <button type="submit" class="glow-on-hover" name="course" value="105">ASL105</button>
+                        <button type="submit" class="glow-on-hover" name="course" value="107">ASL107</button>
                     </form>
                 </div>
             </div> 
