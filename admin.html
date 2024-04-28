@@ -385,12 +385,9 @@
                                                     </tbody>
                                               
                                                 </table>
-                                                <div class="text-center">
-                                                    <button id="delete-lesson" class="btn btn-danger" style="display: none;">Delete Entire Lesson</button>
-                                                </div>
-
-                                                <div class="text-center">
-                                                    <button id="change-lesson" class="btn btn-danger" style="display: none;">Save Flashcard Changes</button>
+                                                <div class="text-center" id="button-container" style="display: none;">
+                                                    <button id="delete-lesson" class="btn btn-danger">Delete Entire Lesson</button>
+                                                    <button id="change-lesson" class="btn btn-danger">Save Flashcard Changes</button>
                                                 </div>
                                             </div>
                                          
@@ -539,8 +536,7 @@
                 var lessonNumber = $(this).data('lesson');
                 lessonidglobal = lessonNumber
                 fetchData(courseId, lessonNumber);
-                $('#delete-lesson').show();
-                $('#change-lesson').show()
+                $('#button-container').show();
             });
        
         
