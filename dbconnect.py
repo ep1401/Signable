@@ -616,21 +616,23 @@ def delete_flashcard(card_id):
 
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'delete_flashcard_by_cardid'")
-            exists = cursor.fetchone()
+            # Prepare the statement to delete flashcards
+            cursor.execute("PREPARE delete_flashcards_by_cardid (INT) AS "
+                           "DELETE FROM flashcards WHERE cardid = $1")
+            # Execute the prepared statement to delete flashcards
+            cursor.execute("EXECUTE delete_flashcards_by_cardid (%s)", (card_id,))
+            # Deallocate the prepared statement
+            cursor.execute("DEALLOCATE delete_flashcards_by_cardid")
 
-            if exists:
-                # Deallocate the existing prepared statement
-                cursor.execute("DEALLOCATE delete_flashcard_by_cardid")
+            # Prepare the statement to delete class data associated with the lesson
+            cursor.execute("PREPARE delete_classes_by_cardid (INT) AS "
+                           "DELETE FROM starredflashcards WHERE cardid = $1")
+            # Execute the prepared statement to delete class data
+            cursor.execute("EXECUTE delete_classes_by_cardid (%s)", (card_id,))
+            # Deallocate the prepared statement
+            cursor.execute("DEALLOCATE delete_classes_by_cardid")
 
-            # Prepare the new statement
-            cursor.execute("PREPARE delete_flashcard_by_cardid (INT) AS "
-                        "DELETE FROM flashcards WHERE cardid = $1")
-            
-            # Execute the prepared statement
-            cursor.execute("EXECUTE delete_flashcard_by_cardid (%s)", (card_id,))
             connection.commit()
-
             return True, "Flashcard deleted successfully."
 
     except Exception as ex:
@@ -658,6 +660,13 @@ def delete_lesson(lesson_id, course_id):
             # Prepare the statement to delete class data associated with the lesson
             cursor.execute("PREPARE delete_classes_by_lessonid (INT, INT) AS "
                            "DELETE FROM classes WHERE lessonid = $1 AND courseid = $2")
+            # Execute the prepared statement to delete class data
+            cursor.execute("EXECUTE delete_classes_by_lessonid (%s, %s)", (lesson_id, course_id))
+            # Deallocate the prepared statement
+            cursor.execute("DEALLOCATE delete_classes_by_lessonid")
+            
+            cursor.execute("PREPARE delete_classes_by_lessonid (INT, INT) AS "
+                           "DELETE FROM starredflashcards WHERE lessonid = $1 AND courseid = $2")
             # Execute the prepared statement to delete class data
             cursor.execute("EXECUTE delete_classes_by_lessonid (%s, %s)", (lesson_id, course_id))
             # Deallocate the prepared statement

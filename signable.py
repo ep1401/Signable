@@ -638,7 +638,6 @@ def review():
         if len(flashcards) != 0:
             empty=[1]
         
-        print(flashcards)
         html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin, empty=empty, username=username)
         response = flask.make_response(html_code)
     else:
