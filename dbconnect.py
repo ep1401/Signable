@@ -640,24 +640,24 @@ def delete_flashcard(card_id):
     finally:
         _put_connection(connection)
         
-def delete_lesson(lesson_id):
+def delete_lesson(lesson_id, course_id):
     connection = _get_connection()
 
     try:
         with connection.cursor() as cursor:
             # Prepare the statement to delete flashcards associated with the lesson
-            cursor.execute("PREPARE delete_flashcards_by_lessonid (INT) AS "
-                           "DELETE FROM flashcards WHERE lessonid = $1")
+            cursor.execute("PREPARE delete_flashcards_by_lessonid (INT, INT) AS "
+                           "DELETE FROM flashcards WHERE lessonid = $1 AND courseid = $2")
             # Execute the prepared statement to delete flashcards
-            cursor.execute("EXECUTE delete_flashcards_by_lessonid (%s)", (lesson_id,))
+            cursor.execute("EXECUTE delete_flashcards_by_lessonid (%s, %s)", (lesson_id, course_id))
             # Deallocate the prepared statement
             cursor.execute("DEALLOCATE delete_flashcards_by_lessonid")
 
             # Prepare the statement to delete class data associated with the lesson
-            cursor.execute("PREPARE delete_classes_by_lessonid (INT) AS "
-                           "DELETE FROM classes WHERE lessonid = $1")
+            cursor.execute("PREPARE delete_classes_by_lessonid (INT, INT) AS "
+                           "DELETE FROM classes WHERE lessonid = $1 AND courseid = $2")
             # Execute the prepared statement to delete class data
-            cursor.execute("EXECUTE delete_classes_by_lessonid (%s)", (lesson_id,))
+            cursor.execute("EXECUTE delete_classes_by_lessonid (%s, %s)", (lesson_id, course_id))
             # Deallocate the prepared statement
             cursor.execute("DEALLOCATE delete_classes_by_lessonid")
 

@@ -713,7 +713,7 @@
                     $.ajax({
                         type: 'POST',
                         url: '/delete-lesson',
-                        data: JSON.stringify({lessonNumber: lessonNumber }),
+                        data: JSON.stringify({ courseId: courseId, lessonNumber: lessonNumber }),
                         contentType: 'application/json',
                         success: function(response) {
                             location.reload(); 

@@ -748,10 +748,9 @@ def fetch_lesson_terms(course_id, lesson_number):
 @app.route('/delete-lesson', methods=['POST'])
 def delete_lesson_route():
     lesson_id = escape(request.json.get('lessonNumber'))
+    course_id = escape(request.json.get('courseId'))
     
-    print(lesson_id)
-
-    success, message = dbconnect.delete_lesson(int(lesson_id))
+    success, message = dbconnect.delete_lesson(int(lesson_id), int(course_id))
 
     if success:
         return flask.jsonify({'success': True, 'message': message}), 200
