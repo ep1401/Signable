@@ -182,12 +182,12 @@
                     </a> 
                 </li> 
 
-                <li class="nav-item mb-1"> 
-                    <a href="/admin"> 
-                        <i class="fas fa-user-cog text-black"></i>
-                        <span class="text text-black"> Admin </span>
-                    </a> 
-                </li> 
+                <li class="nav-item mb-1" id="adminButton"> 
+                  <a href="/admin"> 
+                      <i class="fas fa-user-cog text-black"></i>
+                      <span class="text text-black"> Admin </span>
+                  </a> 
+                </li>
   
                 
   
@@ -358,16 +358,16 @@
         </div> 
     </div> 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var adminValue = "{{ admin }}"; 
-            var adminButton = document.getElementById("adminButton");
-        
-            if (adminValue === "true") {
-                adminButton.style.visibility = "visible";
-            } else {
-                adminButton.style.visibility = "hidden"; 
-            }
-        });
+      document.addEventListener("DOMContentLoaded", function() {
+        var adminValue = "{{ admin }}";  // Make sure this value is properly passed from the server
+        var adminButton = document.getElementById("adminButton");
+    
+        if (adminValue !== "true") {  // Only show if adminValue is "true"
+            adminButton.style.display = "none";  // Use 'display' instead of 'visibility' for removing space
+        } else {
+            adminButton.style.display = "block"; // Ensure it's visible if admin
+        }
+      });
         
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
