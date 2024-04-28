@@ -129,8 +129,8 @@
                                 <span class="topic" style="color: #6c757d;" >Log Out</span> 
                             </a> 
                         </li> 
-                        <li class="sidebar-item"> 
-                            <a href="/admin" class="sidebar-link" id="adminButton"> 
+                        <li class="sidebar-item nav-item mb-1" id="adminButton"> 
+                            <a href="/admin" class="sidebar-link"> 
                                 <i class="fas fa-user-cog" style="color: #6c757d;"></i>
                                 <span class="topic" style="color: #6c757d;">Admin</span> 
                             </a>
@@ -187,13 +187,13 @@
     </div> 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var adminValue = "{{ admin }}"; 
-            var adminButton = document.getElementById("adminButton"); 
-    
+            var adminValue = "{{ admin }}"; // Ensure this variable is set to "true" or "false" string on the server-side
+            var adminButton = document.getElementById("adminButton");
+        
             if (adminValue === "true") {
-                adminButton.style.visibility = "visible";
+                adminButton.style.display = "block"; // Show the button
             } else {
-                adminButton.style.visibility = "hidden"; 
+                adminButton.style.display = "none"; // Hide the button
             }
         });
     </script>

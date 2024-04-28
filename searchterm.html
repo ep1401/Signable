@@ -60,12 +60,12 @@
                     </a> 
                 </li> 
 
-                <li class="nav-item mb-1"> 
-                    <a href="/admin"> 
+                <li class="nav-item mb-1" id="adminButton">
+                    <a href="/admin">
                         <i class="fas fa-user-cog text-black"></i>
                         <span class="text text-black"> Admin </span>
-                    </a> 
-                </li> 
+                    </a>
+                </li>
   
                 
   
@@ -197,13 +197,13 @@
     </div> 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var adminValue = "{{ admin }}"; 
-            var adminButton = document.getElementById("adminButton"); 
+            var adminValue = "{{ admin }}"; // This will render as 'true' or 'false' based on server-side logic
+            var adminButton = document.getElementById("adminButton");
     
-            if (adminValue === "true") {
-                adminButton.style.visibility = "visible";
+            if (adminValue !== "true") {
+                adminButton.style.display = "none"; 
             } else {
-                adminButton.style.visibility = "hidden"; 
+                adminButton.style.display = "block"; 
             }
         });
     </script>
