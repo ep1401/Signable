@@ -637,6 +637,8 @@ def review():
         empty = []
         if len(flashcards) != 0:
             empty=[1]
+        
+        print(flashcards)
         html_code = flask.render_template('reviewstack.html', flashcards = flashcards, admin = admin, empty=empty, username=username)
         response = flask.make_response(html_code)
     else:
@@ -659,7 +661,11 @@ def delstarflashcard():
 def starflashcard(): 
      username = auth.authenticate()
      cardid =  escape(request.get_json()["cardid"])
-     result = dbconnect.add_starred_card(username, cardid)
+     lessonid =  escape(request.get_json()["lessonid"])
+     courseid =  escape(request.get_json()["courseid"])
+     
+     print(courseid)
+     result = dbconnect.add_starred_card(username, cardid, int(courseid), int(lessonid))
      if result[0] is False:
          return flask.redirect(flask.url_for('error', error=result[1]))
      return result[1]

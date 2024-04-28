@@ -779,6 +779,8 @@ function playStream(stream) {
         $('.star-button').on('click', function(){
         var card = $(this).closest('.flashcard');
         let cardid = card.attr("id")
+        let lessonid = "{{ lesson_num }}";
+        let courseid = "{{ course }}";
         var frontStar = card.find('.front .star-button');
         var backStar = card.find('.back .star-button');
         
@@ -800,7 +802,7 @@ function playStream(stream) {
             $.ajax({
             url: "/addstarredflashcard",
             type: 'PUT',    
-            data: JSON.stringify({"cardid": cardid}),
+            data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
             contentType: "application/JSON",
             error: function(data) {
                 alert(data);

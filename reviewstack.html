@@ -437,7 +437,8 @@
                                                 <div class="col-sm-1"><div class="img-space"><img class="img-fluid" alt=""></div></div>
                                                 <div class="col-sm-10">
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
-                                                    speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
+                                                    speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}" lessonid="{{ flashcard['lessonid'] }}" 
+                                                    courseid="{{ flashcard['courseid'] }}">
                                                         <div class="front">
                                                             <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Add to Review Stack">
                                                                 <i class="fa-solid fa-star"></i>
@@ -655,6 +656,8 @@
                 event.stopPropagation();
                 var card = $(this).closest('.flashcard');
                 let cardid = card.attr("id")
+                let lessonid = card.attr("lessonid");
+                let courseid = card.attr("courseid");
                 var frontStar = card.find('.front .star-button');
                 var backStar = card.find('.back .star-button');
             
@@ -677,7 +680,7 @@
                     $.ajax({
                         url: "/addstarredflashcard",
                         type: 'PUT',    
-                        data: JSON.stringify({"cardid": cardid}),
+                        data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
                         contentType: "application/JSON",
                         error: function(data) {
                             alert(data);

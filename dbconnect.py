@@ -45,7 +45,7 @@ def get_flashcards(username, courseid, lessonid):
 
             # Prepare the new statement
             cursor.execute("PREPARE select_flashcards (INT, INT) AS "
-                        "SELECT cardid, videolink, translation, memorytip, speech, sentence "
+                        "SELECT cardid, videolink, translation, memorytip, speech, sentence, courseid, lessonid "
                         "FROM flashcards WHERE courseid = $1 AND lessonid = $2")
             
             # Execute the prepared statement
@@ -61,7 +61,8 @@ def get_flashcards(username, courseid, lessonid):
             for row in table:
                 
                 flashcard = {"cardid": row[0], "videolink": row[1], "translation": row[2],
-                             "memorytip": row[3], "speech": row[4], "sentence": row[5]}
+             "memorytip": row[3], "speech": row[4], "sentence": row[5], "courseid": row[6],
+                            "lessonid": row[7]}
                 flashcard["starred-class"] = "active"
                 if (flashcard in starred_flashcards[1]):
                    
@@ -317,7 +318,7 @@ def get_starred_cards(netid):
 
             # Prepare the new statement
             cursor.execute("PREPARE select_starred_flashcards_by_netid (TEXT) AS "
-                        "SELECT flashcards.cardid, videolink, translation, memorytip, speech, sentence "
+                        "SELECT flashcards.cardid, videolink, translation, memorytip, speech, sentence, flashcards.courseid, flashcards.lessonid "
                         "FROM flashcards, starredflashcards "
                         "WHERE netid = $1 AND starredflashcards.cardid = flashcards.cardid")
             
@@ -331,7 +332,8 @@ def get_starred_cards(netid):
             flashcard_list = []
             for row in table:
                 flashcard = {"cardid": row[0], "videolink": row[1], "translation": row[2],
-                             "memorytip": row[3], "speech": row[4], "sentence": row[5]}
+                             "memorytip": row[3], "speech": row[4], "sentence": row[5], "courseid": row[6],
+                            "lessonid": row[7]}
                 flashcard["starred-class"] = "active"
                 flashcard_list.append(flashcard)
             return_list.append(flashcard_list)
@@ -348,7 +350,7 @@ def get_starred_cards(netid):
     
     return return_list
 
-def add_starred_card(netid, cardid):
+def add_starred_card(netid, cardid, courseid, lessonid):
     connection = _get_connection()
 
     try: 
@@ -361,11 +363,11 @@ def add_starred_card(netid, cardid):
                 cursor.execute("DEALLOCATE insert_starred_flashcard")
 
             # Prepare the new statement
-            cursor.execute("PREPARE insert_starred_flashcard (TEXT, INT) AS "
-                        "INSERT INTO starredflashcards (netid, cardid) VALUES ($1, $2)")
+            cursor.execute("PREPARE insert_starred_flashcard (TEXT, INT, INT, INT) AS "
+                        "INSERT INTO starredflashcards (netid, cardid, courseid, lessonid) VALUES ($1, $2, $3, $4)")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE insert_starred_flashcard (%s, %s)", [netid, cardid])
+            cursor.execute("EXECUTE insert_starred_flashcard (%s, %s, %s, %s)", [netid, cardid, courseid, lessonid])
             connection.commit()
             
             return True, "Flashcard starred"
