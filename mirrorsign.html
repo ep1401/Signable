@@ -363,6 +363,13 @@
                     </a> 
                 </li> 
 
+                <li class="nav-item mb-1" id="adminButton"> 
+                    <a href="/admin"> 
+                        <i class="fas fa-user-cog text-black"></i>
+                        <span class="text text-black"> Admin </span>
+                    </a> 
+                  </li>
+
                 
                 
   
@@ -567,15 +574,15 @@
           src="{{ url_for('static', filename='sidebar/sidebar.js') }}">  </script>
           <script>
             document.addEventListener("DOMContentLoaded", function() {
-                var adminValue = "{{ admin }}"; 
-                var adminButton = document.getElementById("adminButton"); 
-        
-                if (adminValue === "true") {
-                    adminButton.style.visibility = "visible";
+                var adminValue = "{{ admin }}";  // Make sure this value is properly passed from the server
+                var adminButton = document.getElementById("adminButton");
+            
+                if (adminValue !== "true") {  // Only show if adminValue is "true"
+                    adminButton.style.display = "none";  // Use 'display' instead of 'visibility' for removing space
                 } else {
-                    adminButton.style.visibility = "hidden"; 
+                    adminButton.style.display = "block"; // Ensure it's visible if admin
                 }
-            });
+              });
             'use strict';
 
             /* globals MediaRecorder */
