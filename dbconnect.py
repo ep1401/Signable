@@ -753,19 +753,19 @@ def get_quiz_questions(courseid, lessonid):
                  temp = random.choice(allowed_values)
                  allowed_values.remove(temp)
                  options.append([temp, "incorrect"])
-                 print(temp)
+              
 
 
                   # set third option
                  temp = random.choice(allowed_values)
                  allowed_values.remove(temp)
                  options.append([temp, "incorrect"])
-                 print(temp)   
+            
                  # set fourth option
                  temp = random.choice(allowed_values)
                  allowed_values.remove(temp)
                  options.append([temp, "incorrect"])
-                 print(temp)
+             
 
                  random.shuffle(options)
 

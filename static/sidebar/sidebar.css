@@ -69,6 +69,7 @@ html, body {
 #hide {
     display: flex;
     margin-left:auto;
+    padding-left: 2px;
     padding-bottom: 0px;
 }
 
