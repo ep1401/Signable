@@ -192,7 +192,7 @@ def get_user(netid):
 
             # Prepare the new statement
             cursor.execute("PREPARE select_student_user_by_netid (TEXT) AS "
-                        "SELECT netid, firstname, lastname "
+                        "SELECT netid "
                         "FROM studentusers WHERE netid = $1")
             
             # Execute the prepared statement
@@ -207,8 +207,7 @@ def get_user(netid):
             else:
                 return_list.append(True)
                 row = table[0]
-                user = {"netid": row[0], "firstname": row[1],
-                             "lastname": row[2] }
+                user = {"netid": row[0] }
                 return_list.append(user)
 
 
@@ -224,7 +223,7 @@ def get_user(netid):
     
     return return_list
 
-def add_user(username, firstname, lastname):
+def add_user(username):
     connection = _get_connection()
 
     try: 
@@ -238,10 +237,10 @@ def add_user(username, firstname, lastname):
 
             # Prepare the new statement
             cursor.execute("PREPARE insert_student_user (TEXT, TEXT, TEXT) AS "
-                        "INSERT INTO studentusers (netid, firstname, lastname) VALUES ($1, $2, $3)")
+                        "INSERT INTO studentusers (netid) VALUES ($1)")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE insert_student_user (%s, %s, %s)", (username, firstname, lastname))
+            cursor.execute("EXECUTE insert_student_user (%s)", (username))
             connection.commit()
             
             return True, "User added successfully."
