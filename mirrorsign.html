@@ -323,20 +323,20 @@
         border-color: rgb(232, 130, 130) !important;
     }
 
+    .fixedpos {
+        position: sticky !important;
+        top: 0 !important;   
+        padding-top: 5px !important;
+    }
+
    
     </style>
   
 <body> 
   
-    <div id="total" class="container-fluid p-0 d-flex h-100 "> 
-        
-        <div id="bdSidebar" 
-             class="d-flex flex-column  
-                    flex-shrink-0  
-                    p-3 
-                    text-black offcanvas-md offcanvas-start width1" style="width: 70px">
-             <ul class="mynav nav  d-flex  d-none d-md-block">  
-                <span id="textwrapper" class=" textwidth1 fixedpos">
+    <div id="total" class="container-fluid p-0 d-flex h-100">
+        <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+            <span id="textwrapper" class=" textwidth1 fixedpos">
              <ul class="mynav nav  d-flex  d-none d-md-block">   
                     <li class="nav-item justify-content-right"> 
                         <a> 
@@ -352,10 +352,7 @@
                     </li>
                 </ul>
                 
-            
-            <a href="#" 
-               class="navbar-brand"> 
-            </a><hr> 
+            <hr> 
             
             <ul class="mynav nav nav-pills flex-column mb-auto "> 
                 <li class="nav-item mb-1"> 
@@ -405,9 +402,8 @@
                 </li> 
    
             </ul> 
-            <<hr>> 
             <div class="d-flex"> 
-  
+            </span>
                
             </div> 
         </div> 

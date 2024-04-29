@@ -1,11 +1,44 @@
 html, body { 
-	height: 100%; 
 	font-family: 'Ubuntu', sans-serif; 
     background-color: #fbfafa;
 } 
 
+#total {
+    min-height: 100vh;
+    display: flex;
+}
+
+.bg-light {
+    flex-grow: 1;
+    min-height: 100%; 
+}
+
+#bdSidebar {
+    min-height: 100vh;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.fixedpos {
+    position: sticky !important;
+    top: 0;   
+    padding-top: 5px;
+}
+
+.textwidth1 {
+    width: 270px;
+}
+
+.textwidth2 {
+    width: 30px;
+}
+
+#textwrapper {
+    transition: all 0.2s !important;
+}
 * {
     font-family: 'Koh Santepheap';
+    
 }
 
 .gfg { 
@@ -13,33 +46,6 @@ html, body {
 	width: 50px; 
 
 } 
-
-.dropdownstyles {
-    border-radius: 20px !important;
-    background-color: #ccf2f4 !important;
-    border-color: #ccf2f4 !important;
-    color: #000;
-}
-
-.makefloat {
-    float: right !important;
-}
-
-.dropdownstyles:hover {
-    background-color: #aeb1b1 !important;
-    border-color: #aeb1b1 !important;
-    color: #000;
-}
-
-ol li {
-    display: inline-block !important;
-
-}
-
-.font-size-dropdown {
-    font-size: 2px !important;
-}
-
 
 .width1 {
     width: 300px !important;
@@ -50,7 +56,7 @@ ol li {
 }
 
 #bdSidebar {
-    transition: all 0.3s !important;
+    transition: all 0.2s !important;
     background-color: #ccf2f4 !important;
 }
 
@@ -102,6 +108,60 @@ ol li {
 	width: 25px; 
 	text-align: center; 
 } 
+
+h1 {
+    font-size: 400%;
+    text-align: center;
+}
+
+.breadcrumb-item {
+    color: black;
+    text-decoration: none;
+}
+
+.breadcrumb-item:not(:first-child):hover {
+    text-decoration: underline;
+}
+
+.dropdownstyles {
+    border-radius: 20px !important;
+    background-color: #ccf2f4 !important;
+    border-color: #ccf2f4 !important;
+    color: #000;
+}
+
+.makefloat {
+    float: right !important;
+}
+
+.dropdownstyles:hover {
+    background-color: #aeb1b1 !important;
+    border-color: #aeb1b1 !important;
+    color: #000;
+}
+
+ol li {
+    display: inline-block !important;
+
+}
+
+.topmargindude {
+    margin-bottom: 0px !important;
+}
+
+.font-size-dropdown {
+    font-size: 2px !important;
+}
+
+
+.expansionmargin {
+    margin-top: 11.5px !important;
+    margin-left: 3px !important;
+}
+
+.automargin {
+    margin-left:auto !important;
+}
 
 h2 {
     font-size: 300%;
