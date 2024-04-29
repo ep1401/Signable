@@ -651,7 +651,7 @@ def delstarflashcard():
         cardid =  escape(request.get_json()["cardid"])
         result = dbconnect.del_starred_card(username, cardid)
         if result[0] is False:
-            return flask.redirect(flask.url_for('error', error=result[1]))
+            return flask.jsonify({'errors': result[1]}), 500
         return result[1]
         
         
@@ -663,10 +663,9 @@ def starflashcard():
      lessonid =  escape(request.get_json()["lessonid"])
      courseid =  escape(request.get_json()["courseid"])
      
-     print(courseid)
      result = dbconnect.add_starred_card(username, cardid, int(courseid), int(lessonid))
      if result[0] is False:
-         return flask.redirect(flask.url_for('error', error=result[1]))
+         return flask.jsonify({'errors': result[1]}), 500
      return result[1]
         
 
@@ -684,7 +683,7 @@ def save_changes():
         translation = escape(item['translation'])  
         contains_card = dbconnect.contains_flashcard(card_id)
         if contains_card[0] is False:
-         return flask.redirect(flask.url_for('error', error=contains_card[1]))
+         return flask.jsonify({'success': False, 'errors': contains_card[1]}), 500
 
         if len(contains_card[1]) == 0:
             deleted_messages.append("\nUnable to save " + translation)
@@ -737,7 +736,7 @@ def deleteflashcard():
     else:
         return flask.jsonify({'success': False, 'error': message}), 500
     
-@app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>')
+@app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>', methods=["GET"])
 def fetch_lesson_terms(course_id, lesson_number):
     terms = dbconnect.get_lessonterms('', lesson_number, course_id)
     if terms[0] is False:

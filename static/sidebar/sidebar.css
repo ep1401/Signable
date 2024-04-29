@@ -17,6 +17,23 @@ html, body {
     min-height: 100vh;
 }
 
+.fixedpos {
+    position: fixed !important;
+    
+}
+
+.textwidth1 {
+    width: 270px;
+}
+
+.textwidth2 {
+    width: 30px;
+}
+
+#textwrapper {
+    transition: all 0.2s !important;
+  
+}
 * {
     font-family: 'Koh Santepheap';
     
@@ -37,7 +54,7 @@ html, body {
 }
 
 #bdSidebar {
-    transition: all 0.3s !important;
+    transition: all 0.2s !important;
     background-color: #ccf2f4 !important;
 }
 

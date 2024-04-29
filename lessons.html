@@ -513,7 +513,7 @@
                                     </button>
                                 </div>
 
-                                <div id="card-counter" class="text-center mt-0 mr-5 ml-5" style="display: inline">
+                                <div id="card-counter" class="text-center mt-0 mr-4 ml-4" style="display: inline">
                                 </div>
                                 
                                 <div class="option-wrapper">
@@ -779,7 +779,7 @@ $(document).on('click', '.star-button', function(event){
             data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
             contentType: "application/JSON",
             error: function(data) {
-                alert(data);
+                alert("A server error occured. Review stack not updated");
             }
         });
         frontStar.addClass('active');
@@ -804,7 +804,7 @@ $(document).on('click', '.star-button', function(event){
             data: JSON.stringify({"cardid": cardid}),
             contentType: "application/JSON",
             error: function(data) {
-                alert(data);
+                alert("A server error occured. Review stack not updated");
             }
         });
         frontStar.removeClass('active');

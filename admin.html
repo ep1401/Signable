@@ -102,6 +102,15 @@
         border-color: #aeb1b1 !important;
         color: #000;
     }
+
+
+    .too-long-input {
+        background-color: #febeab !important;
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        overflow-x: auto;
+    }
+    
     </style>
  
 </head> 
@@ -109,6 +118,7 @@
 <body> 
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
         <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+            <span id="textwrapper" class=" textwidth1 fixedpos">
             <ul class="mynav nav d-flex d-none d-md-block">   
                 <li class="nav-item justify-content-right"> 
                     <a href="#"> 
@@ -173,7 +183,7 @@
   
            
             </ul> 
-            <hr> 
+            </span>
             <div class="d-flex"> 
   
             </div> 
@@ -277,7 +287,7 @@
                                         <br>
                                         <div class="form-group">
                                             <label for="translation">English Translation</label>
-                                            <small id="inputhelp" class="form-text text-muted">(for example: to-run or hello)<span style="color: red;">*</span></small>
+                                            <small id="inputhelp" class="form-text text-muted">(for example: to-run or hello. Maximum 300 characters)<span style="color: red;">*</span></small>
                                             <input id="translationinput" class="form-control" name="translation" aria-describedby="emailHelp" placeholder="English Translation" >
                                             <div id="translationfeedback" class="invalid-feedback">
                                                 Please limit the translation to less than 50 words
@@ -286,7 +296,7 @@
                                         <br>
                                         <div class="form-group">
                                             <label for="memory">Memory Tip</label>
-                                            <small id="inputhelp" class="form-text text-muted">(for example: think of a salute)</small>
+                                            <small id="inputhelp" class="form-text text-muted">(for example: think of a salute. Maximum 300 characters)</small>
                                             <input id="memoryinput"class="form-control" name="memory" aria-describedby="emailHelp" placeholder="Enter Memory Tip">
                                             <div class="invalid-feedback">
                                                 Please limit the memory tip to less than 300 characters
@@ -295,16 +305,16 @@
                                         <br>
                                         <div class="form-group">
                                             <label for="speech">Parts of Speech</label>
-                                            <small id="inputhelp" class="form-text text-muted">(for example: verb or noun)</small>
+                                            <small id="inputhelp" class="form-text text-muted">(for example: verb or noun. Maximum 300 characters)</small>
                                             <input id="speechinput"class="form-control" name="speech" aria-describedby="emailHelp" placeholder="Enter Parts of Speech">
                                             <div class="invalid-feedback">
-                                                Please limit the parts of speech to less than 200 characters
+                                                Please limit the parts of speech to less than 300 characters
                                             </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <label for="sentence">Example Sentence</label>
-                                            <small id="inputhelp" class="form-text text-muted">(for example: DOG TO-RUN AROUND HOUSE)</small>
+                                            <small id="inputhelp" class="form-text text-muted">(for example: DOG TO-RUN AROUND HOUSE. Maximum 300 characters)</small>
                                             <input id="sentenceinput" class="form-control" name="sentence" aria-describedby="emailHelp" placeholder="Enter Example Sentence">
                                             <div class="invalid-feedback">
                                                 Please limit the example sentence to less than 300 characters
@@ -368,7 +378,7 @@
                                                 <table class="table max-height">
                                                     <h2 id="table-title" class="text-center pt-5 pb-3"></h2>
                                                     <div id="edit-message" style="display: none;">
-                                                        <h3>Select cells to edit, remember to save your changes</h3>
+                                                        <h3>Select cells to edit. Remember to save your changes<br><br> Yellow: Edited <br> Red: Input too long</h3>
                                                     </div>
                                                     <thead class="hidden ">
                                                         <tr>
@@ -422,7 +432,7 @@
                 $("#courseinput").removeClass("is-invalid")
             }
 
-            if (translation_input.length > 50 || translation_input.length === 0 ) {
+            if (translation_input.length > 300 || translation_input.length === 0 ) {
                 if (translation_input.length === 0 ){
                     $("#translationfeedback").empty()
                     $("#translationfeedback").html("Please enter an ASL translation")
@@ -488,16 +498,11 @@
             return isvalid
         }
 
- 
-
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
 
         let initialstate = null
         let courseidglobal =  null
         let lessonidglobal = null
-
-      
-
         
             function fetchData(courseId, lessonNumber) {
                 $.ajax({
@@ -524,19 +529,38 @@
                         $('#edit-message').show()
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching data: ' + error);
+                        alert("Unable to display table");
                     }
                 });
             }
         
             $('.lesson-link').click(function(e) {
                 e.preventDefault();
-                var courseId = $(this).data('course');
+
+                var cellsedited = document.querySelectorAll('.edited-cell');
+                var cellslong = document.querySelectorAll('.too-long-input');
+                if (cellsedited.length > 0 || cellslong.length > 0) {
+                    if (confirm('Clicking on a different lesson will cause your data to be lost. Do you want to proceed?')) {
+                        var courseId = $(this).data('course');
                 courseidglobal = courseId
                 var lessonNumber = $(this).data('lesson');
                 lessonidglobal = lessonNumber
                 fetchData(courseId, lessonNumber);
                 $('#button-container').show();
+                    }
+
+                } else {
+                    var courseId = $(this).data('course');
+                courseidglobal = courseId
+                var lessonNumber = $(this).data('lesson');
+                lessonidglobal = lessonNumber
+                fetchData(courseId, lessonNumber);
+                $('#button-container').show();
+                }
+
+
+
+               
             });
        
         
@@ -545,102 +569,38 @@
 
         $(window).on('beforeunload', function(e){
             var cells = document.querySelectorAll('.edited-cell');
-            console.log(cells.length)
             if (cells.length > 0) {
-                return "Are you sure you want to leave? Data within Edit/Delete tables are not saved";
+                return "Are you sure you want to leave? Your data will not be saved";
+            }
+
+            speech_input = $("#speechinput").val()
+            sentence_input = $("#sentenceinput").val()
+            mem_tip = $("#memoryinput").val()
+            lesson_input = $("#lessonnumberinput").val()
+            link_input = $("#videolinkinput").val()
+            translation_input = $("#translationinput").val()
+    
+            if (speech_input.length > 0 || sentence_input.length > 0 || mem_tip.length > 0 || 
+            lesson_input.length > 0 || link_input.length > 0 || translation_input.length > 0 || $("#courseinput").val() !== null) {
+                return "Are you sure you want to leave? Your data will not be saved";
             }
   
   
   });
-        var typingTimer;
-        var doneTypingInterval = 0;
-        var spinnerTimer;
-        var spinnerInterval = 1000;
+       
 
-        function showAutosaveNotification() {
-            $('#notification').text('Autosaving changes...').fadeIn().delay(1000).fadeOut();
-        }
-
-        function isSpinnerVisible() {
-            return $('#loading-spinner').is(':visible');
-        }
-        
-        function isSavingTextVisible() {
-            return $('#saving-text').is(':visible');
-        }
-
-        function showSpinner() {
-            $('#loading-spinner').show();
-        }
-
-        function hideSpinner() {
-            $('#loading-spinner').hide();
-        }
-
-        function showSavingText() {
-            $('#saving-text').show();
-        }
-    
-        function hideSavingText() {
-            $('#saving-text').hide();
-        }
-
-        function saveChanges() {
-            var data = [];
-            $('#table-body tr').each(function() {
-                var cardid = $(this).find('td:eq(1)').text(); 
-                var translation = $(this).find('td:eq(0)').text(); 
-                var memorytip = $(this).find('td:eq(2)').text(); 
-                var speech = $(this).find('td:eq(3)').text(); 
-                var sentence = $(this).find('td:eq(4)').text(); 
-                data.push({ cardid: cardid, translation: translation, memorytip: memorytip, speech: speech, sentence: sentence });
-            });
-
-            var csrf_token = "{{ csrf_token() }}";
-
-            $.ajaxSetup({
-             beforeSend: function(xhr, settings) {
-                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                        }
-             }})
-
-             if (!isSpinnerVisible() && !isSavingTextVisible()) {
-                spinnerTimer = setTimeout(function() {
-                    showSpinner();
-                    showSavingText();
-                }, spinnerInterval);
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: '/savechanges',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function(response) {
-                    // Show autosave notification
-                    // showAutosaveNotification();
-
-                // Simulate saving data (replace with actual AJAX call)
-                    setTimeout(function() {
-                        // Hide spinner after data is saved
-                        hideSavingText();
-                        hideSpinner();
-                        console.log('Data saved successfully.');
-                    }, 2000);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error saving changes: ' + error);
-                }
-            });
-        }
-
-        // autosaving feature
-        
+       
         $('#table-body').on('input', 'td[contenteditable="true"]', function() {
    
 
             $(this).addClass('edited-cell');
+    
+            var contentLength = $(this).text().trim().length;
+            if (contentLength < 300) {
+                $(this).removeClass('too-long-input');
+            } else {
+                $(this).addClass('too-long-input');
+            }
         });
         
 
@@ -668,7 +628,7 @@
                         row.remove();
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error deleting flashcard: ' + error);
+                        alert("Unable to delete flashcard");;
                     }
                 });
             } else {
@@ -715,18 +675,18 @@
                             location.reload(); 
                         },
                         error: function(xhr, status, error) {
-                            console.error('Error deleting lesson: ' + error);
+                            alert("Unable to delete lesson");;
                         }
                     });
                 } else {
                     return;
                 }
             } else {
-                console.error('Error extracting courseId and lessonNumber from title.');
+                alert("Unable to delete lesson");;
             }
         });
     });
-
+// fix console errors from here down
 
     $(document).ready(function() {
         function fetchData(courseId, lessonNumber) {
@@ -742,7 +702,7 @@
                     $('#edit-message').show();
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error fetching data: ' + error);
+                    alert("Unable to display table");;
                 }
             });
         }
@@ -774,12 +734,30 @@
             });
     
             var currentdata = [];
+            let validdata = true;
             $('#table-body tr').each(function() {
                 var cardid = $(this).find('td:eq(1)').text();
                 var translation = $(this).find('td:eq(0)').text();
                 var memorytip = $(this).find('td:eq(2)').text();
                 var speech = $(this).find('td:eq(3)').text();
                 var sentence = $(this).find('td:eq(4)').text();
+
+
+                if (memorytip.length >= 300) {
+                    validdata = false;
+                    $(this).find('td:eq(2)').addClass('too-long-input');
+                }
+
+                if (speech.length >= 300) {
+                    validdata = false;
+                    $(this).find('td:eq(3)').addClass('too-long-input');
+                }
+
+                if (sentence.length >= 300) {
+                    validdata = false;
+                    $(this).find('td:eq(4)').addClass('too-long-input ');
+                }
+
                 currentdata.push({
                     cardid: cardid,
                     translation: translation,
@@ -788,6 +766,19 @@
                     sentence: sentence
                 });
             });
+
+      
+
+            if (validdata === false) {
+                setTimeout(function() {
+                    alert("Red highlighted cells exceed maximum length. Please reduce input size to save changes");
+            
+                    // Optionally, scroll to the first cell that's too long
+                    $('.too-long-input').first().get(0).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 200); // Delay of 10 milliseconds
+                return;
+                
+            }
     
             $.ajax({
                 type: 'POST',
@@ -797,7 +788,7 @@
                 success: function(response) {
                     if (response.messages && response.messages.length > 0) {
                         if (response.deleted) {
-                            alert("Some cards have been deleted: " + response.messages.join(", "));
+                            alert("Some cards have been deleted from the database: " + response.messages.join(", "));
                         } else {
                             alert("Updated successfully");
                         }
@@ -812,7 +803,7 @@
                     fetchData(courseidglobal, lessonidglobal);
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error saving changes: ' + error);
+                    alert("Unable to save changes");;
                 }
             });
         }
@@ -836,7 +827,6 @@
                     data: JSON.stringify(initialstate),
                     contentType: 'application/json',
                     success: function alertsuccess(request)  {
-                        console.log(request)
                     if (request.success === true) {
                         noautosavechanges()
 
@@ -849,7 +839,7 @@
                     
                     }},
                     error: function alerterror(xhr, status, error) {
-                        console.error('Error fetching data: ' + error);
+                        alert("An error occured please contact system administrator");
                     }
                     })
                 });

@@ -3,6 +3,7 @@
 function handleclick() {
 
         $("#bdSidebar").toggleClass("width1", "width2")
+        $("#textwrapper").toggleClass("textwidth1", "textwidth2")
         $(".text").toggle()
         $(".logo").toggle()
         $("#hide").addClass("fa-flip")

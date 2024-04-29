@@ -329,16 +329,17 @@
 <body> 
   
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
+        
         <div id="bdSidebar" 
              class="d-flex flex-column  
                     flex-shrink-0  
                     p-3 
                     text-black offcanvas-md offcanvas-start width1" style="width: 70px">
              <ul class="mynav nav  d-flex  d-none d-md-block">  
-
+                <span id="textwrapper" class=" textwidth1 fixedpos">
              <ul class="mynav nav  d-flex  d-none d-md-block">   
                     <li class="nav-item justify-content-right"> 
-                        <a href="#"> 
+                        <a> 
                             <i id="hide" class="fa-solid fa-x text-black"></i>
                         </a> 
                     </li>
@@ -355,6 +356,7 @@
             <a href="#" 
                class="navbar-brand"> 
             </a><hr> 
+            
             <ul class="mynav nav nav-pills flex-column mb-auto "> 
                 <li class="nav-item mb-1"> 
                     <a href="/home"> 
@@ -403,7 +405,7 @@
                 </li> 
    
             </ul> 
-            <hr> 
+            <<hr>> 
             <div class="d-flex"> 
   
                
@@ -805,7 +807,7 @@ function playStream(stream) {
             data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
             contentType: "application/JSON",
             error: function(data) {
-                alert(data);
+                alert("A server error occured. Review stack not updated");
             }
              });
             frontStar.addClass('active');
@@ -831,7 +833,7 @@ function playStream(stream) {
             data: JSON.stringify({"cardid": cardid}),
             contentType: "application/JSON",
             error: function(data) {
-                alert(data);
+                alert("A server error occured. Review stack not updated");
             }
              });
             frontStar.removeClass('active');

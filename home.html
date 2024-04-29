@@ -169,15 +169,12 @@
 
 <body> 
   
-    <div id="total" class="container-fluid p-0 d-flex h-100 "> 
-        <div id="bdSidebar" 
-             class="d-flex flex-column  
-                    flex-shrink-0  
-                    p-3 
-                    text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+    <div id="total" class="container-fluid p-0 d-flex h-100">
+        <div id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3 text-black offcanvas-md offcanvas-start width1" style="width: 70px">
+            <span id="textwrapper" class=" textwidth1 fixedpos">
              <ul class="mynav nav  d-flex  d-none d-md-block">   
                     <li class="nav-item justify-content-right"> 
-                        <a href="#"> 
+                        <a> 
                             <i id="hide" class="fa-solid fa-x text-black"></i>
                         </a> 
                     </li>
@@ -243,7 +240,9 @@
               
 
             </ul> 
-            <hr> 
+            <hr class="hrmarginclass">
+            </span>
+            
             <div class="d-flex"> 
 
             
@@ -314,7 +313,7 @@
                                         <i class="fas fa-video fa-3x"></i>
                                     </div>
                                     <h2 style="margin-top: 25px;">Mirror</h2>
-                                    <p>Refine your signing skills by comparing your signing to reference videos. Use the mirror tool to practice alongside professional ASL expressions, ensuring accuracy and fluency.</p>
+                                    <p>Refine your signing skills by comparing your signing to reference videos. Use the mirror tool to practice alongside professional ASL instructors, ensuring accuracy and fluency.</p>
                                 </div>
                                 <div class="col-lg-4 text-center">
                                     <div class="circle-icon blue-bg">
@@ -324,53 +323,39 @@
                                     <p>Diversify your studying experience with interactive quizzes. Test your ASL knowledge and track your progress. Practice grammar, vocabulary, and comprehension in a structured environment.</p>
                                 </div>
                             </div>
-                            
-                            
-                      
                       
                               <!-- START THE FEATURETTES -->
                       
                               <hr class="featurette-divider">
                               <div class="row featurette">
-                                  <div class="col-lg-5 d-flex align-items-center">
-                                      <div>
-                                          <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-                                          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                                      </div>
-                                  </div>
-                                  <div class="col-lg-7 d-flex align-items-center justify-content-center">
-                                      <img class="featurette-image img-fluid" data-src="holder.js/500x500/auto" src="static/images/homepage.jpg" alt="Generic placeholder image">
-                                  </div>
-                              </div>
-
-                      
-                              <hr class="featurette-divider">
-                      
-                              <div class="row featurette">
-                                <div class="col-md-5 order-md-2 d-flex align-items-center">
-                                    <div>
-                                        <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-                                        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-7 order-md-1 d-flex align-items-center justify-content-center">
-                                    <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-                                </div>
-                            </div>
-                      
-                              <hr class="featurette-divider">
-                      
-                              <div class="row featurette">
                                 <div class="col-lg-5 d-flex align-items-center">
                                     <div>
-                                        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-                                        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+                                        <h2 class="featurette-heading">Master ASL with Flashcards. <span class="text-muted">Unlock Your Signing Potential.</span></h2>
+                                        <p class="lead">Ready to dive into ASL? Our flashcard feature is your gateway to fluency. Click on any card to flip it and reveal the translation. Whether you prefer starting with ASL or English, you can switch sides effortlessly. Need more practice with certain terms? Simply star them for easy access later. Plus, shake things up by shuffling the deck to keep your learning fresh. With Signable's flashcards, mastering ASL has never been more engaging.</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-7 d-flex align-items-center justify-content-center">
-                                    <img class="featurette-image img-fluid" data-src="holder.js/500x500/auto" src="static/images/homepage.jpg" alt="Generic placeholder image">
+                                    <img class="featurette-image img-fluid" data-src="holder.js/500x500/auto" src="static/images/homepage.jpg" alt="Homepage example">
                                 </div>
                             </div>
+                            
+
+                      
+                              <hr class="featurette-divider">
+
+                              <div class="row featurette">
+                                <div class="col-lg-5 d-flex align-items-center">
+                                    <div>
+                                        <h2 class="featurette-heading">Search and Learn ASL. <span class="text-muted">Explore the World of Sign Language.</span></h2>
+                                        <p class="lead">Looking to learn a new ASL term? Our search feature makes it easy. Simply enter the term you're curious about, and watch the corresponding video to learn how to sign it. But that's not all - you can also access extra information to enhance your understanding. Whether it's example sentences, memory tools, or context usage, we've got you covered. Discover the richness of ASL with Signable.</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 d-flex align-items-center justify-content-center">
+                                    <img class="featurette-image img-fluid" data-src="holder.js/500x500/auto" src="static/images/IMG_0400.jpg" alt="Homepage example">
+                                </div>
+                            </div>
+
+                            
                       
                               <hr class="featurette-divider">
                       
