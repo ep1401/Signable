@@ -236,7 +236,7 @@ def add_user(username, junk, junk2):
                 cursor.execute("DEALLOCATE insert_student_user")
 
             # Prepare the new statement
-            cursor.execute("PREPARE insert_student_user (TEXT, TEXT, TEXT) AS "
+            cursor.execute("PREPARE insert_student_user (TEXT) AS "
                         "INSERT INTO studentusers (netid) VALUES ($1)")
             
             # Execute the prepared statement
