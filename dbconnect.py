@@ -240,7 +240,7 @@ def add_user(username, junk, junk2):
                         "INSERT INTO studentusers (netid) VALUES ($1)")
             
             # Execute the prepared statement
-            cursor.execute("EXECUTE insert_student_user (%s)", (username))
+            cursor.execute("EXECUTE insert_student_user (%s)", (username, ))
             connection.commit()
             
             return True, "User added successfully."
