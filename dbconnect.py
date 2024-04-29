@@ -223,7 +223,7 @@ def get_user(netid):
     
     return return_list
 
-def add_user(username):
+def add_user(username, junk, junk2):
     connection = _get_connection()
 
     try: 
