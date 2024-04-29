@@ -15,11 +15,13 @@ html, body {
 
 #bdSidebar {
     min-height: 100vh;
+    padding-top: 0px !important;
 }
 
 .fixedpos {
-    position: fixed !important;
-    
+    position: sticky !important;
+    top: 0;   
+    padding-top: 5px;
 }
 
 .textwidth1 {
@@ -32,7 +34,6 @@ html, body {
 
 #textwrapper {
     transition: all 0.2s !important;
-  
 }
 * {
     font-family: 'Koh Santepheap';
@@ -160,8 +161,3 @@ ol li {
 .automargin {
     margin-left:auto !important;
 }
-
-
-
-
-
