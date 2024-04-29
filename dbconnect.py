@@ -270,7 +270,7 @@ def get_admin(netid):
 
             # Prepare the new statement
             cursor.execute("PREPARE select_admin_by_adminid (TEXT) AS "
-                        "SELECT adminid, firstname, lastname "
+                        "SELECT adminid "
                         "FROM admin WHERE adminid = $1")
             
             # Execute the prepared statement
@@ -286,8 +286,7 @@ def get_admin(netid):
             else:
                 return_list.append(True)
                 row = table[0]
-                user = {"adminid": row[0], "firstname": row[1],
-                             "lastname": row[2] }
+                user = {"adminid": row[0] }
                 return_list.append(user)
 
 
