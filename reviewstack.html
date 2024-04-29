@@ -38,6 +38,7 @@
         text-align: center;
         position: relative;
         margin: 40px 70px;
+        margin-top: 60px;
     }
 
     .carousel {    
@@ -418,9 +419,10 @@
                         </ul>
                     </span>
                       </div>
-                    
-                 
-                 
+                
+                {% if empty | length != 0 %}
+                <h2>Click on the star again to remove it from the Review Stack</h2>
+                {% endif %}
                 </nav>
                 
                 <div class="container-xl mt-5">
@@ -440,7 +442,7 @@
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}" lessonid="{{ flashcard['lessonid'] }}" 
                                                     courseid="{{ flashcard['courseid'] }}">
                                                         <div class="front">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Toggle to Review Stack">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Star/Unstar">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
                                                             <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
@@ -449,7 +451,7 @@
                                                             <iframe id="video{{ loop.index }}" width="80%" height="80%" src="{{ flashcard['videolink'] }}" frameborder="0" allowfullscreen></iframe>
                                                         </div>
                                                         <div class="back">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Toggle to Review Stack">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Star/Unstar">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
                                                             <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">

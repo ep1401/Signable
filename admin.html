@@ -611,7 +611,7 @@
         $('#table-body').on('click', '.remove-btn', function() {
             var cardId = $(this).data('cardid');
     
-            if (confirm('Are you sure you want to remove this card?')) {
+            if (confirm('Are you sure you want to permanently remove this card? This flashcard cannot be restored')) {
                 var row = $(this).closest('tr'); 
                 var csrf_token = "{{ csrf_token() }}";
 
@@ -630,6 +630,10 @@
                     contentType: 'application/json', 
                     success: function(response) {
                         row.remove();
+                        for (var i = 0; i < initialstate.length; i++) {
+                           if (initialstate[i].cardid === cardId)
+                                initialstate.splice(i, 1);
+                        }
                     },
                     error: function(xhr, status, error) {
                         alert("Unable to delete flashcard");;

@@ -475,7 +475,7 @@
                                                     <div class="flashcard" id = "{{ flashcard['cardid'] }}" mem = "{{ flashcard['memorytip'] }}" 
                                                     speech = "{{ flashcard['speech'] }}" sentence = "{{ flashcard['sentence'] }}">
                                                     <div class="front">
-                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Toggle to Review Stack">
+                                                        <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Star/Unstar">
                                                             <i class="fa-solid fa-star"></i>
                                                         </button>
                                                         <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
@@ -484,7 +484,7 @@
                                                         <div class="translationwrap"> {{ flashcard['translation'] | safe}} </div>
                                                     </div>
                                                         <div class="back">
-                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Toggle to Review Stack">
+                                                            <button class="star-button btn-lg {{flashcard['starred-class']}}" data-bs-toggle="tooltip" title="Star/Unstar">
                                                                 <i class="fa-solid fa-star"></i>
                                                             </button>
                                                             <button class="info-button btn-lg" data-bs-toggle="tooltip" title="Extra Info" data-bs-toggle="modal" data-bs-target="#infoModal">
