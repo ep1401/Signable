@@ -248,7 +248,7 @@
                             <br>
                             <div class="row"> 
                                 <div class="col"> 
-                                    <form class="needs-validation"action="/add_card" method="POST" onsubmit="return checkInput()">
+                                    <form id="form" class="needs-validation"action="/add_card" method="POST" onsubmit="return checkInput()">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                         <div class="form-group">
                                             <div class="form-group">
@@ -419,7 +419,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         
-
+    
         function checkInput(){
             translation_input = $("#translationinput").val()
             let isvalid = true
@@ -563,6 +563,10 @@
                
             });
        
+            $(document).on("submit", "form", function(event){
+
+        $(window).off('beforeunload');
+    });
         
 
     $(document).ready(function() {

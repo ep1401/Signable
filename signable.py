@@ -270,7 +270,7 @@ def searchtermresults():
     query_result = dbconnect.get_terms(input)
     if query_result[0] is True:
         terms = query_result[1]
-        terms_sorted = sorted(terms, key=lambda x: x['translation'])
+        terms_sorted = sorted(terms, key=lambda x: x['translation'].lower())
         html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
     else: 
         return flask.redirect(flask.url_for('error', error=query_result[1]))
@@ -384,7 +384,7 @@ def searchlessonresults():
     query_result = dbconnect.get_lessonterms(input_query, lesson_id, course_id)
     if query_result[0] is True:
         terms = query_result[1]
-        terms_sorted = sorted(terms, key=lambda x: x['translation'])
+        terms_sorted = sorted(terms, key=lambda x: x['translation'].lower())
         html_code = flask.render_template('tabledisplay.html', terms=terms_sorted, lessonid=lesson_id, courseid=course_id)
     else: 
         return flask.redirect(flask.url_for('error', error=query_result[1]))
