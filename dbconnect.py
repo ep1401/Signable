@@ -348,11 +348,50 @@ def get_starred_cards(netid):
     
     return return_list
 
+def contains_starred_card(netid, cardid):
+    connection = _get_connection()
+
+    try: 
+        with connection.cursor() as cursor:
+            cursor.execute("PREPARE flashcards_by_cardid (TEXT, INT) AS "
+                           "SELECT * FROM starredflashcards WHERE netid = $1 AND cardid = $2")
+
+            cursor.execute("EXECUTE flashcards_by_cardid (%s, %s)", [escape_special_characters(netid), escape_special_characters(cardid)])
+            table = cursor.fetchall()
+
+            contains = False
+
+            if len(table) > 0:
+                contains = True
+            
+            cursor.execute("DEALLOCATE flashcards_by_cardid")
+
+            return True, contains
+
+    except Exception as ex:
+        error_message = "A server error occurred. Please contact the system administrator."
+        print(sys.argv[0] + ":", ex, file=sys.stderr)
+        connection.rollback()
+        return False, error_message
+
+    finally:
+        _put_connection(connection)
+
+
+
 def add_starred_card(netid, cardid, courseid, lessonid):
     connection = _get_connection()
 
     try: 
         with connection.cursor() as cursor:
+            contains = contains_starred_card(netid, cardid)
+            
+            if contains[0] is False:
+                return False, contains[1]
+            
+            if contains[1] is True:
+                return True, "Flashcard already added"
+                
             cursor.execute("SELECT 1 FROM pg_prepared_statements WHERE name = 'insert_starred_flashcard'")
             exists = cursor.fetchone()
 
