@@ -138,13 +138,6 @@
                         <span class="text text-black">  Home </span>
                     </a> 
                 </li> 
-
-                <li class="nav-item mb-1" id="adminButton">
-                    <a href="/admin">
-                        <i class="fas fa-user-cog text-black"></i>
-                        <span class="text text-black"> Admin </span>
-                    </a>
-                </li>
   
                 <li class="nav-item mb-1"> 
                     <a>  
@@ -218,7 +211,10 @@
                         <span class="d-none d-md-block">
                         <ul class="dropdown-menu dropdown-menu-end ">
                             <span class="dropdown-item d-lg-none"> <i class="fa fa-user "> </i> {{username}}  </span>
-                            <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
+                            <a class="dropdown-item" id="adminButton" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
+
+
+                            <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt text-black pe-2" style="color: black;"></i>Log Out</a>
                             
                         </ul>
                     </span>

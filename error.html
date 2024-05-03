@@ -59,15 +59,6 @@
                         <span class="text text-black">  Home </span>
                     </a> 
                 </li> 
-
-                <li class="nav-item mb-1" id="adminButton"> 
-                  <a href="/admin"> 
-                      <i class="fas fa-user-cog text-black"></i>
-                      <span class="text text-black"> Admin </span>
-                  </a> 
-                </li>
-  
-                
   
                 <li class="nav-item mb-1"> 
                     <a href="/courses">  
@@ -122,6 +113,24 @@
                 <span class="ms-3 text-black">Signable</span> 
             </div> 
             <div class="p-4"> 
+                <div class="btn-group d-inline-block makefloat font-size-dropdown   text-dark">
+                    <button type="button" class="btn  dropdown-toggle dropdownstyles d-none d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user "></i>
+                        <span class="d-none d-lg-inline"> {{username}}  </span>
+                    </button>
+                    <span class="d-none d-md-block">
+                    <ul class="dropdown-menu dropdown-menu-end ">
+                        <span class="dropdown-item d-lg-none"> <i class="fa fa-user "> </i> {{username}}  </span>
+                        <a class="dropdown-item" id="adminButton" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
+
+
+                        <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt text-black pe-2" style="color: black;"></i>Log Out</a>
+
+                        
+                    </ul>
+                </span>
+                  </div>
+                <br>
                 <br>
                 <div class="row"> 
                     <div class="col"> 
