@@ -825,18 +825,3 @@ def get_quiz_questions(courseid, lessonid):
     
     return return_list
      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
