@@ -5,6 +5,7 @@ function handleResponse(data) {
 }
 
 function handleError(request) {
+    console.log(request)
     alert(request)
 }
 let request = null
