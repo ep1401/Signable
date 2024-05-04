@@ -4,17 +4,19 @@ function handleResponse(data) {
     $('#tablecontainer').html(data);
 }
 
-function handleError(request) {
-    console.log(request)
-    
-    if (request.statusText !== 'abort') {
-        alert('Error: Failed to fetch data from server')
-    }
-    else if (request.status === 403) {
-        alert("A 403 Forbidden Resource Error Occured Invalid Input");;
-    }
-    else {
-        alert(request)
+function handleError(xhr, textStatus, errorThrown) {
+    if (xhr.status === 403) {
+        // Server is down or unreachable
+        alert('Server is down or unreachable.');
+    } else {
+        // Check if the error message contains HTML markup
+        if (xhr.responseText && xhr.responseText.startsWith("<")) {
+            // Display HTML error message
+            alert('This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.');
+        } else {
+            // Other errors
+            alert(errorThrown);
+        }
     }
 }
 let request = null
@@ -30,7 +32,7 @@ function getResults() {
         success: handleResponse,
         error: handleError
     };
-    request = $.ajax(requestData)
+    request = $.ajax(requestData);
 }
 
 let timer = null;
