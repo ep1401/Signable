@@ -343,25 +343,25 @@
                             <div class = "options-container">
                                 <label class="option"> 
                                     <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][0][1]}}">
-                                    <span> {{flashcard['options'][0][0]}} </span>
+                                    <span> {{flashcard['options'][0][0] | safe}} </span>
                                 </label>
                             </div>  
                             <div class = "options-container">
                                 <label class="option"> 
                                     <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][1][1]}}">
-                                    <span> {{flashcard['options'][1][0]}}</span>
+                                    <span> {{flashcard['options'][1][0] | safe}}</span>
                                 </label>
                             </div>  
                             <div class = "options-container">
                                 <label class="option"> 
                                     <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][2][1]}}">
-                                    <span> {{flashcard['options'][2][0]}}</span>
+                                    <span> {{flashcard['options'][2][0] | safe}}</span>
                                 </label>
                             </div>  
                             <div class = "options-container">
                                 <label class="option"> 
                                     <input type="radio" name="q{{loop.index}}" value="{{flashcard['options'][3][1]}}">
-                                    <span> {{flashcard['options'][3][0]}} </span>
+                                    <span> {{flashcard['options'][3][0] | safe}} </span>
                                 </label>
                             </div>  
                             <hr>

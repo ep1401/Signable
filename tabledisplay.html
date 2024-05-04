@@ -25,10 +25,10 @@
       <tbody class="overflow">
           {% for term in terms %}
           <tr>
-              <td><a href="#" onclick="openModal('{{ term.videolink }}', '{{ term.translation }}')">{{ term.translation }}</a></td>
-              <td>{{ term.memorytip }}</td>
-              <td>{{ term.speech }}</td>
-              <td>{{ term.sentence }}</td>
+              <td><a href="#" onclick="openModal('{{ term.videolink }}', '{{ term.translation }}')">{{ term.translation | safe}}</a></td>
+              <td>{{ term.memorytip | safe }}</td>
+              <td>{{ term.speech | safe }}</td>
+              <td>{{ term.sentence | safe }}</td>
           </tr>
           {% endfor %}
       </tbody>
