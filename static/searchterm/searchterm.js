@@ -6,7 +6,7 @@ function handleResponse(data) {
 
 function handleError(request) {
     if (typeof request === 'object' && request !== null) {
-        alert('I think we should just alert this: This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.');
+        alert('This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.');
     } else {
         alert(request);
     }
