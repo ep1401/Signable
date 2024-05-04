@@ -5,7 +5,7 @@ function handleResponse(data) {
 }
 
 function handleError(request) {
-    print(request)
+    alert(request)
 }
 let request = null
 function getResults() {
