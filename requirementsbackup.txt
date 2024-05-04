@@ -1,0 +1,8 @@
+Flask
+psycopg2
+SQLAlchemy
+gunicorn
+python-dotenv
+requests
+oauthlib
+flask_wtf
