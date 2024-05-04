@@ -5,10 +5,16 @@ function handleResponse(data) {
 }
 
 function handleError(request) {
-    if (typeof request === 'object' && request !== null) {
-        alert('This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.');
-    } else {
-        alert(request);
+    console.log(request)
+    
+    if (request.statusText !== 'abort') {
+        alert('Error: Failed to fetch data from server')
+    }
+    else if (request.status === 403) {
+        alert("A 403 Forbidden Resource Error Occured Invalid Input");;
+    }
+    else {
+        alert(request)
     }
 }
 let request = null
