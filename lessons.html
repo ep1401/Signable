@@ -586,7 +586,12 @@
             }
 
             function handleError(request) {
-                print(request)
+                if (xhr.responseText && xhr.responseText.startsWith("<")) {
+                    alert('This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.');
+                }
+               else {
+                    alert("Error while fetching data from the server. Please contact a system adminstrator");
+                }
             }
             let request = null
             let lessonid = "{{ lesson_num }}";
