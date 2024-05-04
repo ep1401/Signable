@@ -377,7 +377,7 @@ def searchlessonresults():
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
             + "administrator to resolve to issue"))
 
-    input_query = escape(request.args.get('query', default=""))
+    input_query = request.args.get('query', default="")
     lesson_id = request.args.get('lessonid', default="")
     course_id = request.args.get('courseid', default="")
     

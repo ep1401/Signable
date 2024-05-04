@@ -24,7 +24,18 @@ def _put_connection(conn):
     _connection_pool.put(conn)
 
 def escape_special_characters(string):
-    return string.replace('_', '\\_').replace('%', '\\%')
+    special_characters = {
+        "_": "\\_",
+        "%": "\\%",
+        "'": "''",    # Escape single quotes by doubling them
+        "--": "",     # Remove double hyphens
+    }
+    
+    # Replace special characters with their escaped versions
+    for char, escaped_char in special_characters.items():
+        string = string.replace(char, escaped_char)
+    
+    return string
 
     
 # gets the set of flashcards corresponding to a given courseid
