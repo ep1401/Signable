@@ -32,8 +32,8 @@
       <tbody class="overflow">
           {% for term in terms %}
           <tr>
-              <td><a href="#" onclick="openModal('{{ term.videolink }}', '{{ term.translation}}')">{{ term.translation | safe}}</a></td>
-              <td>{{ term.memorytip | safe }}</td>
+            <td><a href="#" onclick="openModal('{{ term.videolink }}', '{{ term.translation | urlencode }}')">{{ term.translation | safe}}</a></td>
+            <td>{{ term.memorytip | safe }}</td>
               <td>{{ term.speech | safe }}</td>
               <td>{{ term.sentence | safe }}</td>
           </tr>
@@ -49,7 +49,9 @@
         modalBody.append('<iframe width="100%" height="100%" src="' + videoLink + '" frameborder="0" allowfullscreen></iframe>');
         
         var modalTitle = $('#termModalLabel');
-        modalTitle.text(translation);
+
+        var decodedTranslation = decodeURIComponent(translation);
+        modalTitle[0].innerHTML = decodedTranslation;
         modalTitle.css({
             'word-wrap': 'break-word',
             'max-width': '90%' 
@@ -59,5 +61,7 @@
         
         return false;
     }
-  </script>
+</script>
+
+
   
