@@ -131,10 +131,16 @@
     .option {
         display: flex;
         align-items: center;
+        width: 100%;
+    }
+    
+    .option span {
+        word-break: break-all; 
     }
     
     .option input[type="radio"] {
         margin-right: 10px;
+        flex-shrink: 0; 
     }
 
     .question-container {
@@ -160,16 +166,14 @@
         border-color: transparent;
     }
 
-    /* Container styles */
     .image-container {
-        width: 80%; /* Set the width of the container */
-        height: 500px; /* Set the height of the container */
+        width: 80%;
+        height: 500px;
         display: flex;
-        justify-content: center; /* Center the image horizontally */
-        align-items: center; /* Center the image vertically */
+        justify-content: center; 
+        align-items: center; 
       }
   
-      /* Ensure the image does not exceed the container width/height */
       .image-container img {
         max-width: 100%; 
         max-height: 100%; 
