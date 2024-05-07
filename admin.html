@@ -317,7 +317,7 @@
                                         <br>
                                         <div class="row justify-content-center">
                                             <div class="col-md-4 text-center">
-                                                <button type="submit" class="btn btn-primary">Add</button>
+                                                <button type="submit" id="submitButton" class="btn btn-primary">Add</button>
                                             </div>
                                         </div>
                                     </form>
@@ -413,8 +413,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         
+
     
         function checkInput(){
+            document.getElementById("submitButton").disabled = true;
             translation_input = $("#translationinput").val()
             let isvalid = true
 
@@ -488,9 +490,18 @@
                 $("#speechinput").removeClass("is-invalid")
             }
 
-
+            if (!isvalid) {
+                document.getElementById("submitButton").disabled = false;
+            }
             return isvalid
         }
+
+        $("#form").bind('ajax:complete', function() {
+
+            document.getElementById("submitButton").disabled = false;
+
+
+        });
 
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
 
@@ -650,6 +661,7 @@
         handleCellEditing();
 
         $('#delete-lesson').click(function() {
+            
             var titleText = $('#table-title').text();
             var match = titleText.match(/\d+/g); 
         
@@ -773,6 +785,7 @@
 
             if (validdata === false) {
                 setTimeout(function() {
+                    document.getElementById("change-lesson").disabled = false;
                     alert("Red highlighted cells exceed maximum length. Please reduce input size to save changes");
             
                     // Optionally, scroll to the first cell that's too long
@@ -803,15 +816,21 @@
                     });
                     // Reload the table after saving changes
                     fetchData(courseidglobal, lessonidglobal);
+                    document.getElementById("change-lesson").disabled = false;
+                    
                 },
                 error: function(xhr, status, error) {
-                    alert("Unable to save changes");;
+                    
+                    alert("Unable to save changes");
+                    document.getElementById("change-lesson").disabled = false;
                 }
             });
         }
     
 
         $("#change-lesson").click(function() {
+            document.getElementById("change-lesson").disabled = true;
+
             var csrf_token = "{{ csrf_token() }}";
 
             $.ajaxSetup({
@@ -836,11 +855,14 @@
                      if (confirm(request.message)) {
                             noautosavechanges()
                      } else {
-                            // do nothing
+                            document.getElementById("change-lesson").disabled = false;
                      }
+
+                     
                     
                     }},
                     error: function alerterror(xhr, status, error) {
+                        document.getElementById("change-lesson").disabled = false;
                         alert("An error occured please contact system administrator");
                     }
                     })

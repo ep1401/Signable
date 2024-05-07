@@ -589,11 +589,17 @@
             const recordButton = document.querySelector('button#record2');
 
             recordButton.addEventListener('click', () => {
-                if (!isRecording) {
-                    startRecording();
-                } else {
-                    stopRecording();
-                }
+                recordButton.disabled = true;
+                
+                setTimeout(() => {
+                    if (!isRecording) {
+                        startRecording();
+                    } else {
+                        stopRecording();
+                    }
+                    
+                    recordButton.disabled = false;
+                }, 100); 
             });
 
             function playRecording() {
@@ -775,6 +781,8 @@ function playStream(stream) {
         let courseid = "{{ course }}";
         var frontStar = card.find('.front .star-button');
         var backStar = card.find('.back .star-button');
+        frontStar.disabled = true;
+        backStar.disabled = true;
         
         // Toggle active class for star button
         $(this).toggleClass('active');
@@ -797,10 +805,14 @@ function playStream(stream) {
             data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
             contentType: "application/JSON",
             success: function(data) {
+                frontStar.disabled = false;
+                backStar.disabled = false;
                 frontStar.addClass('active');
                 backStar.addClass('active');
             },
             error: function(data) {
+                frontStar.disabled = false;
+                backStar.disabled = false;
                 frontStar.removeClass('active');
                 backStar.removeClass('active');
                 alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
@@ -828,10 +840,14 @@ function playStream(stream) {
             data: JSON.stringify({"cardid": cardid}),
             contentType: "application/JSON",
             success: function(data) {
+                frontStar.disabled = false;
+                backStar.disabled = false;                
                 frontStar.removeClass('active');
                 backStar.removeClass('active');
             },
             error: function(data) {
+                frontStar.disabled = false;
+                backStar.disabled = false;
                 frontStar.addClass('active');
                 backStar.addClass('active');
                 alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
