@@ -111,6 +111,17 @@
                     <i class="fa-solid fa-bars text-black"></i> 
                 </a> 
                 <span class="ms-3 text-black">Signable</span> 
+                <div class="btn-group d-inline automargin font-size-dropdown   text-dark">
+                    <button type="button" class="btn  dropdown-toggle dropdownstyles" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user "></i>
+                        
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end 	">
+                        <span class="dropdown-item"> <i class="fa fa-user "> </i> {{username}}  </span>
+                        <a class="dropdown-item" id="adminButton" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
+                        <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
+                    </ul>
+                  </div>
             </div> 
             <div class="p-4"> 
                 <div class="btn-group d-inline-block makefloat font-size-dropdown   text-dark">

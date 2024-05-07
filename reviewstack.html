@@ -301,15 +301,13 @@
     
     <div id="total" class="container-fluid p-0 d-flex h-100 "> 
         <div id="bdSidebar" 
-             class="d-flex flex-column  
-                    flex-shrink-0  
-                    p-3 
+             class="d-flex flex-column flex-shrink-0 p-3 
                     text-black offcanvas-md offcanvas-start width1" style="width: 70px">
                     <span id="textwrapper" class=" textwidth1 fixedpos">
-             <ul class="mynav nav  d-flex  d-none d-md-block">   
+             <ul class="mynav nav d-flex d-none d-md-block">   
                     <li class="nav-item justify-content-right"> 
-                        <a href="#"> 
-                            <i id="hide" class="fa-solid fa-x text-black"></i>
+                        <a> 
+                            <i id="hide" class="fa-solid fa-x text-black d-none d-md-block"></i>
                         </a> 
                     </li>
                    
@@ -387,6 +385,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end 	">
                             <span class="dropdown-item"> <i class="fa fa-user "> </i> {{username}}  </span>
+                            <a class="dropdown-item" id="adminButton" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
                             <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
                         </ul>
                       </div>
