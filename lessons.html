@@ -433,7 +433,7 @@
                         <span class="d-none d-md-block">
                         <ul class="dropdown-menu dropdown-menu-end ">
                             <span class="dropdown-item d-lg-none"> <i class="fa fa-user "> </i> {{username}}  </span>
-                            <a class="dropdown-item" id="adminButton" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
+                            <a class="dropdown-item" id="adminButton2" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
 
                             <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt text-black pe-2" style="color: black;"></i>Log Out</a>
                             
@@ -573,6 +573,14 @@
             document.addEventListener("DOMContentLoaded", function() {
                 var adminValue = "{{ admin }}"; // This will render as 'true' or 'false' based on server-side logic
                 var adminButton = document.getElementById("adminButton");
+        
+                if (adminValue !== "true") {
+                    adminButton.style.display = "none"; // Completely hide the button
+                } else {
+                    adminButton.style.display = "block"; // Show the button if the user is an admin
+                }
+
+                var adminButton = document.getElementById("adminButton2");
         
                 if (adminValue !== "true") {
                     adminButton.style.display = "none"; // Completely hide the button
