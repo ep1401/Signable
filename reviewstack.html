@@ -677,12 +677,17 @@
                         type: 'PUT',    
                         data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
                         contentType: "application/JSON",
+                        success: function(data) {
+                            frontStar.addClass('active');
+                            backStar.addClass('active');  
+                        },
                         error: function(data) {
-                            alert("A server error occured. Review stack not updated");
+                            frontStar.removeClass('active');
+                            backStar.removeClass('active');
+                            alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
                         }
                     });
-                    frontStar.addClass('active');
-                    backStar.addClass('active');   
+                   
                 } else {
 
 
@@ -703,12 +708,17 @@
                         type: 'PUT',    
                         data: JSON.stringify({"cardid": cardid}),
                         contentType: "application/JSON",
+                        success: function(data) {
+                            frontStar.removeClass('active');
+                            backStar.removeClass('active');
+                        },
                         error: function(data) {
-                            alert("A server error occured. Review stack not updated");
+                            frontStar.addClass('active');
+                            backStar.addClass('active');  
+                            alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
                         }
                     });
-                    frontStar.removeClass('active');
-                    backStar.removeClass('active');
+                    
                 }
             });
 </script>

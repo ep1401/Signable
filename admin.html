@@ -704,7 +704,7 @@
                     $('#edit-message').show();
                 },
                 error: function(xhr, status, error) {
-                    alert("Unable to display table");;
+                    alert("Unable to refresh table");;
                 }
             });
         }
@@ -790,7 +790,7 @@
                 success: function(response) {
                     if (response.messages && response.messages.length > 0) {
                         if (response.deleted) {
-                            alert("Some cards have been deleted from the database: " + response.messages.join(", "));
+                            alert("Some cards have been deleted from the database by another adminstrator: " + response.messages.join(", ") +". These card were not updated, please manually restore them using the Add function");
                         } else {
                             alert("Updated successfully");
                         }
