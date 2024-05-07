@@ -749,8 +749,8 @@ $(document).on('click', '.star-button', function(event){
     let courseid = "{{ course }}";
     var frontStar = card.find('.front .star-button');
     var backStar = card.find('.back .star-button');
-    frontStar.disabled = true;
-    backStar.disabled = true;
+    frontStar.attr("disabled", "disabled");
+    backStar.attr("disabled", "disabled");
 
     // Toggle active class for star button
     $(this).toggleClass('active');
@@ -777,14 +777,14 @@ $(document).on('click', '.star-button', function(event){
             data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
             contentType: "application/JSON",
             success: function(data) {
-                frontStar.disabled = false;
-                backStar.disabled = false;
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");
                 frontStar.addClass('active');
                 backStar.addClass('active');
             }, 
             error: function(data) {
-                frontStar.disabled = false;
-                backStar.disabled = false;
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");
                 frontStar.removeClass('active');
                 backStar.removeClass('active');
                 alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
@@ -811,14 +811,14 @@ $(document).on('click', '.star-button', function(event){
             data: JSON.stringify({"cardid": cardid}),
             contentType: "application/JSON",
             success: function(data) {
-                frontStar.disabled = false;
-                backStar.disabled = false;
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");
                 frontStar.removeClass('active');
                 backStar.removeClass('active');
             },
             error: function(data) {
-                frontStar.disabled = false;
-                backStar.disabled = false;
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");
                 frontStar.addClass('active');
                 backStar.addClass('active');
                 alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
