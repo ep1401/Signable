@@ -34,8 +34,7 @@
 }
 
 ol li {
-display: inline-block !important;
-
+    display: inline-block !important;
 }
 
 
@@ -43,15 +42,12 @@ display: inline-block !important;
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
     max-width: 150px !important;
-    
 }
 
 .table td[contenteditable="true"] {
     white-space: nowrap;
     overflow-x: auto;
     word-break: break-all;
-   
-    
 }
 
 #loading-spinner {
@@ -73,25 +69,25 @@ h3 {
 }
 
 .dropdownstyles {
-border-radius: 20px !important;
-background-color: #ccf2f4 !important;
-border-color: #ccf2f4 !important;
-color: #000;
+    border-radius: 20px !important;
+    background-color: #ccf2f4 !important;
+    border-color: #ccf2f4 !important;
+    color: #000;
 }
 
 .font-size-dropdown {
-font-size: 2px !important;
+    font-size: 2px !important;
 }
 
 .dropdownstyles:hover {
-background-color: #aeb1b1 !important;
-border-color: #aeb1b1 !important;
-color: #000;
+    background-color: #aeb1b1 !important;
+    border-color: #aeb1b1 !important;
+    color: #000;
 }
 
 .too-long-input {
-background-color: #febeab !important;
-white-space: pre-wrap !important;
-word-wrap: break-word !important;
-overflow-x: auto;
+    background-color: #febeab !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-x: auto;
 }

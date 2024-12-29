@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='sidebar/sidebar.css') }}"> 
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/admin.css') }}"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head> 
   
 <body> 
@@ -225,8 +226,8 @@
                                               
                                                 </table>
                                                 <div class="text-center" id="button-container" style="display: none;">
-                                                    <button id="delete-lesson" class="btn btn-danger">Delete Entire Lesson</button>
-                                                    <button id="change-lesson" class="btn btn-danger">Save Flashcard Changes</button>
+                                                    <button id="delete-lesson" class="btn btn-danger" data-csrf-token="{{ csrf_token() }}">Delete Entire Lesson</button>
+                                                    <button id="change-lesson" class="btn btn-danger" data-csrf-token="{{ csrf_token() }}">Save Flashcard Changes</button>
                                                 </div>
                                             </div>
                                          
