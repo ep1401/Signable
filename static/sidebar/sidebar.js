@@ -25,22 +25,45 @@ var SidebarModule = SidebarModule || (function() {
                 if (adminButton) adminButton.style.display = "block";  // Show the first admin button
                 if (adminButton2) adminButton2.style.display = "block";  // Show the second admin button
             }
+
+            // Make sure handleclick2 is still available for the mobile click event
+            this.bindSidebarToggle();
+        },
+
+        bindSidebarToggle: function() {
+            // Ensure that the mobile sidebar toggle can still work
+            $("#mobileshow").click(handleclick2);
         }
     };
 
 }());
 
-// Handle the sidebar functionality
-function handleclick2() {
-    $("#hide").removeClass("fa-bars")
-    $("#hide").addClass("fa-x")
-    $(".logo").show()
-    $("#bdSidebar").removeClass("width2")
-    $("#bdSidebar").addClass("width1")
-    $(".text").show()
+// The existing functions to handle sidebar toggle
+function handleclick() {
+    $("#bdSidebar").toggleClass("width1", "width2");
+    $("#textwrapper").toggleClass("textwidth1", "textwidth2");
+    $(".text").toggle();
+    $(".logo").toggle();
+    $("#hide").addClass("fa-flip");
+    $("#hide").toggleClass("fa-x fa-bars");
+    $("#hide").removeClass("fa-flip");
 }
 
-$(document).ready(function() {
-    // Pass the `adminValue` from the global window to SidebarModule
+function handleclick2() {
+    $("#hide").removeClass("fa-bars");
+    $("#hide").addClass("fa-x");
+    $(".logo").show();
+    $("#bdSidebar").removeClass("width2");
+    $("#bdSidebar").addClass("width1");
+    $(".text").show();
+}
+
+function setup() {
+    // Sidebar toggle on the desktop version
+    $("#hide").click(handleclick);
+
+    // Mobile sidebar toggle handled separately with the logic in the SidebarModule
     SidebarModule.init(window.adminValue);
-});
+}
+
+$('document').ready(setup);
