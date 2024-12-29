@@ -1,0 +1,58 @@
+.option:hover .tooltip-text {
+    display: block;
+}
+
+.option-wrapper {
+    position: relative;
+    display: inline-block; 
+}
+
+.tooltip-text {
+    display: none;
+    position: absolute;
+    bottom: -35px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 12px; 
+    white-space: nowrap; 
+}
+
+.custom-modal-body {
+    padding: 20px;
+    word-break: break-all;
+}
+
+.translationwrap {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    width: 100%;
+    padding: 10px;
+
+}
+
+.dropdownstyles {
+    border-radius: 20px !important;
+    background-color: #ccf2f4 !important;
+    border-color: #ccf2f4 !important;
+    color: #000;
+}
+
+.dropdownstyles:hover {
+    background-color: #aeb1b1 !important;
+    border-color: #aeb1b1 !important;
+    color: #000;
+}
+
+ol li {
+    display: inline-block !important;
+
+}
+
+.font-size-dropdown {
+    font-size: 2px !important;
+}

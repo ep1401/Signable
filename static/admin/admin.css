@@ -1,0 +1,97 @@
+#notification {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 9999;
+}
+
+.edited-cell {
+    background-color: #fefeab !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-x: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn {
+    background-color: #ccf2f4;
+    color: black;
+    border-color: black;
+}
+
+.btn:hover {
+    background-color: #e9e9e9; 
+    border-color: black;
+    color: black;
+}
+
+ol li {
+display: inline-block !important;
+
+}
+
+
+.table td {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    max-width: 150px !important;
+    
+}
+
+.table td[contenteditable="true"] {
+    white-space: nowrap;
+    overflow-x: auto;
+    word-break: break-all;
+   
+    
+}
+
+#loading-spinner {
+    position: fixed;
+    top: 10px;
+    right: 80px;
+}
+
+#saving-text {
+    position: fixed;
+    top: 12px;
+    right: 15px;
+}
+
+h3 {
+    font-size: medium;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.dropdownstyles {
+border-radius: 20px !important;
+background-color: #ccf2f4 !important;
+border-color: #ccf2f4 !important;
+color: #000;
+}
+
+.font-size-dropdown {
+font-size: 2px !important;
+}
+
+.dropdownstyles:hover {
+background-color: #aeb1b1 !important;
+border-color: #aeb1b1 !important;
+color: #000;
+}
+
+.too-long-input {
+background-color: #febeab !important;
+white-space: pre-wrap !important;
+word-wrap: break-word !important;
+overflow-x: auto;
+}

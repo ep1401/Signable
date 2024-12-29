@@ -1,326 +1,282 @@
-document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>');
+'use strict';
 
-// Include AWS SDK
-document.write('<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1078.0.min.js"></script>');
+            /* globals MediaRecorder */
+            
+            let mediaRecorder;
+            let recordedBlobs;
+            let isRecording = false;
+            let countdownInterval;
 
+            const errorMsgElement = document.querySelector('span#errorMsg');
+            const videoElement = document.querySelector('video#recorded');
+            const recordButton = document.querySelector('button#record2');
 
-let s3;
-let theStream;
-let theRecorder;
-let recordedChunks = [];
-let blob = null;
-let url = null;
-let camera = 'front'; // front, back
-let allElements = '.video-record .video-playback .record-btn .go-back-btn .toggle-cam-btn .progress-btn .download-btn .upload-btn .stop-btn';
-let config = {
-    bucket: 'video-upload-6052019',
-    region: 'us-east-1',
-    identityPoolId: 'us-east-1:0dce9491-45ec-4e98-9f36-cfc7cf7bc70e'
-};
-let currentCard = 1,
-    totalCards = document.querySelectorAll('.card-container').length,
-    infofront = document.querySelector(".info-front"),
-    infoback = document.querySelector(".info-back"),
-    carousel = document.querySelector(".carousel"),
-    next = document.querySelector(".next"),
-    prev = document.querySelector(".prev"),
-    flip = document.querySelector(".flip"),
-    btn_stop_record = document.querySelectorAll(".stop-btn"),
-    btn_record_btn = document.querySelectorAll(".record-btn"),
-    go_back_btn = document.querySelectorAll(".go-back-btn"),
-    backButtons = document.querySelectorAll('.back-button');
+            recordButton.addEventListener('click', () => {
+                recordButton.disabled = true;
+                
+                setTimeout(() => {
+                    if (!isRecording) {
+                        startRecording();
+                    } else {
+                        stopRecording();
+                    }
+                    
+                    recordButton.disabled = false;
+                }, 100); 
+            });
 
-let bool = false;
-let stopped = false;
-let recording = false;
-let id = 0;
-
-updateCardCounter();
-
-btn_stop_record.forEach(button => {
-    button.addEventListener('click', function() {
-        onStreamStop(currentCard);
-    });
-});
-
-btn_record_btn.forEach(button => {
-    button.addEventListener('click', function() {
-        onStreamRecord(currentCard);
-    });
-});
-
-go_back_btn.forEach(button => {
-    button.addEventListener('click', function() {
-        onBackClick(currentCard);
-    });
-});
-
-backButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        resetCards();
-
-        let car = document.querySelectorAll(".carousel");
-        car.forEach(cardCar => {
-            cardCar.style.transitionDuration = '0s';
-        });
-
-        let currentCardElements = document.querySelectorAll(".card-container");
-        currentCardElements.forEach((cardContainer, index) => {
-            if (cardContainer.querySelector(".card").id == this.value) {
-                currentCard = index + 1;
-            }
-        });
-
-        cardFly();
-    });
-});
-
-next.addEventListener("click", function(e) {
-    if (stopped) {
-        stopped = false;
-        showElements('.video-record .record-btn');
-        getStream();
-    }
-
-    if (recording) {
-        onStreamStop(id);
-        return;
-    }
-
-    resetSpeed();
-    if (currentCard < document.querySelectorAll(".card-container").length) {
-        resetCards();
-        currentCard++;
-        cardFly();
-    }
-    updateCardCounter();
-});
-
-prev.addEventListener("click", function(e) {
-    if (stopped) {
-        stopped = false;
-        showElements('.video-record .record-btn');
-        getStream();
-    }
-
-    if (recording) {
-        onStreamStop(id);
-        return;
-    }
-
-    resetSpeed();
-    if (currentCard > 1) {
-        resetCards();
-        currentCard--;
-        cardFly();
-    }
-    updateCardCounter();
-});
-
-flip.addEventListener("click", function(e) {
-    resetSpeed();
-    let currentCardElement = document.querySelector(".carousel .card-container:nth-child(" + currentCard + ") .card");
-    if (currentCardElement) {
-        currentCardElement.classList.toggle("active");
-    }
-});
-
-document.querySelectorAll('.info-back').forEach(infoBackButton => {
-    infoBackButton.addEventListener('click', function() {
-        // Extract the ID of the current card
-        let currentCardId = infoBackButton.closest('.card-container').querySelector('.card').back;
-
-        // Retrieve extra information for the current card (assuming you have a way to obtain it)
-        let extraInfo = "heeeee\n\nasdf\n\n"; // Replace this with the method to retrieve extra information based on the currentCardId
-
-        // Create a modal to display the extra information
-        var modal = document.createElement("div");
-        modal.classList.add("modal");
-
-        // Display the extra information in the modal
-        var extraInfoContent = document.createElement("p");
-        extraInfoContent.textContent = extraInfo;
-        modal.appendChild(extraInfoContent);
-
-        // Create a close button for the modal
-        var closeButton = document.createElement("button");
-        closeButton.textContent = "Close";
-        closeButton.classList.add("close-button");
-        closeButton.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
-
-        // Append the close button to the modal
-        modal.appendChild(closeButton);
-
-        // Append the modal to the body
-        document.body.appendChild(modal);
-    });
-});
-
-
-
-function resetSpeed() {
-    let currentCardElements = document.querySelectorAll(".card-container");
-    currentCardElements.forEach(cardContainer => {
-        cardContainer.querySelector(".card").style.transitionDuration = '.4s';
-    });
-
-    let car = document.querySelectorAll(".carousel");
-    car.forEach(cardCar => {
-        cardCar.style.transitionDuration = '0.4s';
-    });
-}
-
-function cardFly() {
-    carousel.style.transform = `translateX(-${(currentCard - 1) * 100}vw)`;
-}
-
-function resetCards() {
-    let cards = document.querySelectorAll(".card-container .card");
-    cards.forEach(card => {
-        if (bool) {
-            card.classList.add("active");
-        } else card.classList.remove("active");
-    });
-}
-
-function displayCard(cardnumber) {
-    currentCard = cardnumber;
-    cardFly();
-    updateCardCounter();
-}
-
-function updateCardCounter() {
-    document.getElementById('current-card').textContent = currentCard;
-    document.getElementById('total-cards').textContent = totalCards;
-}
-
-$(function() {
-    // Initialise Bucket
-    setupBucket();
-
-    // Get stream
-    getStream();
-});
-
-
-
-function onBackClick() {
-    stopped = false;
-    recording = false;
-    showElements('.video-record .record-btn');
-    getStream();
-}
-
-function onStreamRecord(cardId) {
-    recording = true;
-    id = cardId;
-    showElements(`#video-record-${cardId} .stop-btn`);
-    recordedChunks = [];
-
-    try {
-        theRecorder = new MediaRecorder(theStream, { mimeType: "video/webm" });
-    } catch (e) {
-        console.error('Exception while creating MediaRecorder: ' + e);
-        return;
-    }
-
-    console.log('MediaRecorder created');
-    theRecorder.ondataavailable = function(event) {
-        recorderOnDataAvailable(event, cardId);
-    };
-    theRecorder.start(100);
-}
-
-function onStreamStop(cardId) {
-    stopped = true;
-    recording = false;
-    showElements(`#video-playback-${cardId} .go-back-btn`);
-
-    console.log('Saving data');
-    theRecorder.stop();
-    stopAllMediaTracks();
-
-    blob = new Blob(recordedChunks, { type: "video/webm" });
-    url = (window.URL || window.webkitURL).createObjectURL(blob);
-
-    var mediaControl = document.getElementById(`video-playback-${cardId}`);
-    mediaControl.src = url;
-}
-
-
-
-/**
- * Helpers
- */
-function setupBucket() {
-    var albumBucketName = config.bucket;
-    var bucketRegion = config.region;
-    var IdentityPoolId = config.identityPoolId;
-
-    AWS.config.update({
-        region: bucketRegion,
-        credentials: new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: IdentityPoolId
-        })
-    });
-
-    s3 = new AWS.S3({
-        apiVersion: '2006-03-01',
-        params: { Bucket: albumBucketName }
-    });
-}
-
-function recorderOnDataAvailable(event) {
-    if (event.data.size == 0) return;
-    console.log('ondataavailable, type: ' + event.data.type);
-    recordedChunks.push(event.data);
-}
-
-function getUserMedia(options, successCallback, failureCallback) {
-    navigator.mediaDevices.getUserMedia(options).then(successCallback, failureCallback);
-}
-
-function getStream() {
-    var facingMode = camera === 'front' ? { facingMode: "user" } : { facingMode: "environment" };
-    var constraints = { video: facingMode, audio: true };
-
-    // Loop through each card to get the corresponding video-record element
-    document.querySelectorAll('.video-record').forEach(videoRecord => {
-        getUserMedia(constraints, function(stream) {
-            var mediaControl = videoRecord;
-            if (navigator.mozGetUserMedia) {
-                mediaControl.mozSrcObject = stream;
-            } else {
-                mediaControl.srcObject = stream;
+            function playRecording() {
+                const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
+                videoElement.src = null;
+                videoElement.srcObject = null;
+                videoElement.src = window.URL.createObjectURL(superBuffer);
+                videoElement.controls = true;
+                videoElement.loop = false;
+                videoElement.play();
             }
 
-            theStream = stream;
-        }, function(err) {
-            alert('Error: ' + err);
+            function handleDataAvailable(event) {
+                console.log('handleDataAvailable', event);
+                if (event.data && event.data.size > 0) {
+                    recordedBlobs.push(event.data);
+                    playRecording();
+                }
+            }
+
+            async function startRecording() {
+                recordedBlobs = [];
+                let options = { mimeType: 'video/webm;codecs=vp9,opus' };
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    mediaRecorder = new MediaRecorder(stream, options);
+                    mediaRecorder.ondataavailable = handleDataAvailable;
+                    mediaRecorder.start();
+                    isRecording = true;
+                    recordButton.textContent = 'Stop Recording';
+                    videoElement.controls = false;
+                    playStream(stream);
+                    
+                    
+                    let duration = 20; 
+                    countdownInterval = setInterval(() => {
+                        if (duration <= 9)
+                            document.getElementById('countdown').textContent = "0:0" + duration;
+                        else
+                        document.getElementById('countdown').textContent = "0:" + duration;
+                        duration--;
+                        if (duration < 0) {
+                            stopRecording();
+                        }
+                    }, 1000); 
+                } catch (e) {
+                    console.error('Exception while creating MediaRecorder:', e);
+                    alert('Recording is not supported on this browser. Please try on a different device.');
+                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    handleSuccess(stream);
+                    return;
+                }
+            }
+            
+            function stopRecording() {
+                mediaRecorder.stop();
+                isRecording = false;
+                recordButton.textContent = 'Record';
+                clearInterval(countdownInterval); // Stop the countdown timer
+                document.getElementById('countdown').textContent = ''; // Clear the countdown display
+            }
+
+            function handleSuccess(stream) {
+                recordButton.disabled = false;
+                console.log('getUserMedia() got stream:', stream);
+                window.stream = stream;
+                playStream(stream);
+            }
+
+            async function init(constraints) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    handleSuccess(stream);
+                } catch (e) {
+                    console.error('navigator.getUserMedia error:', e);
+                    alert("Webcam access denied")
+                }
+            }
+
+            window.addEventListener("load", async () => {
+                const constraints = {
+                    video: {
+                        width: 1280,
+                        height: 1720
+                    }
+                };
+                console.log('Using media constraints:', constraints);
+                await init(constraints);
+            });
+
+function playStream(stream) {
+    videoElement.srcObject = stream;
+    videoElement.play();
+}
+
+    let currentCard = 1;
+    let totalCards = document.querySelectorAll('.carousel-inner .carousel-item').length -1;
+    let frontSideFirst = true; 
+
+    
+    function toggleSide() {
+        frontSideFirst = !frontSideFirst; 
+        $('.flashcard').each(function(index) {
+            $(this).toggleClass('flipped', !frontSideFirst); 
         });
+    }
+    
+    function resetCardSide() {
+        if (frontSideFirst) {
+            $('.carousel-item').eq(currentCard - 1).find('.flashcard').removeClass('flipped'); // Ensure front side is shown
+        } else {
+            $('.carousel-item').eq(currentCard - 1).find('.flashcard').addClass('flipped'); // Ensure back side is shown
+        }
+    }
+    
+    function updateCardCounter() {
+        var counterContainer = document.getElementById('card-counter');
+        counterContainer.textContent = currentCard + '/' + totalCards;
+        counterContainer.style.fontSize = '25px';
+    }
+
+    $('.carousel-control-prev').on('click', function() {
+        if (currentCard > 1) {
+            currentCard--;
+        }
+        else {
+            currentCard = totalCards;
+        }
+        resetCardSide(); 
+        updateCardCounter();
     });
-}
+    
+    $('.carousel-control-next').on('click', function() {
+        if (currentCard < totalCards) {
+            currentCard++;
+        }
+        else {
+            currentCard = 1;
+        }
+        resetCardSide();
+        updateCardCounter();
+    });
 
-function showElements(elements) {
-    hideElements(allElements);
+    $('.info-button').on('click', function() {
+        var flashcard = $(this).closest('.flashcard');
 
-    elements.split(" ").forEach(e => {
-        $(e).css({
-            'display': 'flex'
+        var translation = flashcard.attr('mem');
+        var memorytip = flashcard.attr('speech');
+        var speech = flashcard.attr('sentence');
+
+        var modalBody = $('#cardInfo');
+        modalBody.html('');
+        modalBody.append('<p><strong>Memory Tip:</strong> ' + translation + '</p>');
+        modalBody.append('<p><strong>Part of Speech:</strong> ' + memorytip + '</p>');
+        modalBody.append('<p><strong>Example Sentence:</strong> ' + speech + '</p>');
+      });
+
+      $(document).ready(function(){
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
+
+    
+    $(document).ready(function(){
+        updateCardCounter();
+        $('.info-button').on('click', function(event){
+            event.stopPropagation();
+            $('#infoModal').modal('show');
         });
-    });
-}
-
-function hideElements(elements) {
-    elements.split(" ").forEach(e => {
-        $(e).css({
-            'display': 'none'
+        $(document).on('click', '.flashcard', function(){
+            if (!$(event.target).closest('.star-button').length) {
+                $(this).toggleClass('flipped');
+            }
         });
-    });
-}
+        
+        $('.star-button').on('click', function(){
+        var card = $(this).closest('.flashcard');
+        let cardid = card.attr("id")
+        let lessonid = "{{ lesson_num }}";
+        let courseid = "{{ course }}";
+        var frontStar = card.find('.front .star-button');
+        var backStar = card.find('.back .star-button');
+        frontStar.attr("disabled", "disabled");
+        backStar.attr("disabled", "disabled");
+        
+        // Toggle active class for star button
+        $(this).toggleClass('active');
+       
+        // Toggle active class for front and back stars
+        if ($(this).hasClass('active')) {
 
-function stopAllMediaTracks() {
-    theStream.getTracks().forEach(track => track.stop());
-}
+            var csrf_token = "{{ csrf_token() }}";
+
+            $.ajaxSetup({
+             beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+             }})
+
+            $.ajax({
+            url: "/addstarredflashcard",
+            type: 'PUT',    
+            data: JSON.stringify({"cardid": cardid, "courseid": courseid, "lessonid": lessonid}),
+            contentType: "application/JSON",
+            success: function(data) {
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");
+                frontStar.addClass('active');
+                backStar.addClass('active');
+            },
+            error: function(data) {
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");
+                frontStar.removeClass('active');
+                backStar.removeClass('active');
+                alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
+            }
+             });
+               
+ 
+        } else {
+
+            var csrf_token = "{{ csrf_token() }}";
+
+            $.ajaxSetup({
+             beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+             }})
+
+
+
+
+            $.ajax({
+            url: "/deletestarredflashcard",
+            type: 'PUT',    
+            data: JSON.stringify({"cardid": cardid}),
+            contentType: "application/JSON",
+            success: function(data) {
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");                
+                frontStar.removeClass('active');
+                backStar.removeClass('active');
+            },
+            error: function(data) {
+                frontStar.removeAttr("disabled");
+                backStar.removeAttr("disabled");
+                frontStar.addClass('active');
+                backStar.addClass('active');
+                alert("An error occurred and the review stack was not updated. Please try again or refresh the page");
+            }
+             });
+                       
+        }
+    });
+    });

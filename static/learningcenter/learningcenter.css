@@ -1,0 +1,60 @@
+h2 {
+    font-size: 300%;
+    text-align: center;
+}
+
+.custom-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.custom-btn-wrapper button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 10px;
+}
+
+.btn-text {
+    margin-bottom: 5px;
+}
+
+.custom-btn {
+    border: .1vw solid #ccc;
+    border-radius: 5%;
+    padding: 10% 20%;
+    font-size: 24px;
+    width: 300px; /* Adjust the width as needed */
+    height: 225px;
+    margin: 20px; 
+    color: #222;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.custom-btn:hover {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #222;
+}
+
+h3 {
+    text-align: center;
+}
+
+.makefloat {
+    float: right !important;
+}
+
+.glow-on-hover {
+    width: 300px; /* Adjust the width as needed */
+    height: 225px; /* Adjust the height */
+}
+
+.glow-on-hover:active {
+    color: #222; /* Modify active button color */
+}

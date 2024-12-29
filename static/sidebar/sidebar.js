@@ -1,23 +1,36 @@
-'use strict'
+'use strict';
 
-function handleclick() {
+var SidebarModule = SidebarModule || (function() {
+    var _adminValue = ''; // Private variable to store the admin value
 
-        $("#bdSidebar").toggleClass("width1", "width2")
-        $("#textwrapper").toggleClass("textwidth1", "textwidth2")
-        $(".text").toggle()
-        $(".logo").toggle()
-        $("#hide").addClass("fa-flip")
-        $("#hide").toggleClass("fa-x fa-bars")
-        $("#hide").removeClass("fa-flip")
-        
+    return {
+        // Initialize the SidebarModule with the admin value
+        init: function(adminValue) {
+            _adminValue = adminValue;
+            console.log("Admin value from SidebarModule:", _adminValue);  // Debugging log
 
-    
-    
-   
-  
-    
-}
+            this.setup();
+        },
 
+        setup: function() {
+            var adminButton = document.getElementById("adminButton");
+            var adminButton2 = document.getElementById("adminButton2");
+
+            if (_adminValue !== "true") {
+                console.log("Hiding admin buttons"); // Debugging log
+                if (adminButton) adminButton.style.display = "none";  // Hide the first admin button
+                if (adminButton2) adminButton2.style.display = "none";  // Hide the second admin button
+            } else {
+                console.log("Showing admin buttons"); // Debugging log
+                if (adminButton) adminButton.style.display = "block";  // Show the first admin button
+                if (adminButton2) adminButton2.style.display = "block";  // Show the second admin button
+            }
+        }
+    };
+
+}());
+
+// Handle the sidebar functionality
 function handleclick2() {
     $("#hide").removeClass("fa-bars")
     $("#hide").addClass("fa-x")
@@ -27,11 +40,7 @@ function handleclick2() {
     $(".text").show()
 }
 
-function setup() {
-    $("#hide").click(handleclick);
-    $("#mobileshow").click(handleclick2);
-
-   
-}
-
-$('document').ready(setup);
+$(document).ready(function() {
+    // Pass the `adminValue` from the global window to SidebarModule
+    SidebarModule.init(window.adminValue);
+});

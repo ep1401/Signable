@@ -1,60 +1,119 @@
-let cards = Array.from(document.querySelectorAll('.card-container'));
-let score = 0;
-let currentCardIndex = 0;
-let totalCards = document.querySelectorAll('.card-container').length;
+$(document).ready(function() {
+  var maxFlashcards = $('.questionquiz').length;
+  console.log(maxFlashcards)
 
-updateCardCounter();
-
-// Randomize the order of the cards
-cards.sort(() => Math.random() - 0.5);
-
-// Hide all cards and show only the first one
-cards.forEach((card, index) => {
-  card.style.display = index === 0 ? 'block' : 'none';
-});
-
-// Add event listeners to the options
-cards.forEach(card => {
-  let options = card.querySelectorAll('.option');
-  options.forEach(option => {
-    option.addEventListener('click', function() {
-      // Check if the selected option is correct
-      if (option.dataset.correct) {
-        score++;
-      }
-      // Disable all options after one is clicked
-      options.forEach(option => {
-        option.disabled = true;
-      });
-      // Show the next button
-      document.getElementById('next-button').style.display = 'block';
-    });
+  $('#questionCount').attr('max', maxFlashcards);
+  $('#questionCount').on('input', function() {
+      $('#questionCountOutput').text($(this).val());
   });
-});
 
-// Add event listener to the next button
-document.getElementById('next-button').addEventListener('click', function() {
-  // Hide the current card
-  cards[currentCardIndex].style.display = 'none';
-  currentCardIndex++;
-  updateCardCounter();
-  if (currentCardIndex < cards.length) {
-    // Show the next card
-    cards[currentCardIndex].style.display = 'block';
-    // Hide the next button until an option is clicked
-    this.style.display = 'none';
-  } else {
-    // Quiz is over, show the score
-    document.getElementById('score').textContent = `Quiz over! Your score is ${score}`;
-    document.getElementById('score').style.display = 'block';
-    this.style.display = 'none';
+
+
+  function startNewQuiz() {
+      $('.quiz-container').hide();
+      $('#submitQuizBtn').hide();
+      $('#startNewQuizBtn').hide();
+
+     
+  
+      $('.slider-container').show();
+      $('#startQuizBtn').show();
+      $('label[for="questionCount"]').show();
+      $('#questionCount').show();
+      $('#questionCountOutput').show();
   }
+
+
+
+  $('#startQuizBtn').click(function() {
+      var sliderValue = parseInt($('#questionCount').val());
+      $('.slider-container').hide();
+      $('#startQuizBtn').hide();
+      $('label[for="questionCount"]').hide();
+      $('#questionCount').hide();
+      $('#questionCountOutput').hide();
+      $('.image-container').hide();
+      $('#instructions').hide();
+
+      $('.quiz-container').show();
+      $('#submitQuizBtn').removeAttr('hidden');
+      $('#submitQuizBtn').show();
+
+      var flashcards = document.querySelectorAll('.questionquiz');
+
+      flashcards =  Array.from(flashcards)
+      var hideFlashcards = flashcards.slice(sliderValue, maxFlashcards)
+      let selectFlashcards = flashcards.slice(0, sliderValue)
+      
+
+      hideFlashcards.forEach(function(flashcard, index) { 
+      $(flashcard).hide()
+  
+      })
+
+      selectFlashcards.forEach(function(flashcard, index) { 
+      $(flashcard).addClass("activequestion")
+  
+      })
+
+
+      $('.quiz-container').removeAttr('hidden');
+      $('#submitContainer').removeAttr('hidden');
+  });
+
+  $('#submitQuizBtn').click(function() {
+      var score = 0;
+      var totalQuestions = parseInt($('#questionCount').val());
+      var answeredQuestions = 0;
+      var unansweredQuestionNumbers = []; 
+  
+      $('.activequestion').each(function(index) {
+          var selectedOption = $(this).find('input[type="radio"]:checked');
+  
+          if (selectedOption.length > 0) {
+              answeredQuestions++;
+          } else {
+              unansweredQuestionNumbers.push(index + 1);
+          }
+      });
+  
+      if (answeredQuestions < totalQuestions) {
+          var message = 'Please answer the following question(s) before submitting:\n';
+          unansweredQuestionNumbers.forEach(function(number) {
+              message += 'Question ' + number + '\n';
+          });
+          alert(message);
+          return; 
+      }
+  
+      answeredQuestions = 0;
+  
+      $('.activequestion').each(function() {
+          var selectedOption = $(this).find('input[type="radio"]:checked');
+      
+          $(this).find('input[type="radio"]').prop('disabled', true);
+      
+          if (selectedOption.length > 0) {
+              if (selectedOption.val() === 'correct') {
+                  selectedOption.next('span').addClass('correct-answer');
+                  selectedOption.next('span').prepend('<i class="fas fa-check"></i> ');
+                  score++;
+              } else {
+                  selectedOption.next('span').addClass('incorrect-answer').prepend('<i class="fas fa-times"></i> ');
+                  $(this).find('input[value="correct"]').next('span').addClass('correct-answer');
+                  $(this).find('input[value="correct"]').next('span').prepend('<i class="fas fa-check"></i> ');
+              }
+          }
+      });
+  
+      var scoreMessage = 'Your score: ' + score + ' out of ' + totalQuestions;
+      $('#scoreMessage').text(scoreMessage);
+      $('#submitQuizBtn').hide();
+      $('#startNewQuizBtn').removeAttr('hidden');
+      $('#startNewQuizBtn').show();
+      $('#scoreModal').modal('show'); 
+
+  });
+
+
 });
-
-
-
-function updateCardCounter() {
-    document.getElementById('current-card').textContent = currentCardIndex + 1;
-    document.getElementById('total-cards').textContent = totalCards;
-}
-

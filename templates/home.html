@@ -1,0 +1,173 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport"
+          content="width=device-width, 
+                   initial-scale=1.0"> 
+    <title>Signable</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" 
+          rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
+          crossorigin="anonymous"> 
+    <link rel="stylesheet" 
+          href="{{ url_for('static', filename='sidebar/sidebar.css') }}"> 
+    <link rel="stylesheet" 
+          href="{{ url_for('static', filename='home/home.css') }}"> 
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+          crossorigin="anonymous" 
+          referrerpolicy="no-referrer" /> 
+</head> 
+
+<body> 
+  
+    <div id="total" class="container-fluid p-0 d-flex h-100">
+        
+        {% include 'sidebar.html' %}
+  
+        <div class="bg-light flex-fill"> 
+            <div class="p-2 d-md-none d-flex text-white color"> 
+                <a id="mobileshow" href="#" class="text-white" 
+                   data-bs-toggle="offcanvas"
+                   data-bs-target="#bdSidebar"> 
+                    <i class="fa-solid fa-bars text-black expansionmargin"></i> 
+                </a> 
+                <span class="ms-3 text-black mt-2">Signable</span>
+                <div class="btn-group d-inline automargin font-size-dropdown   text-dark">
+                    <button type="button" class="btn  dropdown-toggle dropdownstyles" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user "></i>
+                        
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end 	">
+                        <span class="dropdown-item"> <i class="fa fa-user "> </i> {{username}}  </span>
+                        <a class="dropdown-item" id="adminButton" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
+                        <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt pe-2" style="color: black;"></i>Log Out</a>
+                    </ul>
+                </div> 
+            </div> 
+            <div class="p-4"> 
+                <div class="btn-group d-inline-block makefloat font-size-dropdown   text-dark">
+                    <button type="button" class="btn  dropdown-toggle dropdownstyles d-none d-md-block" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user "></i>
+                        <span class="d-none d-lg-inline"> {{username}}  </span>
+                    </button>
+                    <span class="d-none d-md-block">
+                    <ul class="dropdown-menu dropdown-menu-end ">
+                        <span class="dropdown-item d-lg-none"> <i class="fa fa-user "> </i> {{username}}  </span>
+                        <a class="dropdown-item" id="adminButton2" href="/admin">  <i class="fas fa-user-cog text-black pe-2" style="color: black;"></i>Admin</a>
+
+
+                        <a class="dropdown-item" href="/logoutapp">  <i class="fas fa-sign-out-alt text-black pe-2" style="color: black;"></i>Log Out</a>
+
+                        
+                    </ul>
+                </span>
+                  </div>
+                <br>
+                <div class="row mt-3"> 
+                    <div class="col">  
+                        <h1>Signable</h1>                        
+                        <br>
+                        <br>
+                        <main role="main">
+
+      
+                            <!-- Marketing messaging and featurettes
+                            ================================================== -->
+                            <!-- Wrap the rest of the page in another container to center all the content. -->
+                      
+                            <div class="container marketing">
+                      
+                              <!-- Three columns of text below the carousel -->
+                              <div class="row">
+                                <div class="col-lg-4 text-center">
+                                    <div class="circle-icon blue-bg">
+                                        <i class="fa-regular fa-address-card fa-3x"></i>
+                                    </div>
+                                    <h2 style="margin-top: 25px;">Flashcards</h2>
+                                    <p>Access a comprehensive set of flashcards tailored for ASL learning. Practice ASL to English translations and vice versa. Customize your study sessions by shuffling cards and starring difficult terms.</p>
+                                </div>
+                                <div class="col-lg-4 text-center">
+                                    <div class="circle-icon blue-bg">
+                                        <i class="fas fa-video fa-3x"></i>
+                                    </div>
+                                    <h2 style="margin-top: 25px;">Mirror</h2>
+                                    <p>Refine your signing skills by comparing your signing to reference videos. Use the mirror tool to practice alongside professional ASL instructors, ensuring accuracy and fluency.</p>
+                                </div>
+                                <div class="col-lg-4 text-center">
+                                    <div class="circle-icon blue-bg">
+                                        <i class="fa-solid fa-graduation-cap fa-3x"></i>
+                                    </div>
+                                    <h2 style="margin-top: 25px;">Quiz</h2>
+                                    <p>Diversify your studying experience with interactive quizzes. Test your ASL knowledge and track your progress. Practice grammar, vocabulary, and comprehension in a structured environment.</p>
+                                </div>
+                            </div>
+                      
+                              <!-- START THE FEATURETTES -->
+                      
+                              <hr class="featurette-divider">
+                              <div class="row featurette">
+                                <div class="col-lg-5 d-flex align-items-center">
+                                    <div>
+                                        <h2 class="featurette-heading">Master ASL with Flashcards. <span class="text-muted">Unlock Your Signing Potential.</span></h2>
+                                        <p class="lead">Ready to dive into ASL? Our flashcard feature is your gateway to fluency. Click on any card to flip it and reveal the translation. Whether you prefer starting with ASL or English, you can switch sides effortlessly. Need more practice with certain terms? Simply star them for easy access later. Plus, shake things up by shuffling the deck to keep your learning fresh. With Signable's flashcards, mastering ASL has never been more engaging.</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 d-flex align-items-center justify-content-center">
+                                    <img class="featurette-image img-fluid" data-src="holder.js/500x500/auto" src="static/images/homepage.jpg" alt="Homepage example">
+                                </div>
+                            </div>
+                            
+
+                      
+                              <hr class="featurette-divider">
+
+                              <div class="row featurette">
+                                <div class="col-lg-5 d-flex align-items-center">
+                                    <div>
+                                        <h2 class="featurette-heading">Search and Learn ASL. <span class="text-muted">Explore the World of Sign Language.</span></h2>
+                                        <p class="lead">Looking to learn a new ASL term? Our search feature makes it easy. Simply enter the term you're curious about, and watch the corresponding video to learn how to sign it. But that's not all - you can also access extra information to enhance your understanding. Whether it's example sentences, memory tools, or context usage, we've got you covered. Discover the richness of ASL with Signable.</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 d-flex align-items-center justify-content-center">
+                                    <img class="featurette-image img-fluid" data-src="holder.js/500x500/auto" src="static/images/IMG_0400.jpg" alt="Homepage example">
+                                </div>
+                            </div>
+
+                            
+                      
+                              <hr class="featurette-divider">
+                      
+                              <!-- /END THE FEATURETTES -->
+                      
+                            </div><!-- /.container -->
+                      
+                      
+                            <!-- FOOTER -->
+                            <footer class="container">
+                              <center>
+                              <p>&copy; 2024 Signable</p>
+                            </center>
+                            </footer>
+                          </main>
+                    </div> 
+                </div> 
+            </div> 
+  
+        </div> 
+    </div> 
+    <script>
+      window.adminValue = "{{ admin }}";  // Set the value passed from the backend to a global variable
+    </script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar/sidebar.js') }}"></script>
+
+</body> 
+
+  
+</html>

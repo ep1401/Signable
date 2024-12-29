@@ -5,14 +5,14 @@ import os
 from flask import request
 from flask_wtf.csrf import CSRFProtect
 from flask import render_template
-import dbconnect
+from database import dbconnect
 import auth
 import dotenv
 from markupsafe import escape
 
 asl_dict = {101: "first", 102: "second", 105: "third", 107: "fourth"}
 
-app = flask.Flask(__name__, template_folder='.')
+app = flask.Flask(__name__, template_folder='templates')
 _DATABASE_URL = os.environ['DATABASE_URL']
 dotenv.load_dotenv()
 app.secret_key = os.environ['APP_SECRET_KEY']

@@ -1,209 +1,148 @@
 body {
-    font-family: 'Koh Santepheap';
-    text-align: center;
-    background-color: #fbfafa;
-    margin: 0;
-    padding: 0;
-}
-header {
-    background-color: #ccf2f4;
-    background-image: linear-gradient(180deg, #ccf2f4, #fbfafa);
-    color: #000000;
-    padding: 5vw;
-    
-}
-section {
-    padding: 0vw;
-}
-
-* {
-    font-family: 'Koh Santepheap';
-    font-size: 4vw;
-}
-
-h1 {
-    font-size: 3vw;
+    background: #fff;
 }
 
 h2 {
-    font-size: 2vw;
-}
-
-.wrapper {
-    max-width: 100vw;
+    color: #696969;
+    font-size: 26px;
+    font-weight: 300;
     text-align: center;
+    position: relative;
+    margin: 40px 70px;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
 }
 
-.carousel {
-    display: flex;
-    justify-content: flex-start;
-    transition: 0.4s;
-}
-
-.card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 60vw; 
-    height: 40vw;
-    margin-right: 20vw; 
-    margin-left: 20vw;
-    justify-content: center;
-}
-
-.card {
-    top: 0.1vw;
-    width: 60vw;
-    height: 40vw;
-    border: .1vw solid #ccc;
-    margin: 4vw auto; 
-    transition: 1s ease-out;
-    perspective: 150vw; 
-    transform-style: preserve-3d;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.5rem;
-    background-color: #ffffff;
-    border-radius: 2vw; 
-}
-
-.card.active .front button {
-    visibility: hidden; 
-}
-
-.card div {
-    position: absolute;
-    top: 4vw; 
-    left: 4vw;
-    right: 4vw; 
-    bottom: 4vw; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backface-visibility: hidden;
-}
-
-.card .options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.card .options .option {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ccf2f4;
-  color: #222;
-  cursor: pointer;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: 1vw;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-.card .options .option[data-correct="true"] {
-  background-color: #a1e6a1;
-}
-
-.card .options .option:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.options{
-  margin: absolute;
-  margin-top: 45vw;
-}
-
-#next-button {
-  position: fixed; 
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ccf2f4;
-  color: #222;
-  cursor: pointer;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: 1vw;
-  font-weight: bold;
-  transition: 0.2s;
-  right: 10vw; 
-  bottom: 10vw; 
-}
+h3 {
+    margin-top: 60px;
+    text-align: center;
+    position: relative;
   
-#next-button:hover {
-    background-color: #a1e6a1;
 }
 
-
-#score {
-  font-family: 'Koh Santepheap';
-  font-size: 1.5vw;
-}
-
-#card-counter {
-  position: relative;
-  font-family: 'Koh Santepheap';
-  margin-top: 1vw;
-  margin-bottom: 0vw;
-  font-size: 1.5vw;
-}
-
-#current-card, #total-cards {
-  font-family: 'Koh Santepheap';
-  font-size: 1.5vw; 
-}
-
-.logo {
-    border: none;
-    background: none;
-    padding: 0vw;
-    margin: 0vw;
+h2::after {
+    content: "";
+    width: 100%;
     position: absolute;
-    left: 0vw;
-    top: 0vw;
-    
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    color: #222;
-    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
-    font-size: 1vw;
-    font-weight: bold;
-    transition: 0.2s;
+    margin: 0 auto;
+    height: 1px;
+    border-radius: 1px;
+    background: #d4d4d4;
+    left: 0;
+    right: 0;
+    bottom: 14px;
 }
 
-.logo-image {
-    width: 18vw;
-    height: 8vw;
+h2 span {
+    display: inline-block;
+    padding: 0 25px;
+    background:#ebebeb;
+    position:relative;
+    z-index:2;
+}
+
+.breadcrumb {
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    list-style: none;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+    padding: 5 5px;
+    color: #333;
+}
+
+.breadcrumb-item.active {
+    color: #333;
+}
+
+hr {
+    border-top: 1px solid #555;
+}
+
+.quiz-wrapper {
+    display: flex;
     justify-content: center; 
     align-items: center; 
 }
 
-.princeton-image {
-    border: none;
-    background: none;
-    padding: 0vw;
-    margin: 0vw;
-    position: absolute;
-    right: 2vw;
-    top: 1.5vw;
-    width: 11vw;
-    height: 6vw;
-    justify-content: center; 
-    align-items: center; 
-    
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    color: #222;
-    background-color: linear-gradient(180deg, #ccf2f4, #ffffff);
-    font-size: 1vw;
-    font-weight: bold;
-    transition: 0.2s;
+.quiz-container {
+    max-width: 800px; 
+    width: 100%;
+    text-align: center; 
+    margin-bottom: 20px;
 }
 
+.video-question {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 400px; 
+}
+
+.video-question iframe {
+    max-width: 70%; 
+    max-height: 100%;
+}
+
+.options-container {
+    display: grid;
+    grid-template-columns: auto; 
+    grid-row-gap: 10px; 
+    align-items: flex-start; 
+    justify-content: center; 
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.option span {
+    word-break: break-all; 
+}
+
+.option input[type="radio"] {
+    margin-right: 10px;
+    flex-shrink: 0; 
+}
+
+.question-container {
+    margin-bottom: 40px; 
+}
+
+.correct-answer {
+    color: green;
+}
+
+.incorrect-answer {
+    color: red;
+}
+
+.btn {
+    background-color: #ccf2f4;
+    color: #333;
+    border-color: transparent;
+}
+
+.btn:hover {
+    background-color: rgb(132, 132, 136); 
+    border-color: transparent;
+}
+
+.image-container {
+    width: 80%;
+    height: 500px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+  }
+
+  .image-container img {
+    max-width: 100%; 
+    max-height: 100%; 
+  }
