@@ -1,5 +1,23 @@
 #!/usr/bin/env python
 
+'''
+------------------------------------------------------------
+Initial Setup and Imports
+------------------------------------------------------------
+This section includes all necessary imports and initial setup for the Flask application.
+
+- flask: Core Flask web framework for creating routes and handling requests.
+- os: Used for accessing environment variables.
+- flask_wtf.csrf: CSRF protection for web forms.
+- render_template: For rendering HTML templates.
+- dbconnect: Custom module for database interactions.
+- auth: Custom authentication module for login/logout operations.
+- dotenv: Used for loading environment variables from a .env file.
+- markupsafe: For escaping potentially dangerous HTML input.
+
+The application is configured with environment variables for the database URL and secret key.
+------------------------------------------------------------
+'''
 import flask
 import os
 from flask import request
@@ -10,6 +28,7 @@ import auth
 import dotenv
 from markupsafe import escape
 
+# Initialize the application and environment variables
 asl_dict = {101: "first", 102: "second", 105: "third", 107: "fourth"}
 
 app = flask.Flask(__name__, template_folder='templates')
@@ -23,8 +42,17 @@ CSRFProtect(app)
 def start_page():
     return render_template('startpage.html')
 
-
-
+'''
+------------------------------------------------------------
+User Authentication Routes
+------------------------------------------------------------
+- /login: Initiates the login process.
+- /login/callback: Handles the callback after login.
+- /logoutapp: Logs the user out of the app.
+- /invalidemail: Displays an error message for invalid email.
+- /logoutgoogle: Logs the user out of Google authentication.
+------------------------------------------------------------
+'''
 @app.route('/login', methods=['GET'])
 def login():
     return auth.login()
@@ -45,96 +73,15 @@ def invalidemail():
 def logoutgoogle():
     return auth.logoutgoogle()
 
-@app.route('/home', methods=['GET'])
-def home():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
-    
-    useradmin = dbconnect.get_admin(username)
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
- 
-    if userinfo[1] == False:
-        adduserresult = dbconnect.add_user(username, "", "")
-        
-        if adduserresult[0] is False:
-            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    if userinfo[0] is False or useradmin[0] is False:
-        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    error = request.args.get('error', default=None)
-    
-    html_code = flask.render_template('home.html', username = username, admin = admin, error = error)
-    response = flask.make_response(html_code)
-    return response
-
-@app.route('/error', methods=['GET'])
-def error():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
-    
-    useradmin = dbconnect.get_admin(username)
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
- 
-    if userinfo[1] == False:
-        adduserresult = dbconnect.add_user(username, "", "")
-        
-        if adduserresult[0] is False:
-            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    if userinfo[0] is False or useradmin[0] is False:
-        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    error = request.args.get('error', default=None)
-    
-    html_code = flask.render_template('error.html', username = username, admin = admin, error = error)
-    response = flask.make_response(html_code)
-    return response
-
-@app.route('/loginerror', methods=['GET'])
-def loginerror():        
-    error = request.args.get('error', default=None)
-    
-    html_code = flask.render_template('loginerror.html', error = error)
-    response = flask.make_response(html_code)
-    return response
-
-@app.route('/courses', methods=['GET'])
-def courses():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
- 
-    if userinfo[1] == False:
-        adduserresult = dbconnect.add_user(username, "", "")
-        
-        if adduserresult[0] is False:
-            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    useradmin = dbconnect.get_admin(username)
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
-        
-    if userinfo[0] is False or useradmin[0] is False:
-        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-
-    html_code = flask.render_template('courses.html', admin = admin, username=username)
-    response = flask.make_response(html_code)
-    return response
-
-
-
-
+'''
+------------------------------------------------------------
+ADMIN PAGE ROUTES
+------------------------------------------------------------
+This section handles routes for the admin page, including 
+user authorization, lesson and flashcard management, and 
+updating or deleting content.
+------------------------------------------------------------
+'''
 @app.route('/admin', methods=['GET'])
 def admin():
     username = auth.authenticate()
@@ -215,72 +162,363 @@ def add_card():
 
     return flask.redirect('/admin')
 
+@app.route('/savechanges', methods=['POST'])
+def save_changes():
+    data = request.get_json()
+    success_messages = []
+    error_messages = []
+    deleted_messages = []
 
-
-
-
-
-@app.route('/searchterm', methods=['GET'])
-def searchterm():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
- 
-    if userinfo[1] == False:
-        adduserresult = dbconnect.add_user(username, "", "")
-        
-        if adduserresult[0] is False:
-            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    useradmin = dbconnect.get_admin(username)
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
-        
-    if userinfo[0] is False or useradmin[0] is False:
-        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + "administrator to resolve to issue"))
-
-    html_code = flask.render_template('searchterm.html', username=username, admin = admin)
-    response = flask.make_response(html_code)
-    return response
-
-@app.route('/searchterm/results', methods=['GET'])
-def searchtermresults():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
- 
-    if userinfo[1] == False:
-        adduserresult = dbconnect.add_user(username, "", "")
-        
-        if adduserresult[0] is False:
-            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    useradmin = dbconnect.get_admin(username)
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
     
+
+    for item in data:
+        card_id = escape(item['cardid'])  
+        translation = escape(item['translation'])  
+        contains_card = dbconnect.contains_flashcard(card_id)
+        if contains_card[0] is False:
+         return flask.jsonify({'success': False, 'errors': contains_card[1]}), 500
+
+        if len(contains_card[1]) == 0:
+            deleted_messages.append("\nUnable to save " + translation)
+        else:
+            
+            memorytip = escape(item['memorytip']) 
+            speech = escape(item['speech'])  
+            sentence = escape(item['sentence'])
+            
+            success, message = dbconnect.update_flashcard(card_id, translation, memorytip, speech, sentence)
+            
+            if success:
+                success_messages.append(message)
+            else:
+                error_messages.append(message)
+
+    if error_messages:
+        return flask.jsonify({'success': False, 'errors': error_messages}), 500
+    elif deleted_messages:
+        return flask.jsonify({'success': True, 'messages': deleted_messages, 'deleted': True})
+    else:
+        return flask.jsonify({'success': True, 'messages': success_messages, 'deleted': False})
+
+    
+
+@app.route("/checkchanges/<int:course_id>/<int:lesson_number>", methods=["PUT"])
+def checkchanges(course_id, lesson_number):
+    data = request.get_json()    
+
+    terms = dbconnect.get_lessonterms('', lesson_number, course_id)
+
+    for item in data:
+        if (item not in terms[1]):
+            return flask.jsonify({"success": False, "message": "Another administrator has changed the lesson you are editing. Are you sure you want to override their changes?"})
+        
+    return flask.jsonify({"success": True, "message": "No changes detected"})    
+    
+@app.route('/deleteflashcard', methods=['POST'])
+def deleteflashcard():
+    data = request.get_json()
+    card_id = escape(data.get('cardid'))
+
+    if card_id is None:
+        return flask.jsonify({'success': False, 'error': 'Card ID not provided'}), 400
+
+    success, message = dbconnect.delete_flashcard(card_id)
+    if success:
+        return flask.jsonify({'success': True, 'message': message}), 200
+    else:
+        return flask.jsonify({'success': False, 'error': message}), 500
+    
+@app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>', methods=["GET"])
+def fetch_lesson_terms(course_id, lesson_number):
+    terms = dbconnect.get_lessonterms('', lesson_number, course_id)
+    if terms[0] is False:
+        return flask.redirect(flask.url_for('error', error=terms[1]))
+
+    sorted_terms = sorted(terms[1], key=lambda x: x['translation']) 
+
+    return flask.jsonify(sorted_terms)
+
+
+
+
+@app.route('/delete-lesson', methods=['POST'])
+def delete_lesson_route():
+    lesson_id = escape(request.json.get('lessonNumber'))
+    course_id = escape(request.json.get('courseId'))
+    
+    success, message = dbconnect.delete_lesson(int(lesson_id), int(course_id))
+
+    if success:
+        return flask.jsonify({'success': True, 'message': message}), 200
+    else:
+        return flask.jsonify({'success': False, 'message': message}), 500
+
+
+'''
+------------------------------------------------------------
+COURSES ROUTE
+------------------------------------------------------------
+Handles user authentication and renders the courses page.
+------------------------------------------------------------
+'''
+@app.route('/courses', methods=['GET'])
+def courses():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+        
     if userinfo[0] is False or useradmin[0] is False:
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + "administrator to resolve to issue"))
+            + " administrator to resolve the issue"))
 
-    input = escape(request.args.get('query', default=""))   
-    query_result = dbconnect.get_terms(input)
-    if query_result[0] is True:
-        terms = query_result[1]
-        terms_sorted = sorted(terms, key=lambda x: x['translation'].lower())
-        html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
-    else: 
-        return flask.redirect(flask.url_for('error', error=query_result[1]))
-
-        
-
+    html_code = flask.render_template('courses.html', admin = admin, username=username)
     response = flask.make_response(html_code)
     return response
 
 
+'''
+------------------------------------------------------------
+ERROR HANDLING ROUTES
+------------------------------------------------------------
+This section contains routes for handling errors, including 
+user authentication issues and login errors.
+------------------------------------------------------------
+'''
+@app.route('/error', methods=['GET'])
+def error():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+    
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    if userinfo[0] is False or useradmin[0] is False:
+        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    error = request.args.get('error', default=None)
+    
+    html_code = flask.render_template('error.html', username = username, admin = admin, error = error)
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/loginerror', methods=['GET'])
+def loginerror():        
+    error = request.args.get('error', default=None)
+    
+    html_code = flask.render_template('loginerror.html', error = error)
+    response = flask.make_response(html_code)
+    return response
+
+'''
+------------------------------------------------------------
+FLASHCARD ROUTES
+------------------------------------------------------------
+Handles adding and removing starred flashcards, including 
+user authentication and interacting with the database 
+to update the user's starred flashcards.
+------------------------------------------------------------
+'''
+@app.route('/deletestarredflashcard', methods=['PUT'])
+def delstarflashcard():
+        username = auth.authenticate()
+        cardid =  escape(request.get_json()["cardid"])
+        result = dbconnect.del_starred_card(username, cardid)
+        if result[0] is False:
+            return flask.jsonify({'errors': result[1]}), 500
+        return result[1]
+        
+        
+
+@app.route('/addstarredflashcard', methods=['PUT'])
+def starflashcard(): 
+     username = auth.authenticate()
+     cardid =  escape(request.get_json()["cardid"])
+     lessonid =  escape(request.get_json()["lessonid"])
+     courseid =  escape(request.get_json()["courseid"])
+     
+     result = dbconnect.add_starred_card(username, cardid, int(courseid), int(lessonid))
+     if result[0] is False:
+         return flask.jsonify({'errors': result[1]}), 500
+     return result[1]
+ 
+ 
+
+'''
+------------------------------------------------------------
+GLOSS ROUTE
+------------------------------------------------------------
+Handles rendering of the gloss page, including user authentication 
+and authorization checks to ensure the user has appropriate access.
+------------------------------------------------------------
+'''
+@app.route('/gloss', methods=['GET'])
+def gloss():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+        
+    if userinfo[0] is False or useradmin[0] is False:
+        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + "administrator to resolve to issue"))
+
+    html_code = flask.render_template('gloss.html', username=username, admin = admin)
+    response = flask.make_response(html_code)
+    return response
+
+
+'''
+------------------------------------------------------------
+HOME PAGE ROUTE
+------------------------------------------------------------
+Handles user authentication and renders the home page.
+------------------------------------------------------------
+'''
+@app.route('/home', methods=['GET'])
+def home():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+    
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    if userinfo[0] is False or useradmin[0] is False:
+        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    error = request.args.get('error', default=None)
+    
+    html_code = flask.render_template('home.html', username = username, admin = admin, error = error)
+    response = flask.make_response(html_code)
+    return response
+
+
+'''
+------------------------------------------------------------
+LEARNING CENTER ROUTE
+------------------------------------------------------------
+Handles rendering the learning center page, including user 
+authentication, course and lesson validation, and displaying 
+the relevant lesson content for the user.
+------------------------------------------------------------
+'''
+@app.route('/learningcenter', methods=['GET'])
+def learningcenter():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+        
+    if userinfo[0] is False or useradmin[0] is False:
+        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + "administrator to resolve to issue"))
+
+    input = request.args.get('course_lesson', default=None)
+    
+    if input is None:
+        return flask.redirect(flask.url_for('error', error="Invalid course and lesson"))
+    
+    try:    
+        values = input.split()
+        course = values[0]
+        lessonid = values[1]
+    except:
+        return flask.redirect(flask.url_for('error', error="Invalid course or lesson"))
+    
+    if not course.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    if not lessonid.isdigit():
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
+    
+    if int(course) not in asl_dict:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
+    
+    lesson = dbconnect.get_lessonlength(int(course))
+    if not lesson[0]:
+        return flask.redirect(flask.url_for('error', error=lesson[1]))
+
+
+    lesson_found = False
+
+
+    for lesson_dict in lesson[1]:
+        lesson_id = lesson_dict.get('lessonid')
+        if lesson_id == int(lessonid):
+            lesson_found = True
+            break
+
+
+    if not lesson_found:
+        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
+
+
+    html_code = flask.render_template('learningcenter.html', course=course, 
+        lesson_num = lessonid,  admin = admin, username=username)
+    
+    
+    response = flask.make_response(html_code)
+    return response
+
+'''
+------------------------------------------------------------
+LESSONS ROUTES
+------------------------------------------------------------
+This section handles routes for displaying lesson content, 
+including rendering lessons, searching for lesson terms, and 
+displaying flashcards.
+------------------------------------------------------------
+'''
 @app.route('/lessons', methods=['GET'])
 def lessons():
     username = auth.authenticate()
@@ -391,51 +629,15 @@ def searchlessonresults():
 
     return html_code
 
-
-@app.route('/selectlessons', methods=['GET'])
-def selectlessons():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
- 
-    if userinfo[1] == False:
-        adduserresult = dbconnect.add_user(username, "", "")
-        
-        if adduserresult[0] is False:
-            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    useradmin = dbconnect.get_admin(username)
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
-        
-    if userinfo[0] is False or useradmin[0] is False:
-        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + "administrator to resolve to issue"))
-
-    course = request.args.get('course', default=None)
-    
-    if course is None:
-        return flask.redirect(flask.url_for('error', error="Invalid course"))
-    
-    if not course.isdigit():
-        return flask.redirect(flask.url_for('error', error="Invalid course"))
-    
-    if int(course) not in asl_dict:
-        return flask.redirect(flask.url_for('error', error="Invalid course"))
-    
-    query_result = dbconnect.get_lessonlength(course)
-    if query_result[0] is True:
-        lesson_length = query_result[1]
-        lesson_length_sorted = sorted(lesson_length, key=lambda x: x['lessonid'])
-        html_code = flask.render_template('selectlessons.html', course=course,
-        lesson_num = lesson_length_sorted, admin = admin, username=username)
-    else: 
-        return flask.redirect(flask.url_for('error', error=query_result[1]))
-
-    response = flask.make_response(html_code)
-    return response
-
+'''
+------------------------------------------------------------
+MIRROR SIGN ROUTE
+------------------------------------------------------------
+This section handles the route for the mirror sign page, 
+including user authentication, course and lesson validation, 
+and rendering the flashcards.
+------------------------------------------------------------
+'''
 @app.route('/mirrorsign', methods=['GET'])
 def mirrorsign():   
     username = auth.authenticate()
@@ -511,6 +713,15 @@ def mirrorsign():
     response = flask.make_response(html_code)
     return response
 
+'''
+------------------------------------------------------------
+QUIZ ROUTES
+------------------------------------------------------------
+This section handles routes for rendering quizzes, 
+including user authentication, course and lesson validation, 
+and displaying quiz questions.
+------------------------------------------------------------
+'''
 @app.route('/quiz', methods=['GET'])
 def quiz():
     username = auth.authenticate()
@@ -583,8 +794,8 @@ def quiz():
     response = flask.make_response(html_code)
     return response
 
-@app.route('/gloss', methods=['GET'])
-def gloss():
+@app.route("/getquestions", methods=["GET"])
+def getquestions():
     username = auth.authenticate()
     userinfo = dbconnect.get_user(username)
  
@@ -594,20 +805,17 @@ def gloss():
         if adduserresult[0] is False:
             return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
             + " administrator to resolve the issue"))
-        
-    useradmin = dbconnect.get_admin(username)
-    admin = "false"
-    if useradmin[1] == True:
-        admin = "true"
-        
-    if userinfo[0] is False or useradmin[0] is False:
-        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + "administrator to resolve to issue"))
 
-    html_code = flask.render_template('gloss.html', username=username, admin = admin)
-    response = flask.make_response(html_code)
-    return response
 
+'''
+------------------------------------------------------------
+REVIEW ROUTE
+------------------------------------------------------------
+Handles rendering the review page for starred flashcards, 
+including user authentication, authorization checks, 
+and displaying the flashcards for review.
+------------------------------------------------------------
+'''
 @app.route('/review', methods=['GET'])
 def review():
     username = auth.authenticate()
@@ -645,140 +853,18 @@ def review():
     
     return response
 
-@app.route('/deletestarredflashcard', methods=['PUT'])
-def delstarflashcard():
-        username = auth.authenticate()
-        cardid =  escape(request.get_json()["cardid"])
-        result = dbconnect.del_starred_card(username, cardid)
-        if result[0] is False:
-            return flask.jsonify({'errors': result[1]}), 500
-        return result[1]
-        
-        
 
-@app.route('/addstarredflashcard', methods=['PUT'])
-def starflashcard(): 
-     username = auth.authenticate()
-     cardid =  escape(request.get_json()["cardid"])
-     lessonid =  escape(request.get_json()["lessonid"])
-     courseid =  escape(request.get_json()["courseid"])
-     
-     result = dbconnect.add_starred_card(username, cardid, int(courseid), int(lessonid))
-     if result[0] is False:
-         return flask.jsonify({'errors': result[1]}), 500
-     return result[1]
-        
-
-@app.route('/savechanges', methods=['POST'])
-def save_changes():
-    data = request.get_json()
-    success_messages = []
-    error_messages = []
-    deleted_messages = []
-
-    
-
-    for item in data:
-        card_id = escape(item['cardid'])  
-        translation = escape(item['translation'])  
-        contains_card = dbconnect.contains_flashcard(card_id)
-        if contains_card[0] is False:
-         return flask.jsonify({'success': False, 'errors': contains_card[1]}), 500
-
-        if len(contains_card[1]) == 0:
-            deleted_messages.append("\nUnable to save " + translation)
-        else:
-            
-            memorytip = escape(item['memorytip']) 
-            speech = escape(item['speech'])  
-            sentence = escape(item['sentence'])
-            
-            success, message = dbconnect.update_flashcard(card_id, translation, memorytip, speech, sentence)
-            
-            if success:
-                success_messages.append(message)
-            else:
-                error_messages.append(message)
-
-    if error_messages:
-        return flask.jsonify({'success': False, 'errors': error_messages}), 500
-    elif deleted_messages:
-        return flask.jsonify({'success': True, 'messages': deleted_messages, 'deleted': True})
-    else:
-        return flask.jsonify({'success': True, 'messages': success_messages, 'deleted': False})
-
-    
-
-@app.route("/checkchanges/<int:course_id>/<int:lesson_number>", methods=["PUT"])
-def checkchanges(course_id, lesson_number):
-    data = request.get_json()    
-
-    terms = dbconnect.get_lessonterms('', lesson_number, course_id)
-
-    for item in data:
-        if (item not in terms[1]):
-            return flask.jsonify({"success": False, "message": "Another administrator has changed the lesson you are editing. Are you sure you want to override their changes?"})
-        
-    return flask.jsonify({"success": True, "message": "No changes detected"})    
-    
-
-@app.route('/deleteflashcard', methods=['POST'])
-def deleteflashcard():
-    data = request.get_json()
-    card_id = escape(data.get('cardid'))
-
-    if card_id is None:
-        return flask.jsonify({'success': False, 'error': 'Card ID not provided'}), 400
-
-    success, message = dbconnect.delete_flashcard(card_id)
-    if success:
-        return flask.jsonify({'success': True, 'message': message}), 200
-    else:
-        return flask.jsonify({'success': False, 'error': message}), 500
-    
-@app.route('/fetch-lesson-terms/<int:course_id>/<int:lesson_number>', methods=["GET"])
-def fetch_lesson_terms(course_id, lesson_number):
-    terms = dbconnect.get_lessonterms('', lesson_number, course_id)
-    if terms[0] is False:
-        return flask.redirect(flask.url_for('error', error=terms[1]))
-
-    sorted_terms = sorted(terms[1], key=lambda x: x['translation']) 
-
-    return flask.jsonify(sorted_terms)
-
-
-
-
-@app.route('/delete-lesson', methods=['POST'])
-def delete_lesson_route():
-    lesson_id = escape(request.json.get('lessonNumber'))
-    course_id = escape(request.json.get('courseId'))
-    
-    success, message = dbconnect.delete_lesson(int(lesson_id), int(course_id))
-
-    if success:
-        return flask.jsonify({'success': True, 'message': message}), 200
-    else:
-        return flask.jsonify({'success': False, 'message': message}), 500
-
-@app.route("/getquestions", methods=["GET"])
-def getquestions():
-    username = auth.authenticate()
-    userinfo = dbconnect.get_user(username)
- 
-    if userinfo[1] == False:
-        adduserresult = dbconnect.add_user(username, "", "")
-        
-        if adduserresult[0] is False:
-            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
-            + " administrator to resolve the issue"))
-        
-    
-
-
-
-@app.route('/learningcenter', methods=['GET'])
-def learningcenter():
+'''
+------------------------------------------------------------
+SEARCH TERM ROUTES
+------------------------------------------------------------
+This section handles routes for searching and displaying terms 
+related to ASL, including rendering the search page and showing 
+search results.
+------------------------------------------------------------
+'''
+@app.route('/searchterm', methods=['GET'])
+def searchterm():
     username = auth.authenticate()
     userinfo = dbconnect.get_user(username)
  
@@ -798,53 +884,98 @@ def learningcenter():
         return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
             + "administrator to resolve to issue"))
 
-    input = request.args.get('course_lesson', default=None)
+    html_code = flask.render_template('searchterm.html', username=username, admin = admin)
+    response = flask.make_response(html_code)
+    return response
+
+@app.route('/searchterm/results', methods=['GET'])
+def searchtermresults():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
     
-    if input is None:
-        return flask.redirect(flask.url_for('error', error="Invalid course and lesson"))
+    if userinfo[0] is False or useradmin[0] is False:
+        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + "administrator to resolve to issue"))
+
+    input = escape(request.args.get('query', default=""))   
+    query_result = dbconnect.get_terms(input)
+    if query_result[0] is True:
+        terms = query_result[1]
+        terms_sorted = sorted(terms, key=lambda x: x['translation'].lower())
+        html_code = flask.render_template('tabledisplay.html', terms = terms_sorted)
+    else: 
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
+
+        
+
+    response = flask.make_response(html_code)
+    return response
+
+
+'''
+------------------------------------------------------------
+SELECT LESSONS ROUTE
+------------------------------------------------------------
+This section handles the route for selecting lessons, 
+including user authentication, course validation, and 
+rendering the select lessons page.
+------------------------------------------------------------
+'''
+@app.route('/selectlessons', methods=['GET'])
+def selectlessons():
+    username = auth.authenticate()
+    userinfo = dbconnect.get_user(username)
+ 
+    if userinfo[1] == False:
+        adduserresult = dbconnect.add_user(username, "", "")
+        
+        if adduserresult[0] is False:
+            return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + " administrator to resolve the issue"))
+        
+    useradmin = dbconnect.get_admin(username)
+    admin = "false"
+    if useradmin[1] == True:
+        admin = "true"
+        
+    if userinfo[0] is False or useradmin[0] is False:
+        return flask.redirect(flask.url_for('loginerror', error="Unable to authorize user please contact" 
+            + "administrator to resolve to issue"))
+
+    course = request.args.get('course', default=None)
     
-    try:    
-        values = input.split()
-        course = values[0]
-        lessonid = values[1]
-    except:
-        return flask.redirect(flask.url_for('error', error="Invalid course or lesson"))
+    if course is None:
+        return flask.redirect(flask.url_for('error', error="Invalid course"))
     
     if not course.isdigit():
         return flask.redirect(flask.url_for('error', error="Invalid course"))
     
-    if not lessonid.isdigit():
-        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
-    
     if int(course) not in asl_dict:
         return flask.redirect(flask.url_for('error', error="Invalid course"))
     
-    lesson = dbconnect.get_lessonlength(int(course))
-    if not lesson[0]:
-        return flask.redirect(flask.url_for('error', error=lesson[1]))
+    query_result = dbconnect.get_lessonlength(course)
+    if query_result[0] is True:
+        lesson_length = query_result[1]
+        lesson_length_sorted = sorted(lesson_length, key=lambda x: x['lessonid'])
+        html_code = flask.render_template('selectlessons.html', course=course,
+        lesson_num = lesson_length_sorted, admin = admin, username=username)
+    else: 
+        return flask.redirect(flask.url_for('error', error=query_result[1]))
 
-
-    lesson_found = False
-
-
-    for lesson_dict in lesson[1]:
-        lesson_id = lesson_dict.get('lessonid')
-        if lesson_id == int(lessonid):
-            lesson_found = True
-            break
-
-
-    if not lesson_found:
-        return flask.redirect(flask.url_for('error', error="Invalid lesson"))
-
-
-    html_code = flask.render_template('learningcenter.html', course=course, 
-        lesson_num = lessonid,  admin = admin, username=username)
-    
-    
     response = flask.make_response(html_code)
     return response
-
 
 
 if __name__ == '__main__':

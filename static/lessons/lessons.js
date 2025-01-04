@@ -8,7 +8,7 @@ function handleError(xhr, textStatus, errorThrown) {
     if (xhr.responseText && xhr.responseText.startsWith("<")) {
         alert('This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.');
     }
-   else {
+    else {
         alert("Error while fetching data from the server. Please contact a system adminstrator");
     }
 }
@@ -16,7 +16,6 @@ function handleError(xhr, textStatus, errorThrown) {
 let request = null;
 let lessonid = $("#lesson-info").data("lesson");  // Fetching from the data-attribute
 let courseid = $("#lesson-info").data("course");      // Convert to a proper JSON format
-
 
 function getResults() {
     let query = $('#searchinput').val();
