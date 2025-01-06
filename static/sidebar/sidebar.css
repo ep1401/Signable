@@ -163,3 +163,52 @@ ol li {
 .automargin {
     margin-left:auto !important;
 }
+
+/* For new logos */
+.sidebar-footer {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    transition: all 0.2s;
+  }
+  
+  .expanded-logo, .collapsed-logo {
+    width: 150px;
+    height: auto;
+    transition: all 0.2s;
+  }
+
+  .collapsed-logo {
+    width: 30px;
+    height: auto;
+    transition: all 0.2s;
+  }
+  
+  .collapsed-logo {
+    display: none;
+  }
+  
+  /* When sidebar is collapsed */
+  .width1 {
+    transition: width 0.3s ease;
+  }
+  
+  .width1.collapsed {
+    width: 70px !important;
+  }
+  
+  .width1.collapsed .sidebar-footer {
+    left: 10px;
+  }
+  
+  .width1.collapsed .expanded-logo {
+    display: none;
+  }
+  
+  .width1.collapsed .collapsed-logo {
+    display: block;
+    width: 30px; /* Adjust as needed for the collapsed state */
+  }
+  
+  
+  

@@ -33,6 +33,17 @@ var SidebarModule = SidebarModule || (function() {
         bindSidebarToggle: function() {
             // Ensure that the mobile sidebar toggle can still work
             $("#mobileshow").click(handleclick2);
+        }, 
+
+        setupCollapsibleSidebar: function() {
+            const sidebar = document.getElementById('bdSidebar');
+            const hideButton = document.getElementById('hide');
+
+            if (hideButton) {
+                hideButton.addEventListener('click', function() {
+                    sidebar.classList.toggle('collapsed');
+                });
+            }
         }
     };
 
@@ -47,6 +58,11 @@ function handleclick() {
     $("#hide").addClass("fa-flip");
     $("#hide").toggleClass("fa-x fa-bars");
     $("#hide").removeClass("fa-flip");
+
+    // princeton logos
+    $("#bdSidebar").toggleClass("collapsed");
+    $(".expanded-logo").toggle();
+    $(".collapsed-logo").toggle();
 }
 
 function handleclick2() {
@@ -65,5 +81,6 @@ function setup() {
     // Mobile sidebar toggle handled separately with the logic in the SidebarModule
     SidebarModule.init(window.adminValue);
 }
+  
 
 $('document').ready(setup);
