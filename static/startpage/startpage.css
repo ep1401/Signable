@@ -35,12 +35,18 @@ body {
     padding-bottom: 2rem; /* Add space between content and footer */
   }
   
-
   .logo {
     width: 200px;
     position: absolute; /* Position absolutely */
     top: 10px; /* Adjust top position */
     left: 10px; /* Adjust left position */
+  }
+
+  .secondary-logo {
+    position: absolute;
+    top: 1px;
+    right: 20px;
+    width: 200px;  
   }
 
   .content {
