@@ -7,18 +7,16 @@ With these features, we hope to transform the current approach to teaching and l
 1. It is recommended to create a virtual environment with the following command: 
 ```
 python -m venv .venv
-
 ```
 2. Activate the virtual coding environment: 
+
 MacOS
 ```
 source .venv/bin/activate
-
 ```
 Windows
 ```
 .venv\Scripts\activate
-
 ```
 
 3. Install project dependencies:
