@@ -34,8 +34,11 @@ html, body {
 }
 
 #textwrapper {
-    transition: all 0.2s !important;
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
 }
+ 
 * {
     font-family: 'Koh Santepheap';
     
@@ -166,43 +169,36 @@ ol li {
 
 /* For new logos */
 .sidebar-footer {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    transition: all 0.2s;
-  }
-  
-  .expanded-logo, .collapsed-logo {
+    text-align: center; /* Center-align footer content */
+    background-color: transparent; /* No background overlap */
+    position: flex;
+}
+ 
+  .expanded-logo {
     width: 150px;
     height: auto;
-    transition: all 0.2s;
+    transition: all 0s;
   }
 
   .collapsed-logo {
     width: 30px;
     height: auto;
-    transition: all 0.2s;
+    transition: all 0s;
+    margin-bottom: 10px;
   }
   
   .collapsed-logo {
+    margin-bottom: 10px;
     display: none;
   }
   
   /* When sidebar is collapsed */
   .width1 {
-    transition: width 0.3s ease;
+    transition: width 0.0s ease;
   }
   
   .width1.collapsed {
     width: 70px !important;
-  }
-  
-  .width1.collapsed .sidebar-footer {
-    left: 10px;
-  }
-  
-  .width1.collapsed .expanded-logo {
-    display: none;
   }
   
   .width1.collapsed .collapsed-logo {
