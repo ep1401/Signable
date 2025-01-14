@@ -10,7 +10,7 @@ __pycache__/
 
 # Logs and databases
 *.log
-*.sql
+#*.sql
 *.sqlite
 
 # Build output
